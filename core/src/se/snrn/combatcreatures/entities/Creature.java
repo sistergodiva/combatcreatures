@@ -8,21 +8,25 @@ import se.snrn.combatcreatures.map.Tile;
 import se.snrn.combatcreatures.map.TileMap;
 import se.snrn.combatcreatures.map.TileType;
 
+import java.util.ArrayList;
+
 import static se.snrn.combatcreatures.CombatCreatures.TILE_SIZE;
 
 public class Creature implements Updatable, Renderable, Mapped, Ai, Living {
     private Tile tile;
     private TileMap tileMap;
     private Sprite sprite;
+    private CreatureManager creatureManager;
     private AiCore aiCore;
     private boolean finished;
     private int health;
     private boolean alive;
 
-    public Creature(Tile tile, TileMap tileMap, Sprite sprite) {
+    public Creature(Tile tile, TileMap tileMap, Sprite sprite, CreatureManager creatureManager) {
         this.tile = tile;
         this.tileMap = tileMap;
         this.sprite = sprite;
+        this.creatureManager = creatureManager;
         aiCore = new AiCore();
         health = 3;
         alive = true;
@@ -38,7 +42,9 @@ public class Creature implements Updatable, Renderable, Mapped, Ai, Living {
 
     @Override
     public void render(Batch batch) {
-        sprite.draw(batch);
+        if(tile.isVisible()) {
+            sprite.draw(batch);
+        }
     }
 
 
@@ -123,6 +129,9 @@ public class Creature implements Updatable, Renderable, Mapped, Ai, Living {
     @Override
     public void die() {
         sprite = ResourceManager.creatureDead;
+        tile.setMapped(null);
+        creatureManager.addCorpse(new Corpse(tile, tileMap, sprite, new ArrayList<Item>()));
+        creatureManager.creaturesToRemove.add(this);
         setAlive(false);
     }
 

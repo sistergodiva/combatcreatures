@@ -7,7 +7,7 @@ import se.snrn.combatcreatures.map.TileMap;
 public class CreatureFactory {
 
 
-    public static Creature spawnCreature(Tile tile, TileMap tileMap, Sprite sprite){
-        return new Creature(tile, tileMap, sprite);
+    public static Creature spawnCreature(Tile tile, TileMap tileMap, Sprite sprite, CreatureManager creatureManager){
+        return new Creature(tile, tileMap, sprite, creatureManager);
     }
 }

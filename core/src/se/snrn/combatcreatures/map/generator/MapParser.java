@@ -28,14 +28,12 @@ public class MapParser {
 
     public void parseMap(TileMap tileMap) {
         ArrayList<Tile> filled;
-        ArrayList<Tile> walls;
-        ArrayList<Tile> spawns;
 
 
         Tile startTile = getRandomEmptyTile(tileMap);
 
         tileMap.setFilled(filled = FloodFill.getFloodFromTile(tileMap, startTile));
-        tileMap.setWalls(walls = FloodFill.getWallsFromTile(tileMap, startTile));
+        tileMap.setWalls(FloodFill.getWallsFromTile(tileMap, startTile));
         tileMap.setSpawns(getSpawnLocations(tileMap, filled));
 
 

@@ -1,6 +1,6 @@
 package se.snrn.combatcreatures.input;
 
-import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector3;
 import se.snrn.combatcreatures.entities.Player;
@@ -22,12 +22,10 @@ public class InputStateMachine implements Updatable, Renderable {
 
     public InputStateMachine(Player player) {
 
-        currentInputState = new JumpInputState(player);
         tileMap = player.getMap();
+        currentInputState = new DefaultInputState(player);
         this.player = player;
     }
-
-
 
 
     @Override
@@ -45,17 +43,16 @@ public class InputStateMachine implements Updatable, Renderable {
     }
 
 
-    public void handleInput(Vector3 mousePosition) {
-        Tile tile = tileMap.getTile((int)mousePosition.x / TILE_SIZE, (int)mousePosition.y / TILE_SIZE);
+    public void handleInput(int input) {
 
-        if (tile != null) {
-            newInputState = currentInputState.handleInput(tile);
-            if (newInputState != null) {
-                newInputState.enter();
-                currentInputState.exit();
-                currentInputState = newInputState;
-            }
+
+        newInputState = currentInputState.handleInput(input);
+        if (newInputState != null) {
+            newInputState.enter();
+            currentInputState.exit();
+            currentInputState = newInputState;
         }
+
     }
 
     public void jump() {

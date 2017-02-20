@@ -15,6 +15,8 @@ public class CreatureManager implements Updatable, Renderable {
     ArrayList<Creature> creatures;
     ArrayList<Creature> creaturesToRemove;
     ArrayList<Creature> creaturesToAdd;
+    ArrayList<Corpse> corpses;
+    ArrayList<Corpse> corpsesToAdd;
     private Player player;
 
     public CreatureManager(Player player) {
@@ -22,6 +24,9 @@ public class CreatureManager implements Updatable, Renderable {
         this.creatures = new ArrayList<>();
         this.creaturesToRemove = new ArrayList<>();
         this.creaturesToAdd = new ArrayList<>();
+        this.corpses = new ArrayList<>();
+        this.corpsesToAdd = new ArrayList<>();
+
     }
 
     public void addCreature(Creature creature) {
@@ -34,6 +39,10 @@ public class CreatureManager implements Updatable, Renderable {
 
     @Override
     public void update(float delta) {
+        if (!corpsesToAdd.isEmpty()) {
+            corpses.addAll(corpsesToAdd);
+            corpsesToAdd.clear();
+        }
         if (!creaturesToAdd.isEmpty()) {
             creatures.addAll(creaturesToAdd);
             creaturesToAdd.clear();
@@ -45,6 +54,9 @@ public class CreatureManager implements Updatable, Renderable {
 
         for (Creature creature : creatures) {
             creature.update(delta);
+        }
+        for (Corpse corpse : corpses) {
+            corpse.update(delta);
         }
         int finishedCreatures = 0;
         for (Creature creature : creatures) {
@@ -67,6 +79,9 @@ public class CreatureManager implements Updatable, Renderable {
         for (Creature creature : creatures) {
             creature.render(batch);
         }
+        for (Corpse corpse : corpses) {
+            corpse.render(batch);
+        }
     }
 
     public void setAllUnfinished() {
@@ -75,5 +90,9 @@ public class CreatureManager implements Updatable, Renderable {
                 creature.setFinished(false);
             }
         }
+    }
+
+    public void addCorpse(Corpse corpse) {
+        corpsesToAdd.add(corpse);
     }
 }

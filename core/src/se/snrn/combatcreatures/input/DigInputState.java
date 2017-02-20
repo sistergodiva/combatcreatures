@@ -12,28 +12,23 @@ import se.snrn.combatcreatures.map.TileType;
 import java.util.ArrayList;
 
 import static se.snrn.combatcreatures.CombatCreatures.TILE_SIZE;
-import static se.snrn.combatcreatures.MissionScreen.turnManager;
+import static se.snrn.combatcreatures.map.TileType.FLOOR;
+
+public class DigInputState implements InputState {
 
 
-public class JumpInputState implements InputState {
-
-
-    private TileMap tileMap;
-    private ArrayList<Tile> allowedTargets;
     private Player player;
-    private boolean done;
+    private ArrayList<Tile> allowedTargets;
+    TileMap tileMap;
 
-    public JumpInputState(Player player) {
+    public DigInputState(Player player) {
         this.player = player;
-
         tileMap = player.getMap();
 
         allowedTargets = new ArrayList<>();
-
         for (Direction direction : Direction.values()) {
-            allowedTargets.add(tileMap.getTile(player.getTile().getX() + (direction.getX() * 2), player.getTile().getY() + (direction.getY() * 2)));
+            allowedTargets.add(tileMap.getTile(player.getTile().getX() + (direction.getX()), player.getTile().getY() + (direction.getY())));
         }
-
     }
 
     @Override
@@ -44,7 +39,7 @@ public class JumpInputState implements InputState {
     @Override
     public void render(Batch batch) {
         for (Tile allowedTarget : allowedTargets) {
-            if(allowedTarget.getType() == TileType.FLOOR) {
+            if (allowedTarget.getType() == TileType.WALL) {
                 ResourceManager.target.setPosition(allowedTarget.getX() * TILE_SIZE, allowedTarget.getY() * TILE_SIZE);
                 ResourceManager.target.draw(batch);
             }
@@ -61,44 +56,36 @@ public class JumpInputState implements InputState {
 
     }
 
+    public InputState defaultInputState() {
+        return new DefaultInputState(player);
+    }
+
+
     @Override
     public InputState handleInput(int input) {
+        Tile tile = null;
         switch (input) {
             case Input.Keys.W: {
-                if(allowedTargets.get(0).getType() == TileType.FLOOR) {
-                    player.changeTile(allowedTargets.get(0));
-                    done = true;
-                }
+                tile = player.getMap().getTileAtDirection(player.getTile(), Direction.NORTH);
                 break;
             }
             case Input.Keys.D: {
-                if(allowedTargets.get(1).getType() == TileType.FLOOR) {
-                    player.changeTile(allowedTargets.get(1));
-                    done = true;
-                }
+                tile = player.getMap().getTileAtDirection(player.getTile(), Direction.EAST);
                 break;
             }
             case Input.Keys.S: {
-                if(allowedTargets.get(2).getType() == TileType.FLOOR) {
-                    player.changeTile(allowedTargets.get(2));
-                    done = true;
-                }
+                tile = player.getMap().getTileAtDirection(player.getTile(), Direction.SOUTH);
                 break;
             }
             case Input.Keys.A: {
-                if(allowedTargets.get(3).getType() == TileType.FLOOR) {
-                    player.changeTile(allowedTargets.get(3));
-                    done = true;
-                }
+                tile = player.getMap().getTileAtDirection(player.getTile(), Direction.WEST);
                 break;
             }
-            default:
-                return null;
+
         }
-        if(done) {
-            turnManager.endPlayerTurn();
-            return new DefaultInputState(player);
+        if (tile != null) {
+            tile.setType(FLOOR);
         }
-        return null;
+        return defaultInputState();
     }
 }

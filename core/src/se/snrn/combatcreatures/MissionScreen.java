@@ -46,7 +46,7 @@ public class MissionScreen implements Screen {
         mapManager = new MapManager();
         player = new Player(mapManager.getStartTile(), mapManager);
         creatureManager = new CreatureManager(player);
-        creatureManager.addCreature(CreatureFactory.spawnCreature(mapManager.getMap().getFilled().get(1), mapManager.getMap(), ResourceManager.creature));
+        creatureManager.addCreature(CreatureFactory.spawnCreature(mapManager.getMap().getFilled().get(1), mapManager.getMap(), ResourceManager.creature, creatureManager));
         turnManager = new TurnManager(creatureManager);
         inputStateMachine = new InputStateMachine(player);
         inputHandler = new InputHandler(inputStateMachine, player);
@@ -67,7 +67,6 @@ public class MissionScreen implements Screen {
     private void update(float delta) {
         orthographicCamera.position.set(player.getTile().getX() * TILE_SIZE, player.getTile().getY() * TILE_SIZE, 0);
 
-        inputHandler.setMousePosition(orthographicCamera.unproject(mouseRaw.set(Gdx.input.getX(), Gdx.input.getY(), 0)));
 
         orthographicCamera.update();
         player.update(delta);
@@ -87,8 +86,8 @@ public class MissionScreen implements Screen {
         batch.begin();
         mapManager.render(batch);
 
-        player.render(batch);
         creatureManager.render(batch);
+        player.render(batch);
         inputStateMachine.render(batch);
         batch.end();
     }

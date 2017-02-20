@@ -46,10 +46,10 @@ public class MapGenerator {
             for (int j = 0; j < height; j++) {
 
                 if (cellGrid[i][j]) {
-                    map.tiles[i][j] = new Tile(i, j, WALL);
+                    map.tiles[i][j] = new Tile(i, j, WALL, map);
                 }
                 if (!cellGrid[i][j]) {
-                    map.tiles[i][j] = new Tile(i, j, FLOOR);
+                    map.tiles[i][j] = new Tile(i, j, FLOOR, map);
                 }
 
             }

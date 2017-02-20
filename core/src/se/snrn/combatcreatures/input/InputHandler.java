@@ -21,22 +21,7 @@ public class InputHandler implements InputProcessor {
 
     @Override
     public boolean keyDown(int keycode) {
-        if(keycode == Input.Keys.A) {
-            player.move(Direction.WEST);
-        }
-        if(keycode == Input.Keys.S) {
-            player.move(Direction.SOUTH);
-        }
-        if(keycode == Input.Keys.D) {
-            player.move(Direction.EAST);
-        }
-        if(keycode == Input.Keys.W) {
-            player.move(Direction.NORTH);
-        }
-
-        if(keycode == Input.Keys.J) {
-            inputStateMachine.jump();
-        }
+        inputStateMachine.handleInput(keycode);
         return false;
     }
 
@@ -52,7 +37,6 @@ public class InputHandler implements InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        inputStateMachine.handleInput(mousePosition);
         return false;
     }
 
@@ -76,7 +60,5 @@ public class InputHandler implements InputProcessor {
         return false;
     }
 
-    public void setMousePosition(Vector3 mousePosition) {
-        this.mousePosition = mousePosition;
-    }
+
 }
