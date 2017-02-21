@@ -1,6 +1,8 @@
 package se.snrn.combatcreatures.entities;
 
 
+import se.snrn.combatcreatures.items.Item;
+
 import java.util.ArrayList;
 
 public class Inventory {

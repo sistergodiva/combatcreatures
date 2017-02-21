@@ -1,6 +1,6 @@
 package se.snrn.combatcreatures.interfaces;
 
-import se.snrn.combatcreatures.entities.Item;
+import se.snrn.combatcreatures.items.Item;
 
 import java.util.ArrayList;
 

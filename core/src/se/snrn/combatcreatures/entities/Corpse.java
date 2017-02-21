@@ -7,6 +7,7 @@ import se.snrn.combatcreatures.interfaces.Container;
 import se.snrn.combatcreatures.interfaces.Mapped;
 import se.snrn.combatcreatures.interfaces.Renderable;
 import se.snrn.combatcreatures.interfaces.Updatable;
+import se.snrn.combatcreatures.items.Item;
 import se.snrn.combatcreatures.map.Tile;
 import se.snrn.combatcreatures.map.TileMap;
 

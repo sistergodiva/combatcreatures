@@ -4,12 +4,12 @@ package se.snrn.combatcreatures.entities;
 public class Modifier {
 
     private String name;
-    private String stat;
+    private Stats stats;
     private int amount;
 
-    public Modifier(String name, String stat, int amount) {
+    public Modifier(String name, Stats stats, int amount) {
         this.name = name;
-        this.stat = stat;
+        this.stats = stats;
         this.amount = amount;
     }
 
@@ -17,8 +17,8 @@ public class Modifier {
         return name;
     }
 
-    public String getStat() {
-        return stat;
+    public Stats getStat() {
+        return stats;
     }
 
     public int getAmount() {
