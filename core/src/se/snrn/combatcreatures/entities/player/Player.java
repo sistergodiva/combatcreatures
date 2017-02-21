@@ -41,6 +41,13 @@ public class Player implements Updatable, Renderable, Mapped, Living, Fighter {
         effects = new ArrayList<>();
     }
 
+    public ArrayList<Effect> getAllEffects(){
+        ArrayList<Effect> allEffects = new ArrayList<>();
+        allEffects.addAll(playerEquipment.getPermanentBuffEffects());
+        allEffects.addAll(effects);
+        return allEffects;
+    }
+
     @Override
     public void update(float delta) {
         sprite.setPosition(tile.getX() * TILE_SIZE, tile.getY() * TILE_SIZE);

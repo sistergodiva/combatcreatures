@@ -8,14 +8,16 @@ public class Equipment implements Item {
     private String description;
     private PermanentBuffEffect permanentBuffEffect;
     private Ability ability;
+    private EquipmentSlot equipmentSlot;
 
 
 
-    public Equipment(String name, String description, PermanentBuffEffect permanentBuffEffect, Ability ability) {
+    public Equipment(String name, String description, PermanentBuffEffect permanentBuffEffect, Ability ability, EquipmentSlot equipmentSlot) {
         this.name = name;
         this.description = description;
         this.permanentBuffEffect = permanentBuffEffect;
         this.ability = ability;
+        this.equipmentSlot = equipmentSlot;
     }
 
     @Override
