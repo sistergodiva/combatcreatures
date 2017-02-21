@@ -62,6 +62,18 @@ public class Stats {
         return mana;
     }
 
+    @Override
+    public String toString() {
+        return "Stats{" +
+                "magicAttack=" + magicAttack +
+                ", normalAttack=" + normalAttack +
+                ", magicDefence=" + magicDefence +
+                ", normalDefence=" + normalDefence +
+                ", health=" + health +
+                ", mana=" + mana +
+                '}';
+    }
+
     public void setMana(int mana) {
         this.mana = mana;
     }

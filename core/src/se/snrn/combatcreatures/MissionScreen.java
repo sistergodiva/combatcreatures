@@ -15,6 +15,7 @@ import se.snrn.combatcreatures.entities.player.Player;
 import se.snrn.combatcreatures.entities.Stats;
 import se.snrn.combatcreatures.input.InputHandler;
 import se.snrn.combatcreatures.input.InputStateMachine;
+import se.snrn.combatcreatures.items.ConsumableFactory;
 import se.snrn.combatcreatures.map.MapManager;
 
 import static se.snrn.combatcreatures.CombatCreatures.TILE_SIZE;
@@ -47,13 +48,18 @@ public class MissionScreen implements Screen {
         mapManager = new MapManager();
         player = new Player(mapManager.getStartTile(), mapManager, new Stats(1, 1, 1, 1, 1, 1));
         creatureManager = new CreatureManager(player);
-        creatureManager.addCreature(CreatureFactory.spawnCreature(mapManager.getMap().getFilled().get(1), mapManager.getMap(), ResourceManager.creature, creatureManager, new Stats(1, 1, 1, 1, 1, 1)));
         turnManager = new TurnManager(creatureManager);
         inputStateMachine = new InputStateMachine(player);
         inputHandler = new InputHandler(inputStateMachine, player);
         Gdx.input.setInputProcessor(inputHandler);
 
         mouseRaw = new Vector3();
+        new CreatureFactory();
+        ConsumableFactory consumableFactory = new ConsumableFactory();
+
+        System.out.println(consumableFactory.getConsumable(0));
+
+        System.out.println(CreatureFactory.spawnCreature(player.getTile(), player.getMap(), 0));
 
 
     }

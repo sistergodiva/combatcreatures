@@ -49,8 +49,4 @@ public class InputStateMachine implements Updatable, Renderable {
         }
 
     }
-
-    public void jump() {
-        currentInputState = new JumpInputState(player);
-    }
 }

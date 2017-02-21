@@ -1,16 +1,18 @@
 package se.snrn.combatcreatures.items;
 
 
+import com.badlogic.gdx.utils.JsonValue;
+
 public class Consumable implements Item {
 
     private String name;
     private String description;
     private String sprite;
 
-    public Consumable(String name, String description, String sprite) {
-        this.name = name;
-        this.description = description;
-        this.sprite = sprite;
+    public Consumable(JsonValue appearance) {
+        this.name = appearance.getString(0);
+        this.description = appearance.getString(1);
+        this.sprite = appearance.getString(2);
     }
 
     @Override

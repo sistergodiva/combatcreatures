@@ -3,6 +3,7 @@ package se.snrn.combatcreatures.entities.player;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import se.snrn.combatcreatures.ResourceManager;
+import se.snrn.combatcreatures.effects.Effect;
 import se.snrn.combatcreatures.entities.Creature;
 import se.snrn.combatcreatures.entities.Direction;
 import se.snrn.combatcreatures.entities.Stats;
@@ -11,6 +12,8 @@ import se.snrn.combatcreatures.map.MapManager;
 import se.snrn.combatcreatures.map.Tile;
 import se.snrn.combatcreatures.map.TileMap;
 import se.snrn.combatcreatures.map.TileType;
+
+import java.util.ArrayList;
 
 import static se.snrn.combatcreatures.CombatCreatures.TILE_SIZE;
 import static se.snrn.combatcreatures.MissionScreen.turnManager;
@@ -23,6 +26,8 @@ public class Player implements Updatable, Renderable, Mapped, Living, Fighter {
     private Sprite sprite;
     private boolean alive;
     private Stats stats;
+    private PlayerEquipment playerEquipment;
+    private ArrayList<Effect> effects;
 
     public Player(Tile tile, MapManager mapManager, Stats stats) {
         this.tile = tile;
@@ -32,6 +37,8 @@ public class Player implements Updatable, Renderable, Mapped, Living, Fighter {
         sprite = ResourceManager.player;
         alive = true;
         health = 10;
+        playerEquipment = new PlayerEquipment();
+        effects = new ArrayList<>();
     }
 
     @Override

@@ -1,14 +1,12 @@
 {
   "creature": [
     {
-      "id": 0,
       "name": "Vampire",
       "description": "A vampire",
       "sprite": "vampire.png",
       "sprite_dead": "vampire_dead.png"
     },
     {
-      "id": 1,
       "name": "Ghost",
       "description": "A ghost",
       "sprite": "ghost.png",

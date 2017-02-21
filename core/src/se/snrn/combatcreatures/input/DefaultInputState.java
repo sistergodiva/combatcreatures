@@ -60,6 +60,10 @@ public class DefaultInputState implements InputState{
                 return new DigInputState(player);
             }
 
+            case Input.Keys.L: {
+                System.out.println(player.getStats());
+            }
+
         }
         return null;
     }

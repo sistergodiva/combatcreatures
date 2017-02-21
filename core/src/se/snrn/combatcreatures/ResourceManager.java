@@ -31,11 +31,11 @@ public class ResourceManager {
     }
 
     public static Sprite getWallFromBitMask(int tileValue) {
-        System.out.println(tileValue);
+
         return walls.get(tileValue);
     }
     public static Sprite getDreamyWallFromBitMask(int tileValue) {
-        System.out.println(tileValue);
+
         return dreamyWalls.get(tileValue);
     }
 }
