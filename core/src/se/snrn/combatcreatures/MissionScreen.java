@@ -45,9 +45,9 @@ public class MissionScreen implements Screen {
         this.batch = batch;
 
         mapManager = new MapManager();
-        player = new Player(mapManager.getStartTile(), mapManager, new Stats(1,1,1,1,1,1));
+        player = new Player(mapManager.getStartTile(), mapManager, new Stats(1, 1, 1, 1, 1, 1));
         creatureManager = new CreatureManager(player);
-        creatureManager.addCreature(CreatureFactory.spawnCreature(mapManager.getMap().getFilled().get(1), mapManager.getMap(), ResourceManager.creature, creatureManager));
+        creatureManager.addCreature(CreatureFactory.spawnCreature(mapManager.getMap().getFilled().get(1), mapManager.getMap(), ResourceManager.creature, creatureManager, new Stats(1, 1, 1, 1, 1, 1)));
         turnManager = new TurnManager(creatureManager);
         inputStateMachine = new InputStateMachine(player);
         inputHandler = new InputHandler(inputStateMachine, player);

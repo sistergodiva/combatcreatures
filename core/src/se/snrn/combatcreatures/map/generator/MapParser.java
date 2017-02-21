@@ -19,7 +19,7 @@ public class MapParser {
     public Tile getRandomEmptyTile(TileMap tileMap) {
         Tile emptyTile = tileMap.getTile(RandomNumber.range(0, tileMap.getWidth()), RandomNumber.range(0, tileMap.getHeight()));
 
-        if (emptyTile.getType() == FLOOR) {
+        if (emptyTile != null && emptyTile.getType() == FLOOR) {
             return emptyTile;
         }
         return getRandomEmptyTile(tileMap);
