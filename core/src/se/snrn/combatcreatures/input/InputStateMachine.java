@@ -1,15 +1,10 @@
 package se.snrn.combatcreatures.input;
 
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.math.Vector3;
-import se.snrn.combatcreatures.entities.Player;
+import se.snrn.combatcreatures.entities.player.Player;
 import se.snrn.combatcreatures.interfaces.Renderable;
 import se.snrn.combatcreatures.interfaces.Updatable;
-import se.snrn.combatcreatures.map.Tile;
 import se.snrn.combatcreatures.map.TileMap;
-
-import static se.snrn.combatcreatures.CombatCreatures.TILE_SIZE;
 
 
 public class InputStateMachine implements Updatable, Renderable {

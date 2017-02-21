@@ -11,7 +11,8 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import se.snrn.combatcreatures.entities.CreatureFactory;
 import se.snrn.combatcreatures.entities.CreatureManager;
-import se.snrn.combatcreatures.entities.Player;
+import se.snrn.combatcreatures.entities.player.Player;
+import se.snrn.combatcreatures.entities.Stats;
 import se.snrn.combatcreatures.input.InputHandler;
 import se.snrn.combatcreatures.input.InputStateMachine;
 import se.snrn.combatcreatures.map.MapManager;
@@ -44,7 +45,7 @@ public class MissionScreen implements Screen {
         this.batch = batch;
 
         mapManager = new MapManager();
-        player = new Player(mapManager.getStartTile(), mapManager);
+        player = new Player(mapManager.getStartTile(), mapManager, new Stats(1,1,1,1,1,1));
         creatureManager = new CreatureManager(player);
         creatureManager.addCreature(CreatureFactory.spawnCreature(mapManager.getMap().getFilled().get(1), mapManager.getMap(), ResourceManager.creature, creatureManager));
         turnManager = new TurnManager(creatureManager);

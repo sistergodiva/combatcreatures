@@ -1,4 +1,4 @@
-package se.snrn.combatcreatures.entities;
+package se.snrn.combatcreatures.entities.player;
 
 
 import se.snrn.combatcreatures.items.Item;

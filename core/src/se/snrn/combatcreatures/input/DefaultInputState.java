@@ -4,7 +4,7 @@ package se.snrn.combatcreatures.input;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import se.snrn.combatcreatures.entities.Direction;
-import se.snrn.combatcreatures.entities.Player;
+import se.snrn.combatcreatures.entities.player.Player;
 
 public class DefaultInputState implements InputState{
     private Player player;

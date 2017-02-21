@@ -4,7 +4,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import se.snrn.combatcreatures.ResourceManager;
 import se.snrn.combatcreatures.entities.Direction;
-import se.snrn.combatcreatures.entities.Player;
+import se.snrn.combatcreatures.entities.player.Player;
 import se.snrn.combatcreatures.map.Tile;
 import se.snrn.combatcreatures.map.TileMap;
 import se.snrn.combatcreatures.map.TileType;

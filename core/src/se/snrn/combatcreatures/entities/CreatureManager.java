@@ -1,8 +1,8 @@
 package se.snrn.combatcreatures.entities;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
-import se.snrn.combatcreatures.CombatCreatures;
 import se.snrn.combatcreatures.TurnType;
+import se.snrn.combatcreatures.entities.player.Player;
 import se.snrn.combatcreatures.interfaces.Renderable;
 import se.snrn.combatcreatures.interfaces.Updatable;
 

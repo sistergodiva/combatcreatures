@@ -1,11 +1,9 @@
 package se.snrn.combatcreatures.input;
 
 
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector3;
-import se.snrn.combatcreatures.entities.Direction;
-import se.snrn.combatcreatures.entities.Player;
+import se.snrn.combatcreatures.entities.player.Player;
 
 public class InputHandler implements InputProcessor {
 

@@ -3,6 +3,7 @@ package se.snrn.combatcreatures.entities;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import se.snrn.combatcreatures.ResourceManager;
+import se.snrn.combatcreatures.entities.player.Player;
 import se.snrn.combatcreatures.interfaces.*;
 import se.snrn.combatcreatures.items.Item;
 import se.snrn.combatcreatures.map.Tile;
