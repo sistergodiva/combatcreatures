@@ -1,0 +1,20 @@
+{
+  "creature": [
+    {
+      "magicAttack": 10,
+      "normalAttack": 10,
+      "magicDefence": 5,
+      "normalDefence": 5,
+      "health": 10,
+      "mana": 5
+    },
+    {
+      "magicAttack": 15,
+      "normalAttack": 5,
+      "magicDefence": 5,
+      "normalDefence": 20,
+      "health": 10,
+      "mana": 10
+    }
+  ]
+}

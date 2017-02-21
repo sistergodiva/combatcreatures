@@ -3,10 +3,7 @@ package se.snrn.combatcreatures.entities;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import se.snrn.combatcreatures.ResourceManager;
-import se.snrn.combatcreatures.interfaces.Living;
-import se.snrn.combatcreatures.interfaces.Mapped;
-import se.snrn.combatcreatures.interfaces.Renderable;
-import se.snrn.combatcreatures.interfaces.Updatable;
+import se.snrn.combatcreatures.interfaces.*;
 import se.snrn.combatcreatures.map.MapManager;
 import se.snrn.combatcreatures.map.Tile;
 import se.snrn.combatcreatures.map.TileMap;
@@ -15,18 +12,20 @@ import se.snrn.combatcreatures.map.TileType;
 import static se.snrn.combatcreatures.CombatCreatures.TILE_SIZE;
 import static se.snrn.combatcreatures.MissionScreen.turnManager;
 
-public class Player implements Updatable, Renderable, Mapped, Living {
+public class Player implements Updatable, Renderable, Mapped, Living, Fighter {
     private int health;
     private Tile tile;
     private MapManager mapManager;
     private TileMap tileMap;
     private Sprite sprite;
     private boolean alive;
+    private Stats stats;
 
-    public Player(Tile tile, MapManager mapManager) {
+    public Player(Tile tile, MapManager mapManager, Stats stats) {
         this.tile = tile;
         this.mapManager = mapManager;
         tileMap = mapManager.getMap();
+        this.stats = stats;
         sprite = ResourceManager.player;
         alive = true;
         health = 10;
@@ -68,6 +67,7 @@ public class Player implements Updatable, Renderable, Mapped, Living {
            if(newTile.getMapped() instanceof Creature){
                Creature creature = (Creature)newTile.getMapped();
                creature.takeDamage(1);
+               //creature.takeDamage(AttackResolver.resolveNormalAttack(this, creature));
                turnManager.endPlayerTurn();
                return true;
            }
@@ -107,6 +107,11 @@ public class Player implements Updatable, Renderable, Mapped, Living {
     @Override
     public void die() {
 
+    }
+
+    @Override
+    public Stats getStats() {
+        return stats;
     }
 }
 

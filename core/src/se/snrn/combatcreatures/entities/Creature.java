@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 import static se.snrn.combatcreatures.CombatCreatures.TILE_SIZE;
 
-public class Creature implements Updatable, Renderable, Mapped, Ai, Living {
+public class Creature implements Updatable, Renderable, Mapped, Ai, Living, Fighter {
     private Tile tile;
     private TileMap tileMap;
     private Sprite sprite;
@@ -21,12 +21,14 @@ public class Creature implements Updatable, Renderable, Mapped, Ai, Living {
     private boolean finished;
     private int health;
     private boolean alive;
+    private Stats stats;
 
-    public Creature(Tile tile, TileMap tileMap, Sprite sprite, CreatureManager creatureManager) {
+    public Creature(Tile tile, TileMap tileMap, Sprite sprite, CreatureManager creatureManager, Stats stats) {
         this.tile = tile;
         this.tileMap = tileMap;
         this.sprite = sprite;
         this.creatureManager = creatureManager;
+        this.stats = stats;
         aiCore = new AiCore();
         health = 3;
         alive = true;
@@ -137,6 +139,11 @@ public class Creature implements Updatable, Renderable, Mapped, Ai, Living {
 
     public void setFinished(boolean finished) {
         this.finished = finished;
+    }
+
+    @Override
+    public Stats getStats() {
+        return stats;
     }
 }
 

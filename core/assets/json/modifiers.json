@@ -1,0 +1,34 @@
+{
+  "modifier": [
+    {
+      "name": "sparkly",
+      "stat": "magicAttack",
+      "amount": 5
+    },
+    {
+      "name": "mundane",
+      "stat": "normalAttack",
+      "amount": 5
+    },
+    {
+      "name": "strong",
+      "stat": "health",
+      "amount": 5
+    },
+    {
+      "name": "magic",
+      "stat": "health",
+      "amount": 5
+    },
+    {
+      "name": "rational",
+      "stat": "magicDefence",
+      "amount": 5
+    },
+    {
+      "name": "superstitious",
+      "stat": "magicDefence",
+      "amount": 5
+    }
+  ]
+}

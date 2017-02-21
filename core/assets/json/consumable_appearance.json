@@ -1,0 +1,16 @@
+{
+  "consumable": [
+    {
+      "id": 0,
+      "name": "Jelly bean",
+      "description": "Jelly bean",
+      "sprite": "jelly_bean.png"
+    },
+    {
+      "id": 1,
+      "name": "Candy cane",
+      "description": "Candy cane",
+      "sprite": "candy_cane.png"
+    }
+  ]
+}
