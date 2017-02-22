@@ -14,7 +14,7 @@ public class CreatureFactory {
     public CreatureFactory() {
         JsonReader jsonReader = new JsonReader();
         creatureStats = jsonReader.parse(Gdx.files.internal("json/creature_stats.json")).get(0);
-        creatures = jsonReader.parse(Gdx.files.internal("json/creatures.json")).get(0);
+        creatures = jsonReader.parse(Gdx.files.internal("json/creature.json")).get(0);
 
     }
 

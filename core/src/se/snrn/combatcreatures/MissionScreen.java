@@ -15,7 +15,8 @@ import se.snrn.combatcreatures.entities.player.Player;
 import se.snrn.combatcreatures.entities.Stats;
 import se.snrn.combatcreatures.input.InputHandler;
 import se.snrn.combatcreatures.input.InputStateMachine;
-import se.snrn.combatcreatures.items.ConsumableFactory;
+import se.snrn.combatcreatures.items.consumable.Consumable;
+import se.snrn.combatcreatures.items.consumable.ConsumableFactory;
 import se.snrn.combatcreatures.map.MapManager;
 
 import static se.snrn.combatcreatures.CombatCreatures.TILE_SIZE;
@@ -55,10 +56,9 @@ public class MissionScreen implements Screen {
 
         mouseRaw = new Vector3();
         new CreatureFactory();
-        ConsumableFactory consumableFactory = new ConsumableFactory();
 
-        System.out.println(consumableFactory.getConsumable(0));
-
+        Consumable consumable = ConsumableFactory.getNewConsumable(0);
+        System.out.println(consumable);
         System.out.println(CreatureFactory.spawnCreature(player.getTile(), player.getMap(), 0));
 
 

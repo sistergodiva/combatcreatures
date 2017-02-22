@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import se.snrn.combatcreatures.effects.PermanentBuffEffect;
 import se.snrn.combatcreatures.interfaces.Renderable;
 import se.snrn.combatcreatures.items.Ability;
-import se.snrn.combatcreatures.items.Equipment;
+import se.snrn.combatcreatures.items.Equipment.Equipment;
 
 import java.util.ArrayList;
 

@@ -1,6 +1,8 @@
-package se.snrn.combatcreatures.items;
+package se.snrn.combatcreatures.items.Equipment;
 
 import se.snrn.combatcreatures.effects.PermanentBuffEffect;
+import se.snrn.combatcreatures.items.Ability;
+import se.snrn.combatcreatures.items.Item;
 
 public class Equipment implements Item {
 
@@ -28,6 +30,11 @@ public class Equipment implements Item {
     @Override
     public String getDescription() {
         return description;
+    }
+
+    @Override
+    public String getSpriteString() {
+        return null;
     }
 
     public PermanentBuffEffect getPermanentBuffEffect(){

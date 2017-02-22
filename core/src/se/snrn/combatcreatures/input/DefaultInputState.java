@@ -64,6 +64,10 @@ public class DefaultInputState implements InputState{
                 System.out.println(player.getStats());
             }
 
+            case Input.Keys.I: {
+                return new InventoryInputState(player);
+            }
+
         }
         return null;
     }

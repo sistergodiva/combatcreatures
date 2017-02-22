@@ -1,0 +1,52 @@
+{
+  "consumable:": [
+    {
+      "id": 0,
+      "name": "Jelly bean",
+      "description": "a jelly Bean",
+      "sprite": "jelly_bean.png"
+    },
+    {
+      "id": 1,
+      "name": "Chocolate bar",
+      "description": "a chocolate bar",
+      "sprite": "chocolate_bar.png"
+    },
+    {
+      "id": 2,
+      "name": "Lollipop",
+      "description": "a lollipop",
+      "sprite": "lollipop.png"
+    },
+    {
+      "id": 3,
+      "name": "Winegum",
+      "description": "a winegum",
+      "sprite": "winegum.png"
+    },
+    {
+      "id": 4,
+      "name": "Chewing gum",
+      "description": "a chewing gum",
+      "sprite": "chewing_gum.png"
+    },
+    {
+      "id": 5,
+      "name": "Foam banana",
+      "description": "a foam banana",
+      "sprite": "foam_banana.png"
+    },
+    {
+      "id": 6,
+      "name": "Jelly raspberry",
+      "description": "a jelly raspberry",
+      "sprite": "jelly_raspberry.png"
+    },
+    {
+      "id": 7,
+      "name": "Liquorice monkey",
+      "description": "a liquorice monkey",
+      "sprite": "liquorice_monkey.png"
+    }
+  ]
+}

@@ -28,6 +28,8 @@ public class Player implements Updatable, Renderable, Mapped, Living, Fighter {
     private Stats stats;
     private PlayerEquipment playerEquipment;
     private ArrayList<Effect> effects;
+    private int karies;
+    private Inventory inventory;
 
     public Player(Tile tile, MapManager mapManager, Stats stats) {
         this.tile = tile;
@@ -37,11 +39,13 @@ public class Player implements Updatable, Renderable, Mapped, Living, Fighter {
         sprite = ResourceManager.player;
         alive = true;
         health = 10;
+        karies = 0;
         playerEquipment = new PlayerEquipment();
+        inventory = new Inventory();
         effects = new ArrayList<>();
     }
 
-    public ArrayList<Effect> getAllEffects(){
+    public ArrayList<Effect> getAllEffects() {
         ArrayList<Effect> allEffects = new ArrayList<>();
         allEffects.addAll(playerEquipment.getPermanentBuffEffects());
         allEffects.addAll(effects);
@@ -79,19 +83,19 @@ public class Player implements Updatable, Renderable, Mapped, Living, Fighter {
 
     @Override
     public boolean move(Direction direction) {
-       Tile newTile = tileMap.getTile(tile.getX()+direction.getX(),tile.getY()+direction.getY());
-       if(newTile != null && newTile.getType() == TileType.FLOOR) {
-           if(newTile.getMapped() instanceof Creature){
-               Creature creature = (Creature)newTile.getMapped();
-               creature.takeDamage(1);
-               //creature.takeDamage(AttackResolver.resolveNormalAttack(this, creature));
-               turnManager.endPlayerTurn();
-               return true;
-           }
-           changeTile(newTile);
-           turnManager.endPlayerTurn();
-           return true;
-       }
+        Tile newTile = tileMap.getTile(tile.getX() + direction.getX(), tile.getY() + direction.getY());
+        if (newTile != null && newTile.getType() == TileType.FLOOR) {
+            if (newTile.getMapped() instanceof Creature) {
+                Creature creature = (Creature) newTile.getMapped();
+                creature.takeDamage(1);
+                //creature.takeDamage(AttackResolver.resolveNormalAttack(this, creature));
+                turnManager.endPlayerTurn();
+                return true;
+            }
+            changeTile(newTile);
+            turnManager.endPlayerTurn();
+            return true;
+        }
         return false;
     }
 
@@ -129,6 +133,22 @@ public class Player implements Updatable, Renderable, Mapped, Living, Fighter {
     @Override
     public Stats getStats() {
         return stats;
+    }
+
+    public void addKaries(int karies) {
+        this.karies += karies;
+    }
+
+    public void removeKaries(int karies) {
+        this.karies -= karies;
+    }
+
+    public int getKaries() {
+        return karies;
+    }
+
+    public Inventory getInventory() {
+        return inventory;
     }
 }
 
