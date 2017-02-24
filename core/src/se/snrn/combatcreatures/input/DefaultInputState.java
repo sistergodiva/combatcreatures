@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import se.snrn.combatcreatures.entities.Direction;
 import se.snrn.combatcreatures.entities.player.Player;
+import se.snrn.combatcreatures.userinterface.GameLog;
 
 public class DefaultInputState implements InputState{
     private Player player;
@@ -68,6 +69,9 @@ public class DefaultInputState implements InputState{
                 return new InventoryInputState(player);
             }
 
+            case Input.Keys.M: {
+                GameLog.addMessage("Pressed M");
+            }
         }
         return null;
     }

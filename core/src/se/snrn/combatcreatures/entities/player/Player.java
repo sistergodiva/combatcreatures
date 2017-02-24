@@ -13,6 +13,7 @@ import se.snrn.combatcreatures.map.MapManager;
 import se.snrn.combatcreatures.map.Tile;
 import se.snrn.combatcreatures.map.TileMap;
 import se.snrn.combatcreatures.map.TileType;
+import se.snrn.combatcreatures.userinterface.GameLog;
 
 import java.util.ArrayList;
 
@@ -31,6 +32,7 @@ public class Player implements Updatable, Renderable, Mapped, Living, Fighter {
     private ArrayList<Effect> effects;
     private int karies;
     private Inventory inventory;
+    private int mana;
 
     public Player(Tile tile, MapManager mapManager, Stats stats) {
         this.tile = tile;
@@ -40,7 +42,8 @@ public class Player implements Updatable, Renderable, Mapped, Living, Fighter {
         sprite = ResourceManager.player;
         alive = true;
         health = 10;
-        karies = 0;
+        mana = 5;
+        karies = 3;
         playerEquipment = new PlayerEquipment();
         inventory = new Inventory();
         effects = new ArrayList<>();
@@ -90,6 +93,7 @@ public class Player implements Updatable, Renderable, Mapped, Living, Fighter {
             if (newTile.getMapped() instanceof Creature) {
                 Creature creature = (Creature) newTile.getMapped();
                 creature.takeDamage(1);
+                GameLog.addMessage(creature.getName()+" took 1 damage");
                 //creature.takeDamage(AttackResolver.resolveNormalAttack(this, creature));
                 turnManager.endPlayerTurn();
                 return true;
@@ -151,6 +155,10 @@ public class Player implements Updatable, Renderable, Mapped, Living, Fighter {
 
     public Inventory getInventory() {
         return inventory;
+    }
+
+    public int getMana() {
+        return mana;
     }
 }
 

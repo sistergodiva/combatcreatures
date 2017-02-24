@@ -14,13 +14,16 @@ public class ResourceManager {
     public static Sprite floor = new Sprite(new Texture(Gdx.files.internal("floor.png")));
     public static Sprite fog = new Sprite(new Texture(Gdx.files.internal("fog.png")));
     public static Sprite player = new Sprite(new Texture(Gdx.files.internal("llama/llama.png")));
-    public static Sprite creature = new Sprite(new Texture(Gdx.files.internal("creature.png")));
+    public static Sprite creature = new Sprite(new Texture(Gdx.files.internal("creature/vampire.png")));
     public static Sprite creatureDead = new Sprite(new Texture(Gdx.files.internal("creature_dead.png")));
     private static ArrayList<Sprite> walls;
     private static ArrayList<Sprite> dreamyWalls;
     public static Sprite target = new Sprite(new Texture(Gdx.files.internal("target.png")));
     public static Sprite cursor = new Sprite(new Texture(Gdx.files.internal("Ui/cursor.png")));
     public static BitmapFont font = new BitmapFont();
+    public static Sprite heart = new Sprite(new Texture(Gdx.files.internal("ui/heart.png")));
+    public static Sprite magic = new Sprite(new Texture(Gdx.files.internal("ui/magic.png")));
+    public static Sprite tooth = new Sprite(new Texture(Gdx.files.internal("ui/tooth.png")));
 
     public ResourceManager() {
         walls = new ArrayList<>();
@@ -41,7 +44,9 @@ public class ResourceManager {
 
         return dreamyWalls.get(tileValue);
     }
-
+    public static Sprite getCreatureSpriteFromString(String spriteString) {
+        return new Sprite(new Texture(Gdx.files.internal("creature/"+spriteString)));
+    }
     public static Sprite getSpriteFromString(String spriteString) {
         return new Sprite(new Texture(Gdx.files.internal("item/"+spriteString)));
     }

@@ -7,6 +7,8 @@ import se.snrn.combatcreatures.ResourceManager;
 import se.snrn.combatcreatures.entities.player.Player;
 import se.snrn.combatcreatures.interfaces.*;
 import se.snrn.combatcreatures.items.Item;
+import se.snrn.combatcreatures.items.consumable.Consumable;
+import se.snrn.combatcreatures.items.consumable.ConsumableFactory;
 import se.snrn.combatcreatures.map.Tile;
 import se.snrn.combatcreatures.map.TileMap;
 import se.snrn.combatcreatures.map.TileType;
@@ -40,11 +42,13 @@ public class Creature implements Updatable, Renderable, Mapped, Ai, Living, Figh
         this.deadSpriteString = appearance.getString(3);
         aiCore = new AiCore();
         alive = true;
+        health = 3;
+        sprite = ResourceManager.getCreatureSpriteFromString(spriteString);
     }
 
     @Override
     public void update(float delta) {
-        if (health <= 0) {
+        if (health <= 0 && alive) {
             die();
         }
         sprite.setPosition(tile.getX() * TILE_SIZE, tile.getY() * TILE_SIZE);
@@ -138,9 +142,10 @@ public class Creature implements Updatable, Renderable, Mapped, Ai, Living, Figh
 
     @Override
     public void die() {
-        sprite = ResourceManager.creatureDead;
+        //sprite = ResourceManager.creatureDead;
         tile.setMapped(null);
         setAlive(false);
+        tile.addItem(ConsumableFactory.getNewConsumable(1));
     }
 
     public void setFinished(boolean finished) {
@@ -150,6 +155,10 @@ public class Creature implements Updatable, Renderable, Mapped, Ai, Living, Figh
     @Override
     public Stats getStats() {
         return stats;
+    }
+
+    public String getName() {
+        return name;
     }
 }
 

@@ -19,6 +19,8 @@ import se.snrn.combatcreatures.input.InputStateMachine;
 import se.snrn.combatcreatures.items.consumable.Consumable;
 import se.snrn.combatcreatures.items.consumable.ConsumableFactory;
 import se.snrn.combatcreatures.map.MapManager;
+import se.snrn.combatcreatures.userinterface.GameLog;
+import se.snrn.combatcreatures.userinterface.Ui;
 
 import static se.snrn.combatcreatures.CombatCreatures.TILE_SIZE;
 
@@ -38,10 +40,11 @@ public class MissionScreen implements Screen {
     private Vector3 mouseRaw;
     public static TurnManager turnManager;
     public Batch uiBatch;
+    private Ui ui;
 
 
     public MissionScreen(Batch batch) {
-
+        new GameLog();
         orthographicCamera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         viewport = new FitViewport(WORLD_WIDTH, WORLD_HEIGHT, orthographicCamera);
         viewport.apply();
@@ -60,10 +63,12 @@ public class MissionScreen implements Screen {
         mouseRaw = new Vector3();
         new CreatureFactory();
 
+        creatureManager.addCreature(CreatureFactory.spawnCreature(mapManager.getMap().getFilled().get(RandomNumber.range(0,20)), mapManager.getMap(), 0));
+
         Consumable consumable = ConsumableFactory.getNewConsumable(0);
         System.out.println(consumable);
-        System.out.println(CreatureFactory.spawnCreature(player.getTile(), player.getMap(), 0));
 
+        ui = new Ui(player);
 
     }
 
@@ -101,9 +106,7 @@ public class MissionScreen implements Screen {
         inputStateMachine.render(batch);
         batch.end();
         uiBatch.begin();
-        if(player.getInventory().isOpen()) {
-            player.getInventory().render(uiBatch);
-        }
+        ui.render(uiBatch);
         uiBatch.end();
     }
 
