@@ -6,6 +6,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -36,6 +37,7 @@ public class MissionScreen implements Screen {
     private CreatureManager creatureManager;
     private Vector3 mouseRaw;
     public static TurnManager turnManager;
+    public Batch uiBatch;
 
 
     public MissionScreen(Batch batch) {
@@ -45,6 +47,7 @@ public class MissionScreen implements Screen {
         viewport.apply();
         new ResourceManager();
         this.batch = batch;
+        uiBatch = new SpriteBatch();
 
         mapManager = new MapManager();
         player = new Player(mapManager.getStartTile(), mapManager, new Stats(1, 1, 1, 1, 1, 1));
@@ -97,6 +100,11 @@ public class MissionScreen implements Screen {
         player.render(batch);
         inputStateMachine.render(batch);
         batch.end();
+        uiBatch.begin();
+        if(player.getInventory().isOpen()) {
+            player.getInventory().render(uiBatch);
+        }
+        uiBatch.end();
     }
 
     @Override

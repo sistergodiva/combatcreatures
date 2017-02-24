@@ -1,6 +1,9 @@
 package se.snrn.combatcreatures.items;
 
-public interface Item {
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import se.snrn.combatcreatures.interfaces.Renderable;
+
+public interface Item extends Renderable{
 
     String getName();
 
@@ -8,4 +11,7 @@ public interface Item {
 
     String getSpriteString();
 
+    Sprite getSprite();
+
+    void setPosition(int x, int y);
 }

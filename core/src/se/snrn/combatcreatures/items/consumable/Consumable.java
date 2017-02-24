@@ -1,7 +1,10 @@
 package se.snrn.combatcreatures.items.consumable;
 
 
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.utils.JsonValue;
+import se.snrn.combatcreatures.ResourceManager;
 import se.snrn.combatcreatures.entities.Creature;
 import se.snrn.combatcreatures.entities.player.Player;
 import se.snrn.combatcreatures.items.Item;
@@ -9,15 +12,20 @@ import se.snrn.combatcreatures.items.consumable.consumableeffect.ConsumableEffec
 
 public class Consumable implements Item, ConsumableEffect {
 
+    private Sprite sprite;
     private String name;
     private String description;
     private String spriteString;
     private ConsumableEffect consumableEffect;
+    private int y;
+    private int x;
+
 
     public Consumable(JsonValue appearance) {
         this.name = appearance.getString(1);
         this.description = appearance.getString(2);
         this.spriteString = appearance.getString(3);
+        this.sprite = ResourceManager.getSpriteFromString(spriteString);
     }
 
 
@@ -58,5 +66,29 @@ public class Consumable implements Item, ConsumableEffect {
 
     public void setConsumableEffect(ConsumableEffect consumableEffect) {
         this.consumableEffect = consumableEffect;
+    }
+
+    @Override
+    public void render(Batch batch) {
+        sprite.setPosition(x, y);
+        sprite.draw(batch);
+    }
+
+    public Sprite getSprite() {
+        return sprite;
+    }
+
+    @Override
+    public void setPosition(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public int getX() {
+        return x;
     }
 }

@@ -1,14 +1,19 @@
 package se.snrn.combatcreatures.input;
 
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import se.snrn.combatcreatures.entities.player.Player;
+import se.snrn.combatcreatures.inventory.Inventory;
+import se.snrn.combatcreatures.items.Item;
 
 public class InventoryInputState implements InputState {
 
+    private Inventory inventory;
     private Player player;
 
     public InventoryInputState(Player player) {
         this.player = player;
+        inventory = player.getInventory();
     }
 
     @Override
@@ -24,6 +29,7 @@ public class InventoryInputState implements InputState {
     @Override
     public void enter() {
         System.out.println(player.getInventory().getInventoryString());
+        inventory.setOpen(true);
     }
 
     @Override
@@ -33,10 +39,34 @@ public class InventoryInputState implements InputState {
 
     @Override
     public InputState handleInput(int input) {
-        if(input == 8){
-            input = 1;
+
+        switch (input) {
+            case Input.Keys.W: {
+                inventory.moveCursorDown();
+                break;
+            }
+            case Input.Keys.S: {
+                inventory.moveCursorUp();
+                break;
+            }
+
+            case Input.Keys.ENTER: {
+                System.out.println(inventory.getItemAtCursor());
+                inventory.setOpen(false);
+                return new DefaultInputState(player);
+
+            }
+            case Input.Keys.O: {
+                Item item = inventory.getItemAtCursor();
+                inventory.removeItemAtCursor();
+                if(item != null) {
+                    player.getTile().addItem(item);
+                }
+                inventory.setOpen(false);
+                return new DefaultInputState(player);
+
+            }
         }
-        System.out.println(player.getInventory().getItems().get(input));
 
         return null;
     }

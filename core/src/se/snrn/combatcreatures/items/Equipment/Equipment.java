@@ -1,5 +1,7 @@
 package se.snrn.combatcreatures.items.Equipment;
 
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import se.snrn.combatcreatures.effects.PermanentBuffEffect;
 import se.snrn.combatcreatures.items.Ability;
 import se.snrn.combatcreatures.items.Item;
@@ -11,7 +13,9 @@ public class Equipment implements Item {
     private PermanentBuffEffect permanentBuffEffect;
     private Ability ability;
     private EquipmentSlot equipmentSlot;
-
+    private int x;
+    private int y;
+    private Sprite sprite;
 
 
     public Equipment(String name, String description, PermanentBuffEffect permanentBuffEffect, Ability ability, EquipmentSlot equipmentSlot) {
@@ -37,6 +41,17 @@ public class Equipment implements Item {
         return null;
     }
 
+    @Override
+    public Sprite getSprite() {
+        return null;
+    }
+
+    @Override
+    public void setPosition(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+
     public PermanentBuffEffect getPermanentBuffEffect(){
         return permanentBuffEffect;
     }
@@ -44,4 +59,9 @@ public class Equipment implements Item {
         return ability;
     }
 
+    @Override
+    public void render(Batch batch) {
+        sprite.setPosition(x, y);
+        sprite.draw(batch);
+    }
 }

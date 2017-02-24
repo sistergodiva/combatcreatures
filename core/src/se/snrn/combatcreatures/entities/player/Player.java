@@ -8,6 +8,7 @@ import se.snrn.combatcreatures.entities.Creature;
 import se.snrn.combatcreatures.entities.Direction;
 import se.snrn.combatcreatures.entities.Stats;
 import se.snrn.combatcreatures.interfaces.*;
+import se.snrn.combatcreatures.inventory.Inventory;
 import se.snrn.combatcreatures.map.MapManager;
 import se.snrn.combatcreatures.map.Tile;
 import se.snrn.combatcreatures.map.TileMap;
@@ -78,6 +79,7 @@ public class Player implements Updatable, Renderable, Mapped, Living, Fighter {
         this.tile.setMapped(null);
         tile.setMapped(this);
         this.tile = tile;
+        tile.stepOn(this);
         mapManager.setLineOfSight(tile, 4);
     }
 

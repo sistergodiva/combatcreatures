@@ -3,6 +3,7 @@ package se.snrn.combatcreatures;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.DistanceFieldFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
@@ -18,6 +19,8 @@ public class ResourceManager {
     private static ArrayList<Sprite> walls;
     private static ArrayList<Sprite> dreamyWalls;
     public static Sprite target = new Sprite(new Texture(Gdx.files.internal("target.png")));
+    public static Sprite cursor = new Sprite(new Texture(Gdx.files.internal("Ui/cursor.png")));
+    public static BitmapFont font = new BitmapFont();
 
     public ResourceManager() {
         walls = new ArrayList<>();
@@ -37,5 +40,9 @@ public class ResourceManager {
     public static Sprite getDreamyWallFromBitMask(int tileValue) {
 
         return dreamyWalls.get(tileValue);
+    }
+
+    public static Sprite getSpriteFromString(String spriteString) {
+        return new Sprite(new Texture(Gdx.files.internal("item/"+spriteString)));
     }
 }
