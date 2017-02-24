@@ -8,6 +8,8 @@ import se.snrn.combatcreatures.items.Item;
 import se.snrn.combatcreatures.items.consumable.ConsumableFactory;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import static se.snrn.combatcreatures.CombatCreatures.TILE_SIZE;
 
@@ -110,10 +112,19 @@ public class Inventory implements Renderable {
         return inventoryContent;
     }
 
+    public void sortInventory() {
+        Collections.sort(slots,Comparator.comparing(Slot::getItemName));
+    }
+
     @Override
     public void render(Batch batch) {
-        for (Slot slot : slots) {
-            slot.render(batch);
+        sortInventory();
+
+        for (int i = 0; i < 9; i++) {
+            x = right + margin;
+            y = top - (i * TILE_SIZE) - (i * margin);
+            slots.get(i).setPosition(x,y);
+            slots.get(i).render(batch);
         }
         cursor.render(batch);
     }

@@ -63,4 +63,9 @@ public class Slot implements Renderable {
     public void removeItem() {
         item = null;
     }
+
+    public void setPosition(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
 }

@@ -12,6 +12,7 @@ import se.snrn.combatcreatures.items.consumable.ConsumableFactory;
 import se.snrn.combatcreatures.map.Tile;
 import se.snrn.combatcreatures.map.TileMap;
 import se.snrn.combatcreatures.map.TileType;
+import se.snrn.combatcreatures.userinterface.GameLog;
 
 import java.util.ArrayList;
 
@@ -86,6 +87,7 @@ public class Creature implements Updatable, Renderable, Mapped, Ai, Living, Figh
             if (newTile.getMapped() instanceof Player) {
                 Player player = (Player) newTile.getMapped();
                 player.takeDamage(1);
+                GameLog.addMessage("You took 1 damage");
                 return true;
             }
             changeTile(newTile);
@@ -142,7 +144,7 @@ public class Creature implements Updatable, Renderable, Mapped, Ai, Living, Figh
 
     @Override
     public void die() {
-        //sprite = ResourceManager.creatureDead;
+        sprite = ResourceManager.creatureDead;
         tile.setMapped(null);
         setAlive(false);
         tile.addItem(ConsumableFactory.getNewConsumable(1));
