@@ -15,9 +15,10 @@ public class ManaBar implements Updatable, Renderable{
     private Player player;
     private int x;
     private int y;
+    private int margin;
 
     public ManaBar(Player player, int x, int y) {
-
+        margin = 8;
         this.player = player;
         this.x = x;
         this.y = y;
@@ -31,8 +32,9 @@ public class ManaBar implements Updatable, Renderable{
 
     @Override
     public void render(Batch batch) {
+        ResourceManager.pinkBox.draw(batch, x,y-margin*2, player.getHealth()*TILE_SIZE+margin*2, TILE_SIZE+margin*2);
         for (int i = 0; i < player.getMana(); i++) {
-            sprite.setPosition(x+(TILE_SIZE*i), y);
+            sprite.setPosition(x+(TILE_SIZE*i)+margin, y-margin);
             sprite.draw(batch);
         }
     }

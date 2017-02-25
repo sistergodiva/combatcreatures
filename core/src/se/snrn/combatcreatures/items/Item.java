@@ -13,5 +13,5 @@ public interface Item extends Renderable{
 
     Sprite getSprite();
 
-    void setPosition(int x, int y);
+    void setPosition(float x, float y);
 }

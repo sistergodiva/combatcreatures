@@ -9,13 +9,13 @@ import static se.snrn.combatcreatures.CombatCreatures.TILE_SIZE;
 
 public class Slot implements Renderable {
 
-    private int x;
-    private int y;
+    private float x;
+    private float y;
 
 
     private Item item;
 
-    public Slot(int x, int y) {
+    public Slot(float x, float y) {
 
         this.x = x;
         this.y = y;
@@ -52,11 +52,11 @@ public class Slot implements Renderable {
         else return "empty";
     }
 
-    public int getY() {
+    public float getY() {
         return y;
     }
 
-    public int getX() {
+    public float getX() {
         return x;
     }
 
@@ -64,7 +64,7 @@ public class Slot implements Renderable {
         item = null;
     }
 
-    public void setPosition(int x, int y) {
+    public void setPosition(float x, float y) {
         this.x = x;
         this.y = y;
     }

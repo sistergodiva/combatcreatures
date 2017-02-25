@@ -2,6 +2,7 @@ package se.snrn.combatcreatures.map;
 
 
 import com.badlogic.gdx.graphics.g2d.Batch;
+import se.snrn.combatcreatures.MissionScreen;
 import se.snrn.combatcreatures.ResourceManager;
 import se.snrn.combatcreatures.entities.player.Player;
 import se.snrn.combatcreatures.interfaces.Mapped;
@@ -29,6 +30,9 @@ public class Tile implements Renderable {
         this.type = type;
         this.tileMap = tileMap;
         items = new ArrayList<>();
+        if(MissionScreen.debug = true){
+            explored = true;
+        }
     }
 
     @Override

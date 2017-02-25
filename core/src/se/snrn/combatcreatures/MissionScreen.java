@@ -29,6 +29,7 @@ public class MissionScreen implements Screen {
 
     private static final int WORLD_WIDTH = 1280;
     private static final int WORLD_HEIGHT = 720;
+    public static boolean debug = true;
     private InputStateMachine inputStateMachine;
     private Batch batch;
     private InputHandler inputHandler;

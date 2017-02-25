@@ -9,13 +9,16 @@ import se.snrn.combatcreatures.interfaces.Updatable;
 
 import static se.snrn.combatcreatures.CombatCreatures.TILE_SIZE;
 
+
 public class KariesBar implements Updatable, Renderable{
+    private Sprite sprite;
     private Player player;
     private int x;
     private int y;
-    private Sprite sprite;
+    private int margin;
 
     public KariesBar(Player player, int x, int y) {
+        margin = 8;
         this.player = player;
         this.x = x;
         this.y = y;
@@ -29,8 +32,9 @@ public class KariesBar implements Updatable, Renderable{
 
     @Override
     public void render(Batch batch) {
+        ResourceManager.pinkBox.draw(batch, x,y-margin*2, player.getHealth()*TILE_SIZE+margin*2, TILE_SIZE+margin*2);
         for (int i = 0; i < player.getKaries(); i++) {
-            sprite.setPosition(x+(TILE_SIZE*i), y);
+            sprite.setPosition(x+(TILE_SIZE*i)+margin, y-margin);
             sprite.draw(batch);
         }
     }

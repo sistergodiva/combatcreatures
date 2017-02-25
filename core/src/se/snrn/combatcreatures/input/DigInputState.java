@@ -39,7 +39,7 @@ public class DigInputState implements InputState {
     @Override
     public void render(Batch batch) {
         for (Tile allowedTarget : allowedTargets) {
-            if (allowedTarget.getType() == TileType.WALL) {
+            if (allowedTarget != null && allowedTarget.getType() == TileType.WALL) {
                 ResourceManager.target.setPosition(allowedTarget.getX() * TILE_SIZE, allowedTarget.getY() * TILE_SIZE);
                 ResourceManager.target.draw(batch);
             }

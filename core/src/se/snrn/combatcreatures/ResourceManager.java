@@ -3,10 +3,10 @@ package se.snrn.combatcreatures;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.DistanceFieldFont;
-import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.*;
+import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 
+import javax.swing.*;
 import java.util.ArrayList;
 
 public class ResourceManager {
@@ -21,9 +21,17 @@ public class ResourceManager {
     public static Sprite target = new Sprite(new Texture(Gdx.files.internal("target.png")));
     public static Sprite cursor = new Sprite(new Texture(Gdx.files.internal("Ui/cursor.png")));
     public static BitmapFont font = new BitmapFont();
+    public static GlyphLayout glyphLayout = new GlyphLayout();
     public static Sprite heart = new Sprite(new Texture(Gdx.files.internal("ui/heart.png")));
     public static Sprite magic = new Sprite(new Texture(Gdx.files.internal("ui/magic.png")));
     public static Sprite tooth = new Sprite(new Texture(Gdx.files.internal("ui/tooth.png")));
+    public static Sprite white = new Sprite(new Texture(Gdx.files.internal("ui/white.png")));
+    public static Sprite black= new Sprite(new Texture(Gdx.files.internal("ui/black.png")));
+    public static Sprite red= new Sprite(new Texture(Gdx.files.internal("ui/red.png")));
+    public static Sprite blue= new Sprite(new Texture(Gdx.files.internal("ui/blue.png")));
+    public static Sprite pink= new Sprite(new Texture(Gdx.files.internal("ui/pink.png")));
+
+    public static NinePatch pinkBox = new NinePatch(new Texture(Gdx.files.internal("ui/pink_box.png")), 6,6,6,6);
 
     public ResourceManager() {
         walls = new ArrayList<>();

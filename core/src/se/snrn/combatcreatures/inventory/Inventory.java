@@ -3,6 +3,7 @@ package se.snrn.combatcreatures.inventory;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import se.snrn.combatcreatures.ResourceManager;
 import se.snrn.combatcreatures.interfaces.Renderable;
 import se.snrn.combatcreatures.items.Item;
 import se.snrn.combatcreatures.items.consumable.ConsumableFactory;
@@ -20,8 +21,8 @@ public class Inventory implements Renderable {
     private int inventoryHeight;
     private int inventoryBottom;
     private int inventoryWidth;
-    private int x;
-    private int y;
+    private float x;
+    private float y;
     private ArrayList<Item> items;
     private int money;
     private boolean open;
@@ -33,18 +34,18 @@ public class Inventory implements Renderable {
 
 
     public Inventory() {
-
+        margin = 8;
         slots = new ArrayList<>();
         items = new ArrayList<>();
         money = 0;
-        inventoryWidth = 128;
+        inventoryWidth = 192;
         inventoryBottom = 0;
-        inventoryHeight = Gdx.graphics.getHeight();
+        inventoryHeight = Gdx.graphics.getHeight()-192+margin;
         right = Gdx.graphics.getWidth() - inventoryWidth;
         top = inventoryBottom + inventoryHeight - TILE_SIZE;
 
 
-        margin = 8;
+
 
         x = 0;
         y = 0;
@@ -118,11 +119,12 @@ public class Inventory implements Renderable {
 
     @Override
     public void render(Batch batch) {
+        ResourceManager.pinkBox.draw(batch, x-margin,y, inventoryWidth, inventoryHeight-y);
         sortInventory();
 
         for (int i = 0; i < 9; i++) {
             x = right + margin;
-            y = top - (i * TILE_SIZE) - (i * margin);
+            y = top - (i * TILE_SIZE) - (i * margin)-margin;
             slots.get(i).setPosition(x,y);
             slots.get(i).render(batch);
         }
@@ -161,6 +163,11 @@ public class Inventory implements Renderable {
 
     public void removeItemAtCursor() {
         cursor.getSlot().removeItem();
+    }
+
+    public void setPosition(float x, float y) {
+        this.x = x;
+        this.y = y;
     }
 }
 

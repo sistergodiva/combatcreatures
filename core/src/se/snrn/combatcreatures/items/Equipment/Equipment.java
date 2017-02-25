@@ -13,8 +13,8 @@ public class Equipment implements Item {
     private PermanentBuffEffect permanentBuffEffect;
     private Ability ability;
     private EquipmentSlot equipmentSlot;
-    private int x;
-    private int y;
+    private float x;
+    private float y;
     private Sprite sprite;
 
 
@@ -47,7 +47,7 @@ public class Equipment implements Item {
     }
 
     @Override
-    public void setPosition(int x, int y) {
+    public void setPosition(float x, float y) {
         this.x = x;
         this.y = y;
     }

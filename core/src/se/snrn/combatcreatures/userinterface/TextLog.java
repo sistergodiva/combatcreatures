@@ -1,5 +1,7 @@
 package se.snrn.combatcreatures.userinterface;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import se.snrn.combatcreatures.ResourceManager;
 import se.snrn.combatcreatures.interfaces.Renderable;
@@ -13,7 +15,18 @@ import static se.snrn.combatcreatures.CombatCreatures.TILE_SIZE;
 public class TextLog implements Updatable, Renderable{
 
 
-    private int i;
+    private float margin = 8;
+    private int x;
+    private int y;
+    private float textTop;
+
+    public TextLog(int x, int y) {
+        this.x = x;
+        this.y = y;
+        ResourceManager.glyphLayout.setText(ResourceManager.font, "test");
+        textTop = y+((ResourceManager.glyphLayout.height+margin)* 4);
+
+    }
 
     @Override
     public void update(float delta) {
@@ -22,12 +35,17 @@ public class TextLog implements Updatable, Renderable{
 
     @Override
     public void render(Batch batch) {
-        List<String> messages = GameLog.getLastMessages(4);
 
-        i = 0;
+        ResourceManager.pinkBox.draw(batch, x,y, 300,textTop+margin);
+
+
+        List<String> messages = GameLog.getLastMessages(4);
+        int i = 0;
         for (String message : messages) {
-            ResourceManager.font.draw(batch, message, 100, 150-(TILE_SIZE*i));
+
+            ResourceManager.font.draw(batch, message, x+margin, textTop-((ResourceManager.glyphLayout.height+margin)* i));
             i++;
         }
+
     }
 }

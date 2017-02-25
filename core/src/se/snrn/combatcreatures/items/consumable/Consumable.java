@@ -17,8 +17,8 @@ public class Consumable implements Item, ConsumableEffect {
     private String description;
     private String spriteString;
     private ConsumableEffect consumableEffect;
-    private int y;
-    private int x;
+    private float y;
+    private float x;
 
 
     public Consumable(JsonValue appearance) {
@@ -79,16 +79,16 @@ public class Consumable implements Item, ConsumableEffect {
     }
 
     @Override
-    public void setPosition(int x, int y) {
+    public void setPosition(float x, float y) {
         this.x = x;
         this.y = y;
     }
 
-    public int getY() {
+    public float getY() {
         return y;
     }
 
-    public int getX() {
+    public float getX() {
         return x;
     }
 }

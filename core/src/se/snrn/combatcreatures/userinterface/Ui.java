@@ -11,6 +11,7 @@ import static se.snrn.combatcreatures.CombatCreatures.TILE_SIZE;
 
 public class Ui implements Updatable, Renderable{
 
+    private int margin;
     private Player player;
     private Inventory inventory;
     private HealthBar healthBar;
@@ -20,14 +21,15 @@ public class Ui implements Updatable, Renderable{
     private TextLog textLog;
 
     public Ui(Player player) {
-
+        margin = 8;
         this.player = player;
         inventory = player.getInventory();
         healthBar = new HealthBar(player, 0,Gdx.graphics.getHeight()-TILE_SIZE);
-        manaBar = new ManaBar(player, 0, Gdx.graphics.getHeight()-TILE_SIZE*2);
-        kariesBar = new KariesBar(player,0, Gdx.graphics.getHeight()-TILE_SIZE*3);
+        manaBar = new ManaBar(player, 0, Gdx.graphics.getHeight()-(TILE_SIZE*2)-margin*2);
+        kariesBar = new KariesBar(player,0, Gdx.graphics.getHeight()-(TILE_SIZE*3)-margin*4);
         miniMap = new MiniMap(player);
-        textLog = new TextLog();
+        textLog = new TextLog(0,0);
+        inventory.setPosition(Gdx.graphics.getWidth()-200, Gdx.graphics.getHeight()-miniMap.getMiniMapHeight());
     }
 
     @Override
