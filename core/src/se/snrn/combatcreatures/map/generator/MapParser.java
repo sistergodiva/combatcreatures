@@ -2,21 +2,22 @@ package se.snrn.combatcreatures.map.generator;
 
 
 import se.snrn.combatcreatures.RandomNumber;
+import se.snrn.combatcreatures.map.MapManager;
 import se.snrn.combatcreatures.map.Tile;
 import se.snrn.combatcreatures.map.TileMap;
+import se.snrn.combatcreatures.map.TileType;
 import se.snrn.combatcreatures.map.pathfinding.AStar;
 import se.snrn.combatcreatures.map.pathfinding.FloodFill;
 
 import java.util.ArrayList;
 
-import static se.snrn.combatcreatures.map.TileType.FLOOR;
-import static se.snrn.combatcreatures.map.TileType.WALL;
+import static se.snrn.combatcreatures.map.TileType.*;
 
 
 public class MapParser {
 
 
-    public Tile getRandomEmptyTile(TileMap tileMap) {
+    public static Tile getRandomEmptyTile(TileMap tileMap) {
         Tile emptyTile = tileMap.getTile(RandomNumber.range(0, tileMap.getWidth()), RandomNumber.range(0, tileMap.getHeight()));
 
         if (emptyTile != null && emptyTile.getType() == FLOOR) {
@@ -35,8 +36,31 @@ public class MapParser {
         tileMap.setFilled(filled = FloodFill.getFloodFromTile(tileMap, startTile));
         tileMap.setWalls(FloodFill.getWallsFromTile(tileMap, startTile));
         tileMap.setSpawns(getSpawnLocations(tileMap, filled));
+        fillExtraRooms(tileMap);
+        generateStairs(tileMap);
+    }
 
+    private void generateStairs(TileMap tileMap) {
+        Tile stairsUp = getRandomEmptyTile(tileMap);
+        Tile stairsDown = getRandomEmptyTile(tileMap);
+        if (AStar.getDistance(stairsUp, stairsDown, tileMap) < 80) {
+            System.out.println((AStar.getDistance(stairsUp, stairsDown, tileMap)));
+            generateStairs(tileMap);
+        } else {
 
+            stairsUp.setType(UP);
+            stairsDown.setType(DOWN);
+        }
+    }
+
+    public void fillExtraRooms(TileMap tileMap) {
+        for (int i = 0; i < tileMap.getWidth(); i++) {
+            for (int j = 0; j < tileMap.getHeight(); j++) {
+                if (!tileMap.getFilled().contains(tileMap.tiles[i][j])) {
+                    tileMap.tiles[i][j].setType(WALL);
+                }
+            }
+        }
     }
 
     private ArrayList<Tile> findPath(Tile start, Tile goal, TileMap tileMap) {

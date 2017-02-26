@@ -4,6 +4,7 @@ package se.snrn.combatcreatures.map;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import se.snrn.combatcreatures.MissionScreen;
 import se.snrn.combatcreatures.ResourceManager;
+import se.snrn.combatcreatures.entities.Creature;
 import se.snrn.combatcreatures.entities.player.Player;
 import se.snrn.combatcreatures.interfaces.Mapped;
 import se.snrn.combatcreatures.interfaces.Renderable;
@@ -38,11 +39,19 @@ public class Tile implements Renderable {
     @Override
     public void render(Batch batch) {
         if (explored) {
+            if (this.type == TileType.UP) {
+                ResourceManager.up.setPosition(x * TILE_SIZE, y * TILE_SIZE);
+                ResourceManager.up.draw(batch);
+            }
+
+            if (this.type == TileType.DOWN) {
+                ResourceManager.down.setPosition(x * TILE_SIZE, y * TILE_SIZE);
+                ResourceManager.down.draw(batch);
+            }
             if (this.type == TileType.WALL) {
                 int tileValue = TileBitMask.getBitMask(this, tileMap);
                 ResourceManager.getDreamyWallFromBitMask(tileValue).setPosition(x * TILE_SIZE, y * TILE_SIZE);
                 ResourceManager.getDreamyWallFromBitMask(tileValue).draw(batch);
-
             }
             if (this.type == TileType.FLOOR) {
                 ResourceManager.floor.setPosition(x * TILE_SIZE, y * TILE_SIZE);
@@ -88,6 +97,10 @@ public class Tile implements Renderable {
 
     public void setExplored(boolean explored) {
         this.explored = explored;
+        if(mapped != null && mapped instanceof Creature){
+            Creature creature = (Creature)mapped;
+            creature.setActive(true);
+        }
     }
 
     public void setVisible(boolean visible) {

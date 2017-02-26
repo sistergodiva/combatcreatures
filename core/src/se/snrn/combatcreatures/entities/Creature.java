@@ -31,10 +31,15 @@ public class Creature implements Updatable, Renderable, Mapped, Ai, Living, Figh
     private int health;
     private boolean alive;
     private Stats stats;
+    private int cost;
+    private Sprite deadSprite;
+    private boolean active;
+
 
     public Creature(Tile tile, TileMap tileMap, JsonValue stats, JsonValue appearance) {
         System.out.println(stats);
         this.tile = tile;
+        tile.setMapped(this);
         this.tileMap = tileMap;
         this.stats = new Stats(stats.getInt(0), stats.getInt(1), stats.getInt(2), stats.getInt(3), stats.getInt(4), stats.getInt(5));
         this.name = appearance.getString(0);
@@ -45,12 +50,17 @@ public class Creature implements Updatable, Renderable, Mapped, Ai, Living, Figh
         alive = true;
         health = 3;
         sprite = ResourceManager.getCreatureSpriteFromString(spriteString);
+        cost = 10;
+        deadSprite = ResourceManager.getCreatureSpriteFromString(deadSpriteString);
+        active = false;
+
     }
 
     @Override
     public void update(float delta) {
         if (health <= 0 && alive) {
             die();
+            System.out.println("died");
         }
         sprite.setPosition(tile.getX() * TILE_SIZE, tile.getY() * TILE_SIZE);
     }
@@ -144,10 +154,10 @@ public class Creature implements Updatable, Renderable, Mapped, Ai, Living, Figh
 
     @Override
     public void die() {
-        sprite = ResourceManager.creatureDead;
         tile.setMapped(null);
         setAlive(false);
         tile.addItem(ConsumableFactory.getNewConsumable(1));
+        GameLog.addMessage(name +" died.");
     }
 
     public void setFinished(boolean finished) {
@@ -161,6 +171,22 @@ public class Creature implements Updatable, Renderable, Mapped, Ai, Living, Figh
 
     public String getName() {
         return name;
+    }
+
+    public int getCost() {
+        return cost;
+    }
+
+    public Sprite getDeadSprite() {
+        return deadSprite;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public boolean isActive() {
+        return active;
     }
 }
 

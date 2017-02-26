@@ -30,6 +30,8 @@ public class ResourceManager {
     public static Sprite red= new Sprite(new Texture(Gdx.files.internal("ui/red.png")));
     public static Sprite blue= new Sprite(new Texture(Gdx.files.internal("ui/blue.png")));
     public static Sprite pink= new Sprite(new Texture(Gdx.files.internal("ui/pink.png")));
+    public static Sprite up= new Sprite(new Texture(Gdx.files.internal("tiles/up.png")));
+    public static Sprite down= new Sprite(new Texture(Gdx.files.internal("tiles/down.png")));
 
     public static NinePatch pinkBox = new NinePatch(new Texture(Gdx.files.internal("ui/pink_box.png")), 6,6,6,6);
 

@@ -94,7 +94,6 @@ public class Player implements Updatable, Renderable, Mapped, Living, Fighter {
                 Creature creature = (Creature) newTile.getMapped();
                 creature.takeDamage(1);
                 GameLog.addMessage(creature.getName()+" took 1 damage");
-                //creature.takeDamage(AttackResolver.resolveNormalAttack(this, creature));
                 turnManager.endPlayerTurn();
                 return true;
             }

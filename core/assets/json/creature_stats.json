@@ -6,7 +6,8 @@
       "magicDefence": 5,
       "normalDefence": 5,
       "health": 10,
-      "mana": 5
+      "mana": 5,
+      "xp": 10
     },
     {
       "magicAttack": 15,
@@ -14,7 +15,8 @@
       "magicDefence": 5,
       "normalDefence": 20,
       "health": 10,
-      "mana": 10
+      "mana": 10,
+      "xp": 10
     }
   ]
 }

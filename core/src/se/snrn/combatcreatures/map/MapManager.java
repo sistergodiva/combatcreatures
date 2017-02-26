@@ -4,6 +4,8 @@ package se.snrn.combatcreatures.map;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import se.snrn.combatcreatures.entities.DirectionDiagonal;
 import se.snrn.combatcreatures.interfaces.Renderable;
+import se.snrn.combatcreatures.map.generator.MapMerger;
+import se.snrn.combatcreatures.map.generator.MapParser;
 
 import java.util.ArrayList;
 
@@ -16,9 +18,11 @@ public class MapManager implements Renderable{
     private ArrayList<Tile> lineOfSight;
 
     public MapManager() {
-        lineOfSight = new ArrayList<>();
+        MapMerger mapMerger = new MapMerger();
+        //currentMap = mapMerger.getMergedMap();
         currentMap = MapFactory.generateTileMap();
-        startTile = currentMap.tiles[30][20];
+        lineOfSight = new ArrayList<>();
+        startTile = MapParser.getRandomEmptyTile(currentMap);
     }
 
     @Override

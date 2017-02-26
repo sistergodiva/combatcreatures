@@ -13,4 +13,5 @@ public interface Mapped {
     void changeTile(Tile tile);
     boolean move(Direction direction);
 
+
 }

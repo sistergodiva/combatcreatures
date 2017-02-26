@@ -42,6 +42,7 @@ public class MissionScreen implements Screen {
     public static TurnManager turnManager;
     public Batch uiBatch;
     private Ui ui;
+    private EnemySpawner enemySpawner;
 
 
     public MissionScreen(Batch batch) {
@@ -64,12 +65,14 @@ public class MissionScreen implements Screen {
         mouseRaw = new Vector3();
         new CreatureFactory();
 
-        creatureManager.addCreature(CreatureFactory.spawnCreature(mapManager.getMap().getFilled().get(RandomNumber.range(0,20)), mapManager.getMap(), 0));
+
 
         Consumable consumable = ConsumableFactory.getNewConsumable(0);
         System.out.println(consumable);
 
         ui = new Ui(player);
+        enemySpawner = new EnemySpawner();
+        enemySpawner.spawnEnemies(creatureManager, mapManager.getMap(), 200);
 
     }
 
@@ -88,6 +91,7 @@ public class MissionScreen implements Screen {
         player.update(delta);
         creatureManager.update(delta);
         inputStateMachine.update(delta);
+        Gdx.graphics.setTitle("FPS: "+Gdx.graphics.getFramesPerSecond());
     }
 
     @Override

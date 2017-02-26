@@ -60,12 +60,17 @@ public class CreatureManager implements Updatable, Renderable {
         }
         int finishedCreatures = 0;
         for (Creature creature : creatures) {
-            if (turnManager.getTurnType() == TurnType.ENEMY) {
-                if (creature.isFinished()) {
+            if (!creature.isAlive()) {
+                addCorpse(new Corpse(creature));
+                removeCreature(creature);
+            } else if (turnManager.getTurnType() == TurnType.ENEMY) {
+                if (creature.isActive()) {
+                    if (creature.isFinished()) {
 
-                    finishedCreatures++;
-                } else {
-                    creature.act(player);
+                        finishedCreatures++;
+                    } else {
+                        creature.act(player);
+                    }
                 }
             }
         }
@@ -76,12 +81,13 @@ public class CreatureManager implements Updatable, Renderable {
 
     @Override
     public void render(Batch batch) {
-        for (Creature creature : creatures) {
-            creature.render(batch);
-        }
         for (Corpse corpse : corpses) {
             corpse.render(batch);
         }
+        for (Creature creature : creatures) {
+            creature.render(batch);
+        }
+
     }
 
     public void setAllUnfinished() {

@@ -3,9 +3,13 @@ package se.snrn.combatcreatures.map.generator;
 
 import se.snrn.combatcreatures.map.Tile;
 import se.snrn.combatcreatures.map.TileMap;
+import se.snrn.combatcreatures.map.pathfinding.FloodFill;
+
+import java.util.ArrayList;
 
 import static se.snrn.combatcreatures.map.TileType.FLOOR;
 import static se.snrn.combatcreatures.map.TileType.WALL;
+import static se.snrn.combatcreatures.map.pathfinding.FloodFill.getFloodFromTile;
 
 public class MapGenerator {
 
@@ -35,9 +39,41 @@ public class MapGenerator {
         for (int i = 0; i < numberOfSteps; i++) {
             cellmap = doSimulationStep(cellmap, deathLimit, birthLimit);
         }
+
+
         //make true tiles FULL and false tiles OPEN
-        return getMapFromBool(cellmap, width, height);
+        TileMap map = getMapFromBool(cellmap, width, height);
+        if(!acceptableMap(map)) {
+            return getCellAutoMap(chanceToStartAlive,deathLimit,birthLimit,numberOfSteps );
+        } else {
+            MapParser mapParser = new MapParser();
+            mapParser.parseMap(map);
+            return map;
+        }
     }
+
+    private boolean acceptableMap(TileMap tileMap){
+        Tile tile = MapParser.getRandomEmptyTile(tileMap);
+        ArrayList<Tile> emptyTiles;
+        emptyTiles = FloodFill.getFloodFromTile(tileMap, tile);
+        System.out.println(emptyTiles.size());
+        return emptyTiles.size() > tileMap.getHeight() * tileMap.getWidth() * 0.55;
+    }
+
+
+    public boolean[][] getBooleanMap(double chanceToStartAlive, int deathLimit, int birthLimit, int numberOfSteps) {
+        //create 2d array of booleans set to false
+        boolean[][] cellmap = new boolean[width][height];
+        //inititalize the map with 0-100% chance for each tile to start alive
+        cellmap = initialiseMap(cellmap, chanceToStartAlive);
+        //run through the rules a number of times
+        for (int i = 0; i < numberOfSteps; i++) {
+            cellmap = doSimulationStep(cellmap, deathLimit, birthLimit);
+        }
+        //make true tiles FULL and false tiles OPEN
+        return cellmap;
+    }
+
 
     private TileMap getMapFromBool(boolean[][] cellGrid, int width, int height) {
         TileMap map = new TileMap(width, height);
@@ -54,8 +90,7 @@ public class MapGenerator {
 
             }
         }
-        MapParser mapParser = new MapParser();
-        mapParser.parseMap(map);
+
         return map;
     }
 
@@ -71,7 +106,7 @@ public class MapGenerator {
     }
 
 
-    private boolean[][] doSimulationStep(boolean[][] oldMap, int deathLimit, int birthLimit) {
+    public boolean[][] doSimulationStep(boolean[][] oldMap, int deathLimit, int birthLimit) {
 
         boolean[][] newMap = new boolean[width][height];
         for (int x = 0; x < oldMap.length; x++) {
@@ -83,7 +118,9 @@ public class MapGenerator {
                 } //if neighbours > birthLimit a cell is born, else it stays dead
                 else {
                     newMap[x][y] = nbs > birthLimit;
+
                 }
+
             }
         }
         return newMap;

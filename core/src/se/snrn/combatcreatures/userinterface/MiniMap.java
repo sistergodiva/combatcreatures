@@ -74,9 +74,9 @@ public class MiniMap implements Updatable, Renderable {
                     blue.draw(batch);
                 }
                 if (point.getMapped() != null && point.getMapped() instanceof Creature) {
-                    red.setSize(mapScale, mapScale);
-                    red.setPosition(startX + point.getX() * mapScale, startY + point.getY() * mapScale);
-                    red.draw(batch);
+                    black.setSize(mapScale, mapScale);
+                    black.setPosition(startX + point.getX() * mapScale, startY + point.getY() * mapScale);
+                    black.draw(batch);
                 }
 
             }
