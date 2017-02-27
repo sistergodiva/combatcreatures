@@ -38,28 +38,25 @@ public class MapParser {
         tileMap.setWalls(FloodFill.getWallsFromTile(tileMap, startTile));
         tileMap.setSpawns(getSpawnLocations(tileMap, filled));
         //fillExtraRooms(tileMap);
-        //getExtraFill(tileMap);
+        getExtraFill(tileMap);
         createDoors(tileMap);
         generateStairs(tileMap);
     }
 
     private void createDoors(TileMap tileMap) {
-        for (int i = 0; i < 500; i++) {
-            Collections.shuffle(tileMap.getWalls());
-            Tile tile = tileMap.getWalls().get(0);
-            ArrayList<Tile> orthoNeighbours = tileMap.getOrthoNeighbours(tile);
-            int j = 0;
-            for (Tile orthoNeighbour : orthoNeighbours) {
-                if (orthoNeighbour.getType() == WALL) {
-                    j++;
+        for (Tile tile : tileMap.getFilled()) {
+
+
+            Tile westTile = tileMap.getTileAtDirection(tile, Direction.WEST);
+            Tile eastTile = tileMap.getTileAtDirection(tile, Direction.EAST);
+            Tile northTile = tileMap.getTileAtDirection(tile, Direction.NORTH);
+            Tile southTile = tileMap.getTileAtDirection(tile, Direction.SOUTH);
+            if (westTile != null && eastTile != null && southTile != null && northTile != null) {
+                if (westTile.getType() == eastTile.getType() && northTile.getType() == southTile.getType() && westTile.getType() != northTile.getType()) {
+                    tile.setType(DOOR);
                 }
             }
-            if(j == 2) {
-                tile.setType(DOOR);
-            }
         }
-
-
     }
 
     private void generateStairs(TileMap tileMap) {
@@ -77,17 +74,20 @@ public class MapParser {
 
 
     public void getExtraFill(TileMap tileMap) {
+        ArrayList<Tile> extraWalls = new ArrayList<>();
+
         for (int i = 0; i < tileMap.getWidth(); i++) {
             for (int j = 0; j < tileMap.getHeight(); j++) {
                 Tile tile = tileMap.getTile(i, j);
-                if (tile.getType() == FLOOR && !tileMap.getFilled().contains(tile)) {
-                    ArrayList<Tile> extraWalls = FloodFill.getWallsFromTile(tileMap, tile);
-                    for (Tile extraWall : extraWalls) {
-                        if (tileMap.getWalls().contains(extraWall)) {
-                            extraWall.setType(TileType.DOOR);
-                        }
-                    }
+                if (tile.getType() == FLOOR && !tileMap.getWalls().contains(tile)) {
+                    extraWalls.addAll(FloodFill.getWallsFromTile(tileMap, tile));
+
                 }
+            }
+        }
+        for (Tile extraWall : extraWalls) {
+            if (tileMap.getWalls().contains(extraWall)) {
+                extraWall.setType(TileType.DOOR);
             }
         }
     }

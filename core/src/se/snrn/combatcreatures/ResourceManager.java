@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
+import se.snrn.combatcreatures.items.consumable.Consumable;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -34,6 +35,7 @@ public class ResourceManager {
     public static Sprite down= new Sprite(new Texture(Gdx.files.internal("tiles/down.png")));
 
     public static NinePatch pinkBox = new NinePatch(new Texture(Gdx.files.internal("ui/pink_box.png")), 6,6,6,6);
+    public static Sprite doorClosed = new Sprite(new Texture(Gdx.files.internal("tiles/door_closed.png")));
 
     public ResourceManager() {
         walls = new ArrayList<>();

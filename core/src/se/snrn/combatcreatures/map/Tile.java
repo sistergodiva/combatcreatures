@@ -40,8 +40,8 @@ public class Tile implements Renderable {
     public void render(Batch batch) {
         if (explored) {
             if (this.type == TileType.DOOR) {
-                ResourceManager.up.setPosition(x * TILE_SIZE, y * TILE_SIZE);
-                ResourceManager.up.draw(batch);
+                ResourceManager.doorClosed.setPosition(x * TILE_SIZE, y * TILE_SIZE);
+                ResourceManager.doorClosed.draw(batch);
             }
 
             if (this.type == TileType.UP) {
