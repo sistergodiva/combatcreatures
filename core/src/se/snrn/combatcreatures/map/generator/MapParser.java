@@ -5,12 +5,10 @@ import se.snrn.combatcreatures.RandomNumber;
 import se.snrn.combatcreatures.entities.Direction;
 import se.snrn.combatcreatures.map.Tile;
 import se.snrn.combatcreatures.map.TileMap;
-import se.snrn.combatcreatures.map.TileType;
 import se.snrn.combatcreatures.map.pathfinding.AStar;
 import se.snrn.combatcreatures.map.pathfinding.FloodFill;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 import static se.snrn.combatcreatures.map.TileType.*;
 
@@ -37,8 +35,7 @@ public class MapParser {
         tileMap.setFilled(filled = FloodFill.getFloodFromTile(tileMap, startTile));
         tileMap.setWalls(FloodFill.getWallsFromTile(tileMap, startTile));
         tileMap.setSpawns(getSpawnLocations(tileMap, filled));
-        //fillExtraRooms(tileMap);
-        getExtraFill(tileMap);
+
         createDoors(tileMap);
         generateStairs(tileMap);
     }
@@ -62,7 +59,7 @@ public class MapParser {
     private void generateStairs(TileMap tileMap) {
         Tile stairsUp = tileMap.getFilled().get(RandomNumber.range(0, tileMap.getFilled().size() - 1));
         Tile stairsDown = tileMap.getFilled().get(RandomNumber.range(0, tileMap.getFilled().size() - 1));
-        if (AStar.getDistance(stairsUp, stairsDown, tileMap) < 80) {
+        if (AStar.getDistance(stairsUp, stairsDown, tileMap) < 60) {
             System.out.println((AStar.getDistance(stairsUp, stairsDown, tileMap)));
             generateStairs(tileMap);
         } else {
@@ -70,37 +67,6 @@ public class MapParser {
             stairsUp.setType(UP);
             stairsDown.setType(DOWN);
         }
-    }
-
-
-    public void getExtraFill(TileMap tileMap) {
-        ArrayList<Tile> extraWalls = new ArrayList<>();
-
-        for (int i = 0; i < tileMap.getWidth(); i++) {
-            for (int j = 0; j < tileMap.getHeight(); j++) {
-                Tile tile = tileMap.getTile(i, j);
-                if (tile.getType() == FLOOR && !tileMap.getWalls().contains(tile)) {
-                    extraWalls.addAll(FloodFill.getWallsFromTile(tileMap, tile));
-
-                }
-            }
-        }
-        for (Tile extraWall : extraWalls) {
-            if (tileMap.getWalls().contains(extraWall)) {
-                extraWall.setType(TileType.DOOR);
-            }
-        }
-    }
-
-    public void fillExtraRooms(TileMap tileMap) {
-        for (int i = 0; i < tileMap.getWidth(); i++) {
-            for (int j = 0; j < tileMap.getHeight(); j++) {
-                Tile tile = tileMap.getTile(i, j);
-                tileMap.tiles[i][j].setType(WALL);
-            }
-        }
-
-
     }
 
     private ArrayList<Tile> findPath(Tile start, Tile goal, TileMap tileMap) {

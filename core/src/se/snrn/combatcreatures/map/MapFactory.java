@@ -8,7 +8,7 @@ public class MapFactory {
     public static TileMap generateTileMap(){
         MapGenerator mapGenerator = new MapGenerator(60,40);
 
-        return mapGenerator.getCellAutoMap(0.4, 3, 4, 6);
+        return mapGenerator.getCellAutoMap(0.45, 3, 4, 3);
     }
 
 }

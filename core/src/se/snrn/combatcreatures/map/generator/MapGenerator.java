@@ -9,7 +9,6 @@ import java.util.ArrayList;
 
 import static se.snrn.combatcreatures.map.TileType.FLOOR;
 import static se.snrn.combatcreatures.map.TileType.WALL;
-import static se.snrn.combatcreatures.map.pathfinding.FloodFill.getFloodFromTile;
 
 public class MapGenerator {
 

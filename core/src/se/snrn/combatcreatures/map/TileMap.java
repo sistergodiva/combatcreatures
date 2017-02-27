@@ -2,11 +2,14 @@ package se.snrn.combatcreatures.map;
 
 
 import com.badlogic.gdx.graphics.g2d.Batch;
+import se.snrn.combatcreatures.ResourceManager;
 import se.snrn.combatcreatures.entities.Direction;
 import se.snrn.combatcreatures.entities.DirectionDiagonal;
 import se.snrn.combatcreatures.interfaces.Renderable;
 
 import java.util.ArrayList;
+
+import static se.snrn.combatcreatures.CombatCreatures.TILE_SIZE;
 
 public class TileMap implements Renderable {
 
@@ -17,6 +20,7 @@ public class TileMap implements Renderable {
     private ArrayList<Tile> walls;
     private ArrayList<Tile> spawns;
     private Tile startTile;
+    private ArrayList<Tile> extraFill;
 
     public TileMap(int width, int height) {
         this.width = width;
@@ -46,15 +50,15 @@ public class TileMap implements Renderable {
     }
 
     public ArrayList<Tile> getOrthoNeighbours(Tile tile) {
-            ArrayList<Tile> allNeighbours = new ArrayList<>();
-            for (Direction dir : Direction.values()
-                    ) {
-                Tile t = this.getTile(tile.getX() + dir.getX(), tile.getY() + dir.getY());
-                if (t != null) {
-                    allNeighbours.add(t);
-                }
+        ArrayList<Tile> allNeighbours = new ArrayList<>();
+        for (Direction dir : Direction.values()
+                ) {
+            Tile t = this.getTile(tile.getX() + dir.getX(), tile.getY() + dir.getY());
+            if (t != null) {
+                allNeighbours.add(t);
             }
-            return allNeighbours;
+        }
+        return allNeighbours;
 
     }
 
@@ -144,4 +148,5 @@ public class TileMap implements Renderable {
     public Tile getStartTile() {
         return startTile;
     }
+
 }
