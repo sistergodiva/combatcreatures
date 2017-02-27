@@ -44,6 +44,14 @@ public class MiniMap implements Updatable, Renderable {
 
     }
 
+    public void setMapScale(float mapScale) {
+        this.mapScale = mapScale;
+        miniMapWidth = mapScale * tileMap.getWidth();
+        miniMapHeight = mapScale * tileMap.getHeight();
+
+        startX = Gdx.graphics.getWidth() - miniMapWidth - margin;
+        startY = Gdx.graphics.getHeight() - miniMapHeight - margin;
+    }
 
     @Override
     public void update(float delta) {
@@ -57,6 +65,11 @@ public class MiniMap implements Updatable, Renderable {
         for (int x = 0; x < tileMap.getWidth(); x++) {
             for (int y = 0; y < tileMap.getHeight(); y++) {
                 Tile point = tileMap.getTile(x, y);
+                if (point.getType() == TileType.DOOR && point.isExplored()) {
+                    red.setSize(mapScale, mapScale);
+                    red.setPosition(startX + point.getX() * mapScale, startY + point.getY() * mapScale);
+                    red.draw(batch);
+                }
                 if (point.getType() == TileType.FLOOR && point.isExplored()) {
                     white.setSize(mapScale, mapScale);
                     white.setPosition(startX + point.getX() * mapScale, startY + point.getY() * mapScale);

@@ -53,11 +53,12 @@ public class MapGenerator {
     }
 
     private boolean acceptableMap(TileMap tileMap){
-        Tile tile = MapParser.getRandomEmptyTile(tileMap);
+        Tile tile =  MapParser.getRandomEmptyTile(tileMap);
         ArrayList<Tile> emptyTiles;
         emptyTiles = FloodFill.getFloodFromTile(tileMap, tile);
+        tileMap.setStartTile(tile);
         System.out.println(emptyTiles.size());
-        return emptyTiles.size() > tileMap.getHeight() * tileMap.getWidth() * 0.55;
+        return emptyTiles.size() > tileMap.getHeight() * tileMap.getWidth() * 0.40;
     }
 
 

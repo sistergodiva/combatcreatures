@@ -16,6 +16,7 @@ public class TileMap implements Renderable {
     private ArrayList<Tile> filled;
     private ArrayList<Tile> walls;
     private ArrayList<Tile> spawns;
+    private Tile startTile;
 
     public TileMap(int width, int height) {
         this.width = width;
@@ -136,4 +137,11 @@ public class TileMap implements Renderable {
     }
 
 
+    public void setStartTile(Tile startTile) {
+        this.startTile = startTile;
+    }
+
+    public Tile getStartTile() {
+        return startTile;
+    }
 }

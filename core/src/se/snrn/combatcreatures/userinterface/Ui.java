@@ -48,4 +48,8 @@ public class Ui implements Updatable, Renderable{
         miniMap.render(batch);
         textLog.render(batch);
     }
+
+    public MiniMap getMiniMap() {
+        return miniMap;
+    }
 }
