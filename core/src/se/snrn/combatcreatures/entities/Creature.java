@@ -46,7 +46,7 @@ public class Creature implements Updatable, Renderable, Mapped, Ai, Living, Figh
         this.floor = mapManager.getFloor();
         this.stats = new Stats(stats.getInt(0), stats.getInt(1), stats.getInt(2), stats.getInt(3), stats.getInt(4), stats.getInt(5));
         this.tile = tile;
-        tile.setMapped(this);
+        this.tile.setMapped(this);
         this.name = appearance.getString(0);
         this.description = appearance.getString(1);
         this.spriteString = appearance.getString(2);

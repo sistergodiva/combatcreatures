@@ -25,6 +25,7 @@ public class MiniMap implements Updatable, Renderable {
     private TileMap tileMap;
     private Player player;
     private float mapScale;
+    private int mapLevel;
 
 
     public MiniMap(Player player) {
@@ -32,7 +33,9 @@ public class MiniMap implements Updatable, Renderable {
 
         this.player = player;
 
+
         tileMap = player.getMap();
+        mapLevel = player.getFloor();
         mapScale = 4;
         margin = 8;
 
@@ -55,8 +58,9 @@ public class MiniMap implements Updatable, Renderable {
 
     @Override
     public void update(float delta) {
-        if(player.getMap() != tileMap){
+        if(player.getFloor() != mapLevel) {
             this.tileMap = player.getMap();
+            mapLevel = player.getFloor();
         }
     }
 

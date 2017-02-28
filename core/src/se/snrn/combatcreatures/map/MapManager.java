@@ -33,6 +33,7 @@ public class MapManager implements Renderable {
         enemySpawner = new EnemySpawner();
 
         currentMap = floors.get(currentFloor);
+        currentMap.setVisited(true);
         lineOfSight = new ArrayList<>();
 
 
