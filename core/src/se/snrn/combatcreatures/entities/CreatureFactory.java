@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
 import se.snrn.combatcreatures.RandomNumber;
+import se.snrn.combatcreatures.map.MapManager;
 import se.snrn.combatcreatures.map.Tile;
 import se.snrn.combatcreatures.map.TileMap;
 
@@ -18,15 +19,15 @@ public class CreatureFactory {
 
     }
 
-    public static Creature spawnCreature(Tile tile, TileMap tileMap, int id) {
-        return new Creature(tile, tileMap, creatureStats.get(id), creatures.get(id));
+    public static Creature spawnCreature(Tile tile, MapManager mapManager, int id) {
+        return new Creature(tile, mapManager, creatureStats.get(id), creatures.get(id));
     }
 
 
 
-    public static Creature spawnRandomCreature(Tile tile, TileMap tileMap) {
+    public static Creature spawnRandomCreature(Tile tile, MapManager mapManager) {
         int id = RandomNumber.range(0, creatures.size-1);
-        return new Creature(tile, tileMap, creatureStats.get(id), creatures.get(id));
+        return new Creature(tile, mapManager, creatureStats.get(id), creatures.get(id));
 
     }
 }

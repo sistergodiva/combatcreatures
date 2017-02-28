@@ -3,6 +3,7 @@ package se.snrn.combatcreatures;
 import se.snrn.combatcreatures.entities.Creature;
 import se.snrn.combatcreatures.entities.CreatureFactory;
 import se.snrn.combatcreatures.entities.CreatureManager;
+import se.snrn.combatcreatures.map.MapManager;
 import se.snrn.combatcreatures.map.Tile;
 import se.snrn.combatcreatures.map.TileMap;
 
@@ -11,7 +12,10 @@ import java.util.Collections;
 
 public class EnemySpawner {
 
-    public void spawnEnemies(CreatureManager creatureManager, TileMap tileMap, int enemyBudget) {
+
+
+    public void spawnEnemies(CreatureManager creatureManager, MapManager mapManager, int enemyBudget) {
+        TileMap tileMap = mapManager.getMap();
         ArrayList<Tile> emptyTiles = tileMap.getFilled();
         int usedBudget = 0;
 
@@ -22,7 +26,7 @@ public class EnemySpawner {
                 break;
             }
 
-            Creature spawnedCreature = CreatureFactory.spawnRandomCreature(emptyTile, tileMap);
+            Creature spawnedCreature = CreatureFactory.spawnRandomCreature(emptyTile, mapManager);
             creatureManager.addCreature(spawnedCreature);
             usedBudget += spawnedCreature.getCost();
         }

@@ -55,7 +55,9 @@ public class MiniMap implements Updatable, Renderable {
 
     @Override
     public void update(float delta) {
-
+        if(player.getMap() != tileMap){
+            this.tileMap = player.getMap();
+        }
     }
 
     @Override

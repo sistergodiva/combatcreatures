@@ -9,6 +9,7 @@ import se.snrn.combatcreatures.interfaces.*;
 import se.snrn.combatcreatures.items.Item;
 import se.snrn.combatcreatures.items.consumable.Consumable;
 import se.snrn.combatcreatures.items.consumable.ConsumableFactory;
+import se.snrn.combatcreatures.map.MapManager;
 import se.snrn.combatcreatures.map.Tile;
 import se.snrn.combatcreatures.map.TileMap;
 import se.snrn.combatcreatures.map.TileType;
@@ -34,14 +35,18 @@ public class Creature implements Updatable, Renderable, Mapped, Ai, Living, Figh
     private int cost;
     private Sprite deadSprite;
     private boolean active;
+    private TileMap tilemap;
+    private int floor;
+    MapManager mapManager;
 
 
-    public Creature(Tile tile, TileMap tileMap, JsonValue stats, JsonValue appearance) {
-        System.out.println(stats);
+    public Creature(Tile tile, MapManager mapManager, JsonValue stats, JsonValue appearance) {
+        this.mapManager = mapManager;
+        this.tileMap = mapManager.getMap();
+        this.floor = mapManager.getFloor();
+        this.stats = new Stats(stats.getInt(0), stats.getInt(1), stats.getInt(2), stats.getInt(3), stats.getInt(4), stats.getInt(5));
         this.tile = tile;
         tile.setMapped(this);
-        this.tileMap = tileMap;
-        this.stats = new Stats(stats.getInt(0), stats.getInt(1), stats.getInt(2), stats.getInt(3), stats.getInt(4), stats.getInt(5));
         this.name = appearance.getString(0);
         this.description = appearance.getString(1);
         this.spriteString = appearance.getString(2);
@@ -103,6 +108,7 @@ public class Creature implements Updatable, Renderable, Mapped, Ai, Living, Figh
             changeTile(newTile);
             return true;
         }
+
         return false;
     }
 
@@ -119,7 +125,10 @@ public class Creature implements Updatable, Renderable, Mapped, Ai, Living, Figh
 
     @Override
     public void act(Player player) {
-        aiCore.act(this, player);
+        if(player.getFloor() == floor) {
+            aiCore.act(this, player);
+            finished = true;
+        }
         finished = true;
     }
 

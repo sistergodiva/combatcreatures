@@ -30,14 +30,15 @@ public class MapParser {
         ArrayList<Tile> filled;
 
 
-        Tile startTile = tileMap.getStartTile();
 
+        Tile startTile = tileMap.getStartTile();
         tileMap.setFilled(filled = FloodFill.getFloodFromTile(tileMap, startTile));
         tileMap.setWalls(FloodFill.getWallsFromTile(tileMap, startTile));
         tileMap.setSpawns(getSpawnLocations(tileMap, filled));
 
         createDoors(tileMap);
         generateStairs(tileMap);
+
     }
 
     private void createDoors(TileMap tileMap) {
@@ -66,6 +67,9 @@ public class MapParser {
 
             stairsUp.setType(UP);
             stairsDown.setType(DOWN);
+            tileMap.setStartTile(stairsUp);
+            tileMap.setEndTile(stairsDown);
+
         }
     }
 

@@ -43,7 +43,7 @@ public class MissionScreen implements Screen {
     public static TurnManager turnManager;
     public Batch uiBatch;
 
-    private EnemySpawner enemySpawner;
+
 
 
     public MissionScreen(Batch batch) {
@@ -55,9 +55,9 @@ public class MissionScreen implements Screen {
         this.batch = batch;
         uiBatch = new SpriteBatch();
 
-        mapManager = new MapManager();
-        player = new Player(mapManager.getStartTile(), mapManager, new Stats(1, 1, 1, 1, 1, 1));
         creatureManager = new CreatureManager(player);
+        mapManager = new MapManager(creatureManager);
+        player = new Player(mapManager.getStartTile(), mapManager, new Stats(1, 1, 1, 1, 1, 1));
         turnManager = new TurnManager(creatureManager);
         inputStateMachine = new InputStateMachine(player);
         inputHandler = new InputHandler(inputStateMachine, player);
@@ -72,8 +72,8 @@ public class MissionScreen implements Screen {
         System.out.println(consumable);
 
         ui = new Ui(player);
-        enemySpawner = new EnemySpawner();
-        enemySpawner.spawnEnemies(creatureManager, mapManager.getMap(), 200);
+
+
 
     }
 

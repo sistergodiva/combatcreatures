@@ -34,7 +34,7 @@ public class Ui implements Updatable, Renderable{
 
     @Override
     public void update(float delta) {
-
+        miniMap.update(delta);
     }
 
     @Override

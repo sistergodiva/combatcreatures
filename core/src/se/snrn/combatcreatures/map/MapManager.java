@@ -2,6 +2,8 @@ package se.snrn.combatcreatures.map;
 
 
 import com.badlogic.gdx.graphics.g2d.Batch;
+import se.snrn.combatcreatures.EnemySpawner;
+import se.snrn.combatcreatures.entities.CreatureManager;
 import se.snrn.combatcreatures.entities.DirectionDiagonal;
 import se.snrn.combatcreatures.interfaces.Renderable;
 import se.snrn.combatcreatures.map.generator.MapMerger;
@@ -11,19 +13,34 @@ import java.util.ArrayList;
 
 import static se.snrn.combatcreatures.map.TileType.WALL;
 
-public class MapManager implements Renderable{
+public class MapManager implements Renderable {
 
-    TileMap currentMap;
-    private Tile startTile;
+    private TileMap currentMap;
     private ArrayList<Tile> lineOfSight;
+    private ArrayList<TileMap> floors;
+    private int currentFloor;
+    private EnemySpawner enemySpawner;
+    private CreatureManager creatureManager;
 
-    public MapManager() {
-        MapMerger mapMerger = new MapMerger();
-        //currentMap = mapMerger.getMergedMap();
-        currentMap = MapFactory.generateTileMap();
+    public MapManager(CreatureManager creatureManager) {
+        this.creatureManager = creatureManager;
+        currentFloor = 0;
+        floors = new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            floors.add(MapFactory.generateTileMap());
+            floors.get(0).setVisited(false);
+        }
+        enemySpawner = new EnemySpawner();
+
+        currentMap = floors.get(currentFloor);
         lineOfSight = new ArrayList<>();
-        startTile = MapParser.getRandomEmptyTile(currentMap);
+
+
+
+        //MapMerger mapMerger = new MapMerger();
+        //currentMap = mapMerger.getMergedMap();
     }
+
 
     @Override
     public void render(Batch batch) {
@@ -31,7 +48,31 @@ public class MapManager implements Renderable{
     }
 
     public Tile getStartTile() {
-        return startTile;
+        return currentMap.getStartTile();
+    }
+
+    public void moveDown() {
+        if (currentFloor < floors.size()) {
+            currentFloor++;
+            changeFloor(currentFloor);
+            System.out.println(currentFloor);
+        }
+    }
+
+    public void moveUp() {
+        if (currentFloor > 0) {
+            currentFloor--;
+            changeFloor(currentFloor);
+            System.out.println(currentFloor);
+        }
+    }
+
+    public void changeFloor(int newFloor){
+        currentMap = floors.get(newFloor);
+        if(!currentMap.isVisited()) {
+            enemySpawner.spawnEnemies(creatureManager, this, 200);
+            currentMap.setVisited(true);
+        }
     }
 
     public TileMap getMap() {
@@ -84,7 +125,7 @@ public class MapManager implements Renderable{
     }
 
     public void setLineOfSight(Tile tile, int range) {
-        if(!lineOfSight.isEmpty()) {
+        if (!lineOfSight.isEmpty()) {
             for (Tile wasVisible : lineOfSight) {
                 wasVisible.setVisible(false);
             }
@@ -95,5 +136,13 @@ public class MapManager implements Renderable{
             visibleTile.setExplored(true);
             visibleTile.setVisible(true);
         }
+    }
+
+    public Tile getEndTile() {
+        return currentMap.getEndTile();
+    }
+
+    public int getFloor() {
+        return currentFloor;
     }
 }

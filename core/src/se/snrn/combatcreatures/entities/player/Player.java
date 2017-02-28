@@ -93,12 +93,25 @@ public class Player implements Updatable, Renderable, Mapped, Living, Fighter {
             if (newTile.getMapped() instanceof Creature) {
                 Creature creature = (Creature) newTile.getMapped();
                 creature.takeDamage(1);
-                GameLog.addMessage(creature.getName()+" took 1 damage");
+                GameLog.addMessage(creature.getName() + " took 1 damage");
                 turnManager.endPlayerTurn();
                 return true;
             }
+
             changeTile(newTile);
             turnManager.endPlayerTurn();
+            return true;
+        }
+        if (newTile != null && newTile.getType() == TileType.DOWN) {
+            mapManager.moveDown();
+            tileMap = mapManager.getMap();
+            changeTile(mapManager.getStartTile());
+            return true;
+        }
+        if (newTile != null && newTile.getType() == TileType.UP) {
+            mapManager.moveUp();
+            tileMap = mapManager.getMap();
+            changeTile(mapManager.getEndTile());
             return true;
         }
         return false;
@@ -158,6 +171,10 @@ public class Player implements Updatable, Renderable, Mapped, Living, Fighter {
 
     public int getMana() {
         return mana;
+    }
+
+    public int getFloor() {
+        return mapManager.getFloor();
     }
 }
 
