@@ -61,6 +61,7 @@ public class Creature implements Updatable, Renderable, Mapped, Ai, Living, Figh
         deadSprite = ResourceManager.getCreatureSpriteFromString(deadSpriteString);
         active = false;
 
+
     }
 
     @Override
@@ -203,6 +204,10 @@ public class Creature implements Updatable, Renderable, Mapped, Ai, Living, Figh
 
     public int getFloor() {
         return floor;
+    }
+
+    public int getXp() {
+        return xp;
     }
 }
 

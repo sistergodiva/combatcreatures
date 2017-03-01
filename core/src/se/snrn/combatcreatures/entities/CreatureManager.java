@@ -60,6 +60,7 @@ public class CreatureManager implements Updatable, Renderable {
         int finishedCreatures = 0;
         for (Creature creature : creatures) {
             if (!creature.isAlive()) {
+                player.addXp(creature.getXp());
                 addCorpse(new Corpse(creature));
                 removeCreature(creature);
             } else if (turnManager.getTurnType() == TurnType.ENEMY) {

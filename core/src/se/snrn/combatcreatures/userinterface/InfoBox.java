@@ -9,6 +9,8 @@ import se.snrn.combatcreatures.interfaces.Renderable;
 import se.snrn.combatcreatures.interfaces.Updatable;
 import se.snrn.combatcreatures.map.MapManager;
 
+import static se.snrn.combatcreatures.CombatCreatures.TILE_SIZE;
+
 public class InfoBox implements Updatable, Renderable{
 
     private MapManager mapManager;
@@ -32,9 +34,10 @@ public class InfoBox implements Updatable, Renderable{
 
     @Override
     public void render(Batch batch) {
-        ResourceManager.pinkBox.draw(batch, x,(Gdx.graphics.getHeight()-y)-48, 128,48);
+        ResourceManager.pinkBox.draw(batch, x,(Gdx.graphics.getHeight()-y)-80, 128,80);
 
-        ResourceManager.font.draw(batch, "Floor: "+player.getFloor()+" Level: "+player.getLevel(), x+margin, (Gdx.graphics.getHeight()-y)-((ResourceManager.glyphLayout.height+margin)));
+        ResourceManager.font.draw(batch, "Level: "+player.getLevel()+" XP: "+player.getXp(), x+margin, (Gdx.graphics.getHeight()-y)-((ResourceManager.glyphLayout.height+margin)));
+        ResourceManager.font.draw(batch, "Floor: "+player.getFloor(), x+margin, (Gdx.graphics.getHeight()-y)-((ResourceManager.glyphLayout.height+margin*2+TILE_SIZE)));
 
     }
 }
