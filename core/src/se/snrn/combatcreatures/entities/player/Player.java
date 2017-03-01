@@ -35,6 +35,7 @@ public class Player implements Updatable, Renderable, Mapped, Living, Fighter {
     private int mana;
     private int floor;
     private int level;
+    private int score;
 
     public Player(Tile tile, MapManager mapManager, Stats stats) {
         this.tile = tile;
@@ -184,6 +185,10 @@ public class Player implements Updatable, Renderable, Mapped, Living, Fighter {
 
     public int getLevel() {
         return level;
+    }
+
+    public int getScore() {
+        return score;
     }
 }
 
