@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import static se.snrn.combatcreatures.CombatCreatures.TILE_SIZE;
 
 public class Creature implements Updatable, Renderable, Mapped, Ai, Living, Fighter {
+    private int xp;
     private String description;
     private String spriteString;
     private String deadSpriteString;
@@ -51,6 +52,7 @@ public class Creature implements Updatable, Renderable, Mapped, Ai, Living, Figh
         this.description = appearance.getString(1);
         this.spriteString = appearance.getString(2);
         this.deadSpriteString = appearance.getString(3);
+        this.xp = stats.getInt(6);
         aiCore = new AiCore();
         alive = true;
         health = 3;
@@ -166,6 +168,7 @@ public class Creature implements Updatable, Renderable, Mapped, Ai, Living, Figh
         tile.setMapped(null);
         setAlive(false);
         tile.addItem(ConsumableFactory.getNewConsumable(1));
+
         GameLog.addMessage(name +" died.");
     }
 

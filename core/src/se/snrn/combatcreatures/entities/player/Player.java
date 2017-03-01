@@ -2,6 +2,7 @@ package se.snrn.combatcreatures.entities.player;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import se.snrn.combatcreatures.CombatCreatures;
 import se.snrn.combatcreatures.ResourceManager;
 import se.snrn.combatcreatures.effects.Effect;
 import se.snrn.combatcreatures.entities.Creature;
@@ -63,6 +64,9 @@ public class Player implements Updatable, Renderable, Mapped, Living, Fighter {
     @Override
     public void update(float delta) {
         sprite.setPosition(tile.getX() * TILE_SIZE, tile.getY() * TILE_SIZE);
+        if(health <= 0 && alive){
+            die();
+        }
     }
 
     @Override
@@ -151,7 +155,7 @@ public class Player implements Updatable, Renderable, Mapped, Living, Fighter {
 
     @Override
     public void die() {
-
+        alive = false;
     }
 
     @Override

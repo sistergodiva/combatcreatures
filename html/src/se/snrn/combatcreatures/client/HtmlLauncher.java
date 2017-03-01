@@ -7,13 +7,15 @@ import se.snrn.combatcreatures.CombatCreatures;
 
 public class HtmlLauncher extends GwtApplication {
 
-        @Override
-        public GwtApplicationConfiguration getConfig () {
-                return new GwtApplicationConfiguration(480, 320);
-        }
+    @Override
+    public GwtApplicationConfiguration getConfig() {
+        //GwtApplicationConfiguration configuration = new GwtApplicationConfiguration(1280, 720);
 
-        @Override
-        public ApplicationListener createApplicationListener () {
-                return new CombatCreatures();
-        }
+        return new GwtApplicationConfiguration(480, 320);
+    }
+
+    @Override
+    public ApplicationListener createApplicationListener() {
+        return new CombatCreatures();
+    }
 }

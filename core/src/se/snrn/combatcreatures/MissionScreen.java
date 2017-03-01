@@ -7,17 +7,14 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import se.snrn.combatcreatures.entities.CreatureFactory;
 import se.snrn.combatcreatures.entities.CreatureManager;
-import se.snrn.combatcreatures.entities.player.Player;
 import se.snrn.combatcreatures.entities.Stats;
+import se.snrn.combatcreatures.entities.player.Player;
 import se.snrn.combatcreatures.input.InputHandler;
 import se.snrn.combatcreatures.input.InputStateMachine;
-import se.snrn.combatcreatures.items.consumable.Consumable;
-import se.snrn.combatcreatures.items.consumable.ConsumableFactory;
 import se.snrn.combatcreatures.map.MapManager;
 import se.snrn.combatcreatures.userinterface.GameLog;
 import se.snrn.combatcreatures.userinterface.Ui;
@@ -31,6 +28,7 @@ public class MissionScreen implements Screen {
     private static final int WORLD_HEIGHT = 720;
     public static boolean debug = true;
     public static Ui ui;
+    private final CombatCreatures cc;
     private InputStateMachine inputStateMachine;
     private Batch batch;
     private InputHandler inputHandler;
@@ -39,21 +37,21 @@ public class MissionScreen implements Screen {
     private Viewport viewport;
     private Player player;
     private CreatureManager creatureManager;
-    private Vector3 mouseRaw;
     public static TurnManager turnManager;
-    public Batch uiBatch;
+    private Batch uiBatch;
 
 
 
 
-    public MissionScreen(Batch batch) {
+    public MissionScreen(Batch batch, SpriteBatch uiBatch, CombatCreatures combatCreatures) {
+        cc = combatCreatures;
         new GameLog();
         orthographicCamera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         viewport = new FitViewport(WORLD_WIDTH, WORLD_HEIGHT, orthographicCamera);
         viewport.apply();
         new ResourceManager();
         this.batch = batch;
-        uiBatch = new SpriteBatch();
+        this.uiBatch = uiBatch;
 
         creatureManager = new CreatureManager();
         mapManager = new MapManager(creatureManager);
@@ -64,13 +62,8 @@ public class MissionScreen implements Screen {
         inputHandler = new InputHandler(inputStateMachine, player);
         Gdx.input.setInputProcessor(inputHandler);
 
-        mouseRaw = new Vector3();
         new CreatureFactory();
 
-
-
-        Consumable consumable = ConsumableFactory.getNewConsumable(0);
-        System.out.println(consumable);
 
         ui = new Ui(player, mapManager);
 
@@ -88,6 +81,9 @@ public class MissionScreen implements Screen {
     private void update(float delta) {
         orthographicCamera.position.set(player.getTile().getX() * TILE_SIZE, player.getTile().getY() * TILE_SIZE, 0);
 
+        if(!player.isAlive()) {
+            cc.setScreen(cc.highScoreScreen);
+        }
 
         orthographicCamera.update();
         player.update(delta);
