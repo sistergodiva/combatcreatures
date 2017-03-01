@@ -55,9 +55,10 @@ public class MissionScreen implements Screen {
         this.batch = batch;
         uiBatch = new SpriteBatch();
 
-        creatureManager = new CreatureManager(player);
+        creatureManager = new CreatureManager();
         mapManager = new MapManager(creatureManager);
         player = new Player(mapManager.getStartTile(), mapManager, new Stats(1, 1, 1, 1, 1, 1));
+        creatureManager.setPlayer(player);
         turnManager = new TurnManager(creatureManager);
         inputStateMachine = new InputStateMachine(player);
         inputHandler = new InputHandler(inputStateMachine, player);
@@ -71,7 +72,7 @@ public class MissionScreen implements Screen {
         Consumable consumable = ConsumableFactory.getNewConsumable(0);
         System.out.println(consumable);
 
-        ui = new Ui(player);
+        ui = new Ui(player, mapManager);
 
 
 
@@ -92,6 +93,7 @@ public class MissionScreen implements Screen {
         player.update(delta);
         creatureManager.update(delta);
         inputStateMachine.update(delta);
+        ui.update(delta);
         Gdx.graphics.setTitle("FPS: "+Gdx.graphics.getFramesPerSecond());
     }
 

@@ -56,7 +56,6 @@ public class MapManager implements Renderable {
         if (currentFloor < floors.size()) {
             currentFloor++;
             changeFloor(currentFloor);
-            System.out.println(currentFloor);
         }
     }
 
@@ -64,12 +63,13 @@ public class MapManager implements Renderable {
         if (currentFloor > 0) {
             currentFloor--;
             changeFloor(currentFloor);
-            System.out.println(currentFloor);
         }
     }
 
     public void changeFloor(int newFloor){
         currentMap = floors.get(newFloor);
+        System.out.println(currentFloor +" is the new floor\n map is "+currentMap);
+
         if(!currentMap.isVisited()) {
             enemySpawner.spawnEnemies(creatureManager, this, 200);
             currentMap.setVisited(true);

@@ -6,6 +6,7 @@ import se.snrn.combatcreatures.entities.player.Player;
 import se.snrn.combatcreatures.interfaces.Renderable;
 import se.snrn.combatcreatures.interfaces.Updatable;
 import se.snrn.combatcreatures.inventory.Inventory;
+import se.snrn.combatcreatures.map.MapManager;
 
 import static se.snrn.combatcreatures.CombatCreatures.TILE_SIZE;
 
@@ -19,8 +20,9 @@ public class Ui implements Updatable, Renderable{
     private KariesBar kariesBar;
     private MiniMap miniMap;
     private TextLog textLog;
+    private InfoBox infoBox;
 
-    public Ui(Player player) {
+    public Ui(Player player, MapManager mapManager) {
         margin = 8;
         this.player = player;
         inventory = player.getInventory();
@@ -30,6 +32,7 @@ public class Ui implements Updatable, Renderable{
         miniMap = new MiniMap(player);
         textLog = new TextLog(0,0);
         inventory.setPosition(Gdx.graphics.getWidth()-200, Gdx.graphics.getHeight()-miniMap.getMiniMapHeight());
+        infoBox = new InfoBox(mapManager, player, 0,144);
     }
 
     @Override
@@ -47,6 +50,7 @@ public class Ui implements Updatable, Renderable{
         kariesBar.render(batch);
         miniMap.render(batch);
         textLog.render(batch);
+        infoBox.render(batch);
     }
 
     public MiniMap getMiniMap() {

@@ -197,5 +197,9 @@ public class Creature implements Updatable, Renderable, Mapped, Ai, Living, Figh
     public boolean isActive() {
         return active;
     }
+
+    public int getFloor() {
+        return floor;
+    }
 }
 

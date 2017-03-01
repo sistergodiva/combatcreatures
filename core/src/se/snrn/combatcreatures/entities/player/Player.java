@@ -33,6 +33,8 @@ public class Player implements Updatable, Renderable, Mapped, Living, Fighter {
     private int karies;
     private Inventory inventory;
     private int mana;
+    private int floor;
+    private int level;
 
     public Player(Tile tile, MapManager mapManager, Stats stats) {
         this.tile = tile;
@@ -47,6 +49,7 @@ public class Player implements Updatable, Renderable, Mapped, Living, Fighter {
         playerEquipment = new PlayerEquipment();
         inventory = new Inventory();
         effects = new ArrayList<>();
+        level = 0;
     }
 
     public ArrayList<Effect> getAllEffects() {
@@ -105,12 +108,14 @@ public class Player implements Updatable, Renderable, Mapped, Living, Fighter {
         if (newTile != null && newTile.getType() == TileType.DOWN) {
             mapManager.moveDown();
             tileMap = mapManager.getMap();
+            floor++;
             changeTile(mapManager.getStartTile());
             return true;
         }
         if (newTile != null && newTile.getType() == TileType.UP) {
             mapManager.moveUp();
             tileMap = mapManager.getMap();
+            floor--;
             changeTile(mapManager.getEndTile());
             return true;
         }
@@ -174,7 +179,11 @@ public class Player implements Updatable, Renderable, Mapped, Living, Fighter {
     }
 
     public int getFloor() {
-        return mapManager.getFloor();
+        return floor;
+    }
+
+    public int getLevel() {
+        return level;
     }
 }
 

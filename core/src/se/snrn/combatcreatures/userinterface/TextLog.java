@@ -1,15 +1,11 @@
 package se.snrn.combatcreatures.userinterface;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import se.snrn.combatcreatures.ResourceManager;
 import se.snrn.combatcreatures.interfaces.Renderable;
 import se.snrn.combatcreatures.interfaces.Updatable;
 
 import java.util.List;
-
-import static se.snrn.combatcreatures.CombatCreatures.TILE_SIZE;
 
 
 public class TextLog implements Updatable, Renderable{

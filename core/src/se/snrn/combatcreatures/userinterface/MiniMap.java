@@ -48,6 +48,9 @@ public class MiniMap implements Updatable, Renderable {
     }
 
     public void setMapScale(float mapScale) {
+        if(this.mapScale == mapScale){
+            mapScale = 4;
+        }
         this.mapScale = mapScale;
         miniMapWidth = mapScale * tileMap.getWidth();
         miniMapHeight = mapScale * tileMap.getHeight();

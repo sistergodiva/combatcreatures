@@ -21,19 +21,14 @@ public class Corpse implements Updatable, Renderable, Mapped, Container {
     private final Tile tile;
     private final TileMap tileMap;
     private final Sprite sprite;
+    private int floor;
 
-    public Corpse(Tile tile, TileMap tileMap, Sprite sprite, ArrayList<Item> loot) {
-
-        this.tile = tile;
-        this.tileMap = tileMap;
-        this.sprite = sprite;
-    }
 
     public Corpse(Creature creature) {
         tile = creature.getTile();
         tileMap = creature.getMap();
         sprite = creature.getDeadSprite();
-
+        floor = creature.mapManager.getFloor();
     }
 
     @Override
@@ -69,5 +64,9 @@ public class Corpse implements Updatable, Renderable, Mapped, Container {
     @Override
     public ArrayList<Item> getLoot() {
         return null;
+    }
+
+    public int getFloor() {
+        return floor;
     }
 }

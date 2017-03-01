@@ -19,8 +19,7 @@ public class CreatureManager implements Updatable, Renderable {
     ArrayList<Corpse> corpsesToAdd;
     private Player player;
 
-    public CreatureManager(Player player) {
-        this.player = player;
+    public CreatureManager() {
         this.creatures = new ArrayList<>();
         this.creaturesToRemove = new ArrayList<>();
         this.creaturesToAdd = new ArrayList<>();
@@ -82,10 +81,14 @@ public class CreatureManager implements Updatable, Renderable {
     @Override
     public void render(Batch batch) {
         for (Corpse corpse : corpses) {
-            corpse.render(batch);
+            if (corpse.getFloor() == player.getFloor()) {
+                corpse.render(batch);
+            }
         }
         for (Creature creature : creatures) {
-            creature.render(batch);
+            if (creature.getFloor() == player.getFloor()) {
+                creature.render(batch);
+            }
         }
 
     }
@@ -100,5 +103,9 @@ public class CreatureManager implements Updatable, Renderable {
 
     public void addCorpse(Corpse corpse) {
         corpsesToAdd.add(corpse);
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
     }
 }
