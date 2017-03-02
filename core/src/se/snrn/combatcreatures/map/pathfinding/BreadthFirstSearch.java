@@ -53,8 +53,11 @@ public class BreadthFirstSearch {
         while (!frontier.isEmpty()) {
             current = frontier.get(0);
 
-
-            nextElementsToDepthIncrease += map.getOrthoNeighboursTerrain(current.tile).size();
+            if (currentDepth == range - 1) {
+                nextElementsToDepthIncrease += map.getAllNeighbours(current.tile).size();
+            } else {
+                nextElementsToDepthIncrease += map.getOrthoNeighboursTerrain(current.tile).size();
+            }
             if (--elementsToDepthIncrease == 0) {
                 if (++currentDepth > range) {
                     visited.add(current);
@@ -65,8 +68,15 @@ public class BreadthFirstSearch {
                 nextElementsToDepthIncrease = 0;
             }
 
-            for (int i = 0; i < map.getOrthoNeighboursTerrain(current.tile).size(); i++) {
-                frontier.add(nodes.get(map.getOrthoNeighboursTerrain(current.tile).get(i)));
+            if (currentDepth == range - 1) {
+
+                for (int i = 0; i < map.getAllNeighbours(current.tile).size(); i++) {
+                    frontier.add(nodes.get(map.getAllNeighbours(current.tile).get(i)));
+                }
+            } else {
+                for (int i = 0; i < map.getOrthoNeighboursTerrain(current.tile).size(); i++) {
+                    frontier.add(nodes.get(map.getOrthoNeighboursTerrain(current.tile).get(i)));
+                }
             }
             if (frontier.get(0).tile.getMapped() == null && !visited.contains(frontier.get(0))) {
                 visited.add(frontier.get(0));
