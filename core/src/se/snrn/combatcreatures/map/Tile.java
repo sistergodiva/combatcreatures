@@ -39,6 +39,7 @@ public class Tile implements Renderable {
     @Override
     public void render(Batch batch) {
         if (explored) {
+
             if (this.type == TileType.DOOR) {
                 ResourceManager.doorClosed.setPosition(x * TILE_SIZE, y * TILE_SIZE);
                 ResourceManager.doorClosed.draw(batch);
@@ -54,13 +55,20 @@ public class Tile implements Renderable {
                 ResourceManager.down.draw(batch);
             }
             if (this.type == TileType.WALL) {
+                ResourceManager.cloud.setPosition(x * TILE_SIZE, y * TILE_SIZE);
+                ResourceManager.cloud.draw(batch);
                 int tileValue = TileBitMask.getBitMask(this, tileMap);
-                ResourceManager.getDreamyWallFromBitMask(tileValue).setPosition(x * TILE_SIZE, y * TILE_SIZE);
-                ResourceManager.getDreamyWallFromBitMask(tileValue).draw(batch);
+                ResourceManager.getRainbowWallFromBitMask(tileValue).setPosition(x * TILE_SIZE, y * TILE_SIZE);
+                ResourceManager.getRainbowWallFromBitMask(tileValue).draw(batch);
             }
+//            if (this.type == TileType.WALL) {
+//                int tileValue = TileBitMask.getBitMask(this, tileMap);
+//                ResourceManager.getDreamyWallFromBitMask(tileValue).setPosition(x * TILE_SIZE, y * TILE_SIZE);
+//                ResourceManager.getDreamyWallFromBitMask(tileValue).draw(batch);
+//            }
             if (this.type == TileType.FLOOR) {
-                ResourceManager.floor.setPosition(x * TILE_SIZE, y * TILE_SIZE);
-                ResourceManager.floor.draw(batch);
+                ResourceManager.grass.setPosition(x * TILE_SIZE, y * TILE_SIZE);
+                ResourceManager.grass.draw(batch);
             }
             if (!visible) {
                 ResourceManager.fog.setPosition(x * TILE_SIZE, y * TILE_SIZE);

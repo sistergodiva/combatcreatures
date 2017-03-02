@@ -4,6 +4,7 @@ package se.snrn.combatcreatures.map;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import se.snrn.combatcreatures.EnemySpawner;
 import se.snrn.combatcreatures.entities.CreatureManager;
+import se.snrn.combatcreatures.entities.Direction;
 import se.snrn.combatcreatures.entities.DirectionDiagonal;
 import se.snrn.combatcreatures.interfaces.Renderable;
 import se.snrn.combatcreatures.map.generator.MapMerger;
@@ -116,6 +117,18 @@ public class MapManager implements Renderable {
     public ArrayList<Tile> getAllNeighbours(Tile tile) {
         ArrayList<Tile> allNeighbours = new ArrayList<>();
         for (DirectionDiagonal dir : DirectionDiagonal.values()
+                ) {
+            Tile t = currentMap.getTile(tile.getX() + dir.getX(), tile.getY() + dir.getY());
+            if (t != null) {
+                allNeighbours.add(t);
+            }
+        }
+        return allNeighbours;
+    }
+
+    public ArrayList<Tile> getOrthoNeighbours(Tile tile) {
+        ArrayList<Tile> allNeighbours = new ArrayList<>();
+        for (Direction dir : Direction.values()
                 ) {
             Tile t = currentMap.getTile(tile.getX() + dir.getX(), tile.getY() + dir.getY());
             if (t != null) {
