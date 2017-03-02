@@ -92,7 +92,8 @@ public class Player implements Updatable, Renderable, Mapped, Living, Fighter {
         tile.setMapped(this);
         this.tile = tile;
         tile.stepOn(this);
-        mapManager.setLineOfSight(tile, 4);
+        //mapManager.setLineOfSight(tile, 4);
+        mapManager.generateVision(tile,4);
     }
 
     @Override

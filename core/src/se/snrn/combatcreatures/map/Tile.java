@@ -31,9 +31,7 @@ public class Tile implements Renderable {
         this.type = type;
         this.tileMap = tileMap;
         items = new ArrayList<>();
-        if(MissionScreen.debug = true){
-            explored = true;
-        }
+
     }
 
     @Override

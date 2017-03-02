@@ -9,6 +9,8 @@ import se.snrn.combatcreatures.entities.DirectionDiagonal;
 import se.snrn.combatcreatures.interfaces.Renderable;
 import se.snrn.combatcreatures.map.generator.MapMerger;
 import se.snrn.combatcreatures.map.generator.MapParser;
+import se.snrn.combatcreatures.map.pathfinding.BreadthFirstSearch;
+import se.snrn.combatcreatures.map.pathfinding.Node;
 
 import java.util.ArrayList;
 
@@ -22,6 +24,7 @@ public class MapManager implements Renderable {
     private int currentFloor;
     private EnemySpawner enemySpawner;
     private CreatureManager creatureManager;
+    private ArrayList<Tile> vision;
 
     public MapManager(CreatureManager creatureManager) {
         this.creatureManager = creatureManager;
@@ -37,7 +40,7 @@ public class MapManager implements Renderable {
         currentMap.setVisited(true);
         lineOfSight = new ArrayList<>();
 
-
+        vision = new ArrayList<>();
 
         //MapMerger mapMerger = new MapMerger();
         //currentMap = mapMerger.getMergedMap();
@@ -46,6 +49,7 @@ public class MapManager implements Renderable {
 
     @Override
     public void render(Batch batch) {
+
         currentMap.render(batch);
     }
 
@@ -67,11 +71,11 @@ public class MapManager implements Renderable {
         }
     }
 
-    public void changeFloor(int newFloor){
+    public void changeFloor(int newFloor) {
         currentMap = floors.get(newFloor);
-        System.out.println(currentFloor +" is the new floor\n map is "+currentMap);
+        System.out.println(currentFloor + " is the new floor\n map is " + currentMap);
 
-        if(!currentMap.isVisited()) {
+        if (!currentMap.isVisited()) {
             enemySpawner.spawnEnemies(creatureManager, this, 200);
             currentMap.setVisited(true);
         }
@@ -150,6 +154,26 @@ public class MapManager implements Renderable {
             visibleTile.setExplored(true);
             visibleTile.setVisible(true);
         }
+    }
+
+    public void generateVision(Tile tile, int range) {
+        BreadthFirstSearch bfs = new BreadthFirstSearch();
+
+        if(!vision.isEmpty()) {
+            for (Tile visible : vision) {
+                visible.setVisible(false);
+            }
+        }
+        vision.clear();
+
+        for (Node node : bfs.getHighlight(tile, range, currentMap)) {
+            if (!vision.contains(node.tile)) {
+                vision.add(node.tile);
+                node.tile.setVisible(true);
+                node.tile.setExplored(true);
+            }
+        }
+
     }
 
     public Tile getEndTile() {
