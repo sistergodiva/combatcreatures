@@ -20,7 +20,7 @@ public class ResourceManager {
     private static ArrayList<Sprite> walls;
     private static ArrayList<Sprite> dreamyWalls;
     public static Sprite target = new Sprite(new Texture(Gdx.files.internal("target.png")));
-    public static Sprite cursor = new Sprite(new Texture(Gdx.files.internal("Ui/cursor.png")));
+    public static Sprite cursor = new Sprite(new Texture(Gdx.files.internal("ui/cursor.png")));
     public static BitmapFont font = new BitmapFont();
     public static GlyphLayout glyphLayout = new GlyphLayout();
     public static Sprite heart = new Sprite(new Texture(Gdx.files.internal("ui/heart.png")));
