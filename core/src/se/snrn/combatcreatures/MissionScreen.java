@@ -18,6 +18,8 @@ import se.snrn.combatcreatures.entities.Stats;
 import se.snrn.combatcreatures.entities.player.Player;
 import se.snrn.combatcreatures.input.InputHandler;
 import se.snrn.combatcreatures.input.InputStateMachine;
+import se.snrn.combatcreatures.items.consumable.Consumable;
+import se.snrn.combatcreatures.items.consumable.ConsumableFactory;
 import se.snrn.combatcreatures.map.*;
 import se.snrn.combatcreatures.map.los.LineOfSight;
 import se.snrn.combatcreatures.userinterface.GameLog;
@@ -46,11 +48,8 @@ public class MissionScreen implements Screen {
     private CreatureManager creatureManager;
     public static TurnManager turnManager;
     private Batch uiBatch;
-
-
-    ShapeRenderer shapeRenderer;
-    private Vector2 playerVector;
-    private ArrayList<Tile> line;
+    private ConsumableFactory consumableFactory;
+    private ShapeRenderer shapeRenderer;
 
 
     public MissionScreen(Batch batch, SpriteBatch uiBatch, CombatCreatures combatCreatures) {
@@ -62,6 +61,9 @@ public class MissionScreen implements Screen {
         new ResourceManager();
         this.batch = batch;
         this.uiBatch = uiBatch;
+
+        consumableFactory = new ConsumableFactory();
+
 
         creatureManager = new CreatureManager();
         mapManager = new MapManager(creatureManager);
@@ -80,9 +82,6 @@ public class MissionScreen implements Screen {
 
         shapeRenderer = new ShapeRenderer();
 
-        playerVector = new Vector2(player.getTile().getX(), player.getTile().getY());
-
-        line = new ArrayList<>();
 
     }
 
@@ -99,16 +98,6 @@ public class MissionScreen implements Screen {
         if (!player.isAlive()) {
             cc.setScreen(cc.highScoreScreen);
         }
-
-        line.clear();
-
-        line = mapManager.qdLoS(player.getTile());
-
-        //line = LineOfSight.findLine(mapManager.getMap().tiles, player.getTile().getX(), player.getTile().getY(), mapManager.getStartTile().getX(), mapManager.getStartTile().getY());
-        //line = LineOfSight.getAllOctants(player.getTile(), mapManager.getMap());
-
-        //System.out.println(LineOfSight.canSee(player.getTile(), mapManager.getStartTile(), mapManager.getMap()));
-
         orthographicCamera.update();
         player.update(delta);
         creatureManager.update(delta);
@@ -142,10 +131,6 @@ public class MissionScreen implements Screen {
         uiBatch.begin();
         ui.render(uiBatch);
         uiBatch.end();
-
-
-        playerVector.x = player.getTile().getX();
-        playerVector.y = player.getTile().getY();
 
 
         shapeRenderer.setProjectionMatrix(orthographicCamera.combined);
