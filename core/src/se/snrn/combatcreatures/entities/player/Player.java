@@ -53,6 +53,8 @@ public class Player implements Updatable, Renderable, Mapped, Living, Fighter {
         inventory = new Inventory();
         effects = new ArrayList<>();
         level = 0;
+        mapManager.qdLoS(tile);
+
     }
 
     public ArrayList<Effect> getAllEffects() {
@@ -92,8 +94,7 @@ public class Player implements Updatable, Renderable, Mapped, Living, Fighter {
         tile.setMapped(this);
         this.tile = tile;
         tile.stepOn(this);
-        //mapManager.setLineOfSight(tile, 4);
-        mapManager.generateVision(tile,4);
+        mapManager.qdLoS(tile);
     }
 
     @Override

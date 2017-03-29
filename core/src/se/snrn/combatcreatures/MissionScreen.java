@@ -7,6 +7,9 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.GridPoint2;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import se.snrn.combatcreatures.entities.CreatureFactory;
@@ -15,9 +18,13 @@ import se.snrn.combatcreatures.entities.Stats;
 import se.snrn.combatcreatures.entities.player.Player;
 import se.snrn.combatcreatures.input.InputHandler;
 import se.snrn.combatcreatures.input.InputStateMachine;
-import se.snrn.combatcreatures.map.MapManager;
+import se.snrn.combatcreatures.map.*;
+import se.snrn.combatcreatures.map.los.LineOfSight;
 import se.snrn.combatcreatures.userinterface.GameLog;
 import se.snrn.combatcreatures.userinterface.Ui;
+import sun.security.provider.SHA;
+
+import java.util.ArrayList;
 
 import static se.snrn.combatcreatures.CombatCreatures.TILE_SIZE;
 
@@ -41,6 +48,9 @@ public class MissionScreen implements Screen {
     private Batch uiBatch;
 
 
+    ShapeRenderer shapeRenderer;
+    private Vector2 playerVector;
+    private ArrayList<Tile> line;
 
 
     public MissionScreen(Batch batch, SpriteBatch uiBatch, CombatCreatures combatCreatures) {
@@ -68,6 +78,11 @@ public class MissionScreen implements Screen {
         ui = new Ui(player, mapManager);
 
 
+        shapeRenderer = new ShapeRenderer();
+
+        playerVector = new Vector2(player.getTile().getX(), player.getTile().getY());
+
+        line = new ArrayList<>();
 
     }
 
@@ -81,16 +96,25 @@ public class MissionScreen implements Screen {
     private void update(float delta) {
         orthographicCamera.position.set(player.getTile().getX() * TILE_SIZE, player.getTile().getY() * TILE_SIZE, 0);
 
-        if(!player.isAlive()) {
+        if (!player.isAlive()) {
             cc.setScreen(cc.highScoreScreen);
         }
+
+        line.clear();
+
+        line = mapManager.qdLoS(player.getTile());
+
+        //line = LineOfSight.findLine(mapManager.getMap().tiles, player.getTile().getX(), player.getTile().getY(), mapManager.getStartTile().getX(), mapManager.getStartTile().getY());
+        //line = LineOfSight.getAllOctants(player.getTile(), mapManager.getMap());
+
+        //System.out.println(LineOfSight.canSee(player.getTile(), mapManager.getStartTile(), mapManager.getMap()));
 
         orthographicCamera.update();
         player.update(delta);
         creatureManager.update(delta);
         inputStateMachine.update(delta);
         ui.update(delta);
-        Gdx.graphics.setTitle("FPS: "+Gdx.graphics.getFramesPerSecond());
+        Gdx.graphics.setTitle("FPS: " + Gdx.graphics.getFramesPerSecond());
     }
 
     @Override
@@ -105,13 +129,30 @@ public class MissionScreen implements Screen {
         batch.begin();
         mapManager.render(batch);
 
+
         creatureManager.render(batch);
         player.render(batch);
         inputStateMachine.render(batch);
+//        for (Tile tile : line
+//                ) {
+//            ResourceManager.player.setPosition(tile.getX() * TILE_SIZE, tile.getY() * TILE_SIZE);
+//            ResourceManager.player.draw(batch);
+//        }
         batch.end();
         uiBatch.begin();
         ui.render(uiBatch);
         uiBatch.end();
+
+
+        playerVector.x = player.getTile().getX();
+        playerVector.y = player.getTile().getY();
+
+
+        shapeRenderer.setProjectionMatrix(orthographicCamera.combined);
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+
+
+        shapeRenderer.end();
     }
 
     @Override

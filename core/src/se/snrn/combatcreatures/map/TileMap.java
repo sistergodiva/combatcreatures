@@ -162,4 +162,8 @@ public class TileMap implements Renderable {
     public boolean isVisited() {
         return visited;
     }
+
+    public Tile[][] getTileArray() {
+        return tiles;
+    }
 }

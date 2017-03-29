@@ -2,24 +2,17 @@ package se.snrn.combatcreatures.map;
 
 
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.math.GridPoint2;
 import se.snrn.combatcreatures.EnemySpawner;
 import se.snrn.combatcreatures.entities.CreatureManager;
-import se.snrn.combatcreatures.entities.Direction;
-import se.snrn.combatcreatures.entities.DirectionDiagonal;
 import se.snrn.combatcreatures.interfaces.Renderable;
-import se.snrn.combatcreatures.map.generator.MapMerger;
-import se.snrn.combatcreatures.map.generator.MapParser;
-import se.snrn.combatcreatures.map.pathfinding.BreadthFirstSearch;
-import se.snrn.combatcreatures.map.pathfinding.Node;
+import se.snrn.combatcreatures.map.los.LineOfSight;
 
 import java.util.ArrayList;
-
-import static se.snrn.combatcreatures.map.TileType.WALL;
 
 public class MapManager implements Renderable {
 
     private TileMap currentMap;
-    private ArrayList<Tile> lineOfSight;
     private ArrayList<TileMap> floors;
     private int currentFloor;
     private EnemySpawner enemySpawner;
@@ -38,7 +31,6 @@ public class MapManager implements Renderable {
 
         currentMap = floors.get(currentFloor);
         currentMap.setVisited(true);
-        lineOfSight = new ArrayList<>();
 
         vision = new ArrayList<>();
 
@@ -85,95 +77,52 @@ public class MapManager implements Renderable {
         return currentMap;
     }
 
-    public ArrayList<Tile> getLineOfSight(Tile originTile, int range) {
-        ArrayList<Tile> lineOfSightList = new ArrayList<>();
-        for (DirectionDiagonal dir : DirectionDiagonal.values()
-                ) {
-            for (int i = 1; i < range; i++) {
-                Tile tmpTile = currentMap.getTile(originTile.getX() + (dir.getX() * i), originTile.getY() + (dir.getY() * i));
-                if (tmpTile == null || tmpTile.getType() == WALL) {
-                    break;
-                } else if (!lineOfSightList.contains(tmpTile)) {
-                    lineOfSightList.add(tmpTile);
+
+    public ArrayList<Tile> qdLoS(Tile tile) {
+
+        if (!vision.isEmpty()) {
+            for (Tile oldVisible : vision
+                    ) {
+                oldVisible.setVisible(false);
+            }
+            vision.clear();
+        }
+
+        ArrayList<GridPoint2> circle = getLosCircle(tile, 4);
+
+
+        for (GridPoint2 circleTile : circle) {
+            Tile loopTile = currentMap.getTile(circleTile.x, circleTile.y);
+
+            if (loopTile != null) {
+
+
+                ArrayList<GridPoint2> visibleTiles = LineOfSight.isVisible(currentMap, tile.getX(), tile.getY(), loopTile.getX(), loopTile.getY());
+                for (GridPoint2 visibleTile : visibleTiles) {
+                    Tile myTile = currentMap.getTile(visibleTile.x, visibleTile.y);
+
+                    myTile.setExplored(true);
+                    myTile.setVisible(true);
+                    vision.add(myTile);
                 }
+
             }
         }
 
-        ArrayList<Tile> los = new ArrayList<>();
+        return vision;
 
-        for (Tile tile : lineOfSightList
-                ) {
-            los.addAll(getAllNeighbours(tile));
-        }
-
-        for (Tile tile : los
-                ) {
-            if (!lineOfSightList.contains(tile)) {
-                lineOfSightList.add(tile);
-            }
-        }
-
-        los.clear();
-
-        return lineOfSightList;
     }
 
-    public ArrayList<Tile> getAllNeighbours(Tile tile) {
-        ArrayList<Tile> allNeighbours = new ArrayList<>();
-        for (DirectionDiagonal dir : DirectionDiagonal.values()
+
+    public ArrayList<GridPoint2> getLosCircle(Tile tile, int radius) {
+
+        ArrayList<GridPoint2> circleBorder = LineOfSight.getLosCircle(tile.getX(), tile.getY(), radius, currentMap);
+        ArrayList<GridPoint2> circleFill = new ArrayList<>();
+        for (GridPoint2 border : circleBorder
                 ) {
-            Tile t = currentMap.getTile(tile.getX() + dir.getX(), tile.getY() + dir.getY());
-            if (t != null) {
-                allNeighbours.add(t);
-            }
+            circleFill.addAll(LineOfSight.getCircleFill(tile.getX(), tile.getY(), border));
         }
-        return allNeighbours;
-    }
-
-    public ArrayList<Tile> getOrthoNeighbours(Tile tile) {
-        ArrayList<Tile> allNeighbours = new ArrayList<>();
-        for (Direction dir : Direction.values()
-                ) {
-            Tile t = currentMap.getTile(tile.getX() + dir.getX(), tile.getY() + dir.getY());
-            if (t != null) {
-                allNeighbours.add(t);
-            }
-        }
-        return allNeighbours;
-    }
-
-    public void setLineOfSight(Tile tile, int range) {
-        if (!lineOfSight.isEmpty()) {
-            for (Tile wasVisible : lineOfSight) {
-                wasVisible.setVisible(false);
-            }
-        }
-
-        lineOfSight = getLineOfSight(tile, range);
-        for (Tile visibleTile : lineOfSight) {
-            visibleTile.setExplored(true);
-            visibleTile.setVisible(true);
-        }
-    }
-
-    public void generateVision(Tile tile, int range) {
-        BreadthFirstSearch bfs = new BreadthFirstSearch();
-
-        if(!vision.isEmpty()) {
-            for (Tile visible : vision) {
-                visible.setVisible(false);
-            }
-        }
-        vision.clear();
-
-        for (Node node : bfs.getHighlight(tile, range, currentMap)) {
-            if (!vision.contains(node.tile)) {
-                vision.add(node.tile);
-                node.tile.setVisible(true);
-                node.tile.setExplored(true);
-            }
-        }
-
+        return circleFill;
     }
 
     public Tile getEndTile() {
