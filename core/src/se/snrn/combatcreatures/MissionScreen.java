@@ -15,9 +15,11 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import se.snrn.combatcreatures.entities.CreatureFactory;
 import se.snrn.combatcreatures.entities.CreatureManager;
 import se.snrn.combatcreatures.entities.Stats;
+import se.snrn.combatcreatures.entities.player.Experience;
 import se.snrn.combatcreatures.entities.player.Player;
 import se.snrn.combatcreatures.input.InputHandler;
 import se.snrn.combatcreatures.input.InputStateMachine;
+import se.snrn.combatcreatures.items.LootGenerator;
 import se.snrn.combatcreatures.items.consumable.Consumable;
 import se.snrn.combatcreatures.items.consumable.ConsumableFactory;
 import se.snrn.combatcreatures.map.*;
@@ -81,6 +83,10 @@ public class MissionScreen implements Screen {
 
 
         shapeRenderer = new ShapeRenderer();
+
+
+        new Experience();
+
 
 
     }

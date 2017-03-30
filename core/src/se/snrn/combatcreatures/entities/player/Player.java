@@ -2,6 +2,7 @@ package se.snrn.combatcreatures.entities.player;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import se.snrn.combatcreatures.AttackResolver;
 import se.snrn.combatcreatures.CombatCreatures;
 import se.snrn.combatcreatures.ResourceManager;
 import se.snrn.combatcreatures.effects.Effect;
@@ -22,6 +23,9 @@ import static se.snrn.combatcreatures.CombatCreatures.TILE_SIZE;
 import static se.snrn.combatcreatures.MissionScreen.turnManager;
 
 public class Player implements Updatable, Renderable, Mapped, Living, Fighter {
+
+
+    private int skillPoints;
     private int health;
     private Tile tile;
     private MapManager mapManager;
@@ -39,6 +43,7 @@ public class Player implements Updatable, Renderable, Mapped, Living, Fighter {
     private int score;
     private int xp;
 
+
     public Player(Tile tile, MapManager mapManager, Stats stats) {
         this.tile = tile;
         this.mapManager = mapManager;
@@ -49,11 +54,13 @@ public class Player implements Updatable, Renderable, Mapped, Living, Fighter {
         health = 10;
         mana = 5;
         karies = 3;
-        playerEquipment = new PlayerEquipment();
+        playerEquipment = new PlayerEquipment(this);
         inventory = new Inventory();
         effects = new ArrayList<>();
         level = 0;
         mapManager.qdLoS(tile);
+
+        skillPoints = 0;
 
     }
 
@@ -67,7 +74,7 @@ public class Player implements Updatable, Renderable, Mapped, Living, Fighter {
     @Override
     public void update(float delta) {
         sprite.setPosition(tile.getX() * TILE_SIZE, tile.getY() * TILE_SIZE);
-        if(health <= 0 && alive){
+        if (health <= 0 && alive) {
             die();
         }
     }
@@ -75,6 +82,8 @@ public class Player implements Updatable, Renderable, Mapped, Living, Fighter {
     @Override
     public void render(Batch batch) {
         sprite.draw(batch);
+        ResourceManager.boots.setPosition(tile.getX() * TILE_SIZE, tile.getY() * TILE_SIZE);
+        ResourceManager.boots.draw(batch);
     }
 
 
@@ -103,8 +112,9 @@ public class Player implements Updatable, Renderable, Mapped, Living, Fighter {
         if (newTile != null && newTile.getType() == TileType.FLOOR) {
             if (newTile.getMapped() instanceof Creature) {
                 Creature creature = (Creature) newTile.getMapped();
-                creature.takeDamage(1);
-                GameLog.addMessage(creature.getName() + " took 1 damage");
+                int damage = AttackResolver.resolveNormalAttack(this, creature);
+                creature.takeDamage(damage);
+                GameLog.addMessage(creature.getName() + " took " + damage + " damage");
                 turnManager.endPlayerTurn();
                 return true;
             }
@@ -200,10 +210,29 @@ public class Player implements Updatable, Renderable, Mapped, Living, Fighter {
 
     public void addXp(int xp) {
         this.xp += xp;
+
+        while (Experience.getLevel(this.xp) > level) {
+            levelUp();
+        }
+    }
+
+    private void levelUp() {
+        level++;
+        skillPoints++;
+        System.out.println("leveled to level " + level);
+    }
+
+
+    public int getSkillPoints() {
+        return skillPoints;
     }
 
     public int getXp() {
         return xp;
+    }
+
+    public void setSkillPoints(int skillPoints) {
+        this.skillPoints = skillPoints;
     }
 }
 

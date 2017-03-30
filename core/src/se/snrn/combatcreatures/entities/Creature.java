@@ -3,6 +3,8 @@ package se.snrn.combatcreatures.entities;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.utils.JsonValue;
+import se.snrn.combatcreatures.AttackResolver;
+import se.snrn.combatcreatures.RandomNumber;
 import se.snrn.combatcreatures.ResourceManager;
 import se.snrn.combatcreatures.entities.player.Player;
 import se.snrn.combatcreatures.interfaces.*;
@@ -36,7 +38,6 @@ public class Creature implements Updatable, Renderable, Mapped, Ai, Living, Figh
     private int cost;
     private Sprite deadSprite;
     private boolean active;
-    private TileMap tilemap;
     private int floor;
     MapManager mapManager;
 
@@ -67,8 +68,9 @@ public class Creature implements Updatable, Renderable, Mapped, Ai, Living, Figh
     @Override
     public void update(float delta) {
         if (health <= 0 && alive) {
+            GameLog.addMessage(this.name + " died.");
             die();
-            System.out.println("died");
+
         }
         sprite.setPosition(tile.getX() * TILE_SIZE, tile.getY() * TILE_SIZE);
     }
@@ -104,8 +106,9 @@ public class Creature implements Updatable, Renderable, Mapped, Ai, Living, Figh
         if (newTile != null && newTile.getType() == TileType.FLOOR) {
             if (newTile.getMapped() instanceof Player) {
                 Player player = (Player) newTile.getMapped();
-                player.takeDamage(1);
-                GameLog.addMessage("You took 1 damage");
+                int damage = AttackResolver.resolveNormalAttack(this, player);
+                player.takeDamage(damage);
+                GameLog.addMessage("You took " +damage+ " damage");
                 return true;
             }
             changeTile(newTile);
@@ -168,7 +171,7 @@ public class Creature implements Updatable, Renderable, Mapped, Ai, Living, Figh
     public void die() {
         tile.setMapped(null);
         setAlive(false);
-        tile.addItem(ConsumableFactory.getNewConsumable(1));
+        tile.addItem(ConsumableFactory.getNewConsumable(RandomNumber.range(0,7)));
 
         GameLog.addMessage(name +" died.");
     }

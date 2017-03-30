@@ -21,6 +21,7 @@ public class Ui implements Updatable, Renderable{
     private MiniMap miniMap;
     private TextLog textLog;
     private InfoBox infoBox;
+    private AbilityBar abilityBar;
 
     public Ui(Player player, MapManager mapManager) {
         margin = 8;
@@ -33,6 +34,8 @@ public class Ui implements Updatable, Renderable{
         textLog = new TextLog(0,0);
         inventory.setPosition(Gdx.graphics.getWidth()-200, Gdx.graphics.getHeight()-miniMap.getMiniMapHeight());
         infoBox = new InfoBox(mapManager, player, 0,144);
+        abilityBar = new AbilityBar(player, 300+margin, 0);
+
     }
 
     @Override
@@ -51,6 +54,7 @@ public class Ui implements Updatable, Renderable{
         miniMap.render(batch);
         textLog.render(batch);
         infoBox.render(batch);
+        abilityBar.render(batch);
     }
 
     public MiniMap getMiniMap() {

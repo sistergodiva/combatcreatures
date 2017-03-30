@@ -65,6 +65,7 @@ public class DefaultInputState implements InputState{
 
             case Input.Keys.L: {
                 System.out.println(player.getStats());
+                break;
             }
 
             case Input.Keys.I: {
@@ -73,6 +74,16 @@ public class DefaultInputState implements InputState{
 
             case Input.Keys.M: {
                 MissionScreen.ui.getMiniMap().setMapScale(8);
+                break;
+            }
+            case Input.Keys.X: {
+                player.addXp(100);
+                break;
+            }
+
+            case Input.Keys.Z: {
+                player.setSkillPoints(player.getSkillPoints()-1);
+                break;
             }
         }
         return null;

@@ -16,14 +16,16 @@ public class Equipment implements Item {
     private float x;
     private float y;
     private Sprite sprite;
+    private Prefix prefix;
 
 
-    public Equipment(String name, String description, PermanentBuffEffect permanentBuffEffect, Ability ability, EquipmentSlot equipmentSlot) {
+    public Equipment(String name, String description, PermanentBuffEffect permanentBuffEffect, Ability ability, EquipmentSlot equipmentSlot, Prefix prefix) {
         this.name = name;
         this.description = description;
         this.permanentBuffEffect = permanentBuffEffect;
         this.ability = ability;
         this.equipmentSlot = equipmentSlot;
+        this.prefix = prefix;
     }
 
     @Override

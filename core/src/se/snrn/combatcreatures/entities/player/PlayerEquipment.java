@@ -8,13 +8,17 @@ import se.snrn.combatcreatures.items.Equipment.Equipment;
 
 import java.util.ArrayList;
 
+import static se.snrn.combatcreatures.CombatCreatures.TILE_SIZE;
+
 public class PlayerEquipment implements Renderable{
 
     private Equipment head;
     private Equipment back;
     private Equipment chest;
+    private Player player;
 
-    public PlayerEquipment() {
+    public PlayerEquipment(Player player) {
+        this.player = player;
         head = null;
         back = null;
         chest = null;
@@ -74,6 +78,17 @@ public class PlayerEquipment implements Renderable{
 
     @Override
     public void render(Batch batch) {
-
+        if(head != null){
+            head.setPosition(player.getTile().getX()*TILE_SIZE, player.getTile().getY()*TILE_SIZE);
+            head.render(batch);
+        }
+        if(back != null){
+            back.setPosition(player.getTile().getX()*TILE_SIZE, player.getTile().getY()*TILE_SIZE);
+            back.render(batch);
+        }
+        if(chest != null){
+            chest.setPosition(player.getTile().getX()*TILE_SIZE, player.getTile().getY()*TILE_SIZE);
+            chest.render(batch);
+        }
     }
 }
