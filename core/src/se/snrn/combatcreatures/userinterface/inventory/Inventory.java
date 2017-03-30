@@ -1,4 +1,4 @@
-package se.snrn.combatcreatures.inventory;
+package se.snrn.combatcreatures.userinterface.inventory;
 
 
 import com.badlogic.gdx.Gdx;

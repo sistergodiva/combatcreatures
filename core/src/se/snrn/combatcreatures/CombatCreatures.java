@@ -5,6 +5,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import se.snrn.combatcreatures.highscore.HighScoreScreen;
+import se.snrn.combatcreatures.userinterface.leveling.SkillWindow;
 
 public class CombatCreatures extends Game{
     public static final int TILE_SIZE = 32;
@@ -13,9 +14,12 @@ public class CombatCreatures extends Game{
     SpriteBatch uiBatch;
     HighScoreScreen highScoreScreen;
 
+
     public CombatCreatures() {
 
     }
+
+
 
     @Override
     public void create() {

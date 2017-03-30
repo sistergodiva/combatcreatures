@@ -1,4 +1,4 @@
-package se.snrn.combatcreatures.inventory;
+package se.snrn.combatcreatures.userinterface.inventory;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import se.snrn.combatcreatures.ResourceManager;

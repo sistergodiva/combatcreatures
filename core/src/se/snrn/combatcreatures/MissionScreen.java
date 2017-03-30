@@ -91,6 +91,10 @@ public class MissionScreen implements Screen {
 
     }
 
+    public static Ui getUi() {
+        return ui;
+    }
+
     @Override
     public void show() {
         orthographicCamera.position.set(WORLD_WIDTH / 2, WORLD_HEIGHT / 2, 0);

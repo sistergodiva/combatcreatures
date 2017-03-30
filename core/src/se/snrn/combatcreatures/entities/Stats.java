@@ -1,5 +1,7 @@
 package se.snrn.combatcreatures.entities;
 
+import se.snrn.combatcreatures.items.Equipment.Stat;
+
 public class Stats {
 
     private int magicAttack;
@@ -9,6 +11,8 @@ public class Stats {
     private int health;
     private int mana;
 
+    private int[] stats;
+
     public Stats(int magicAttack, int normalAttack, int magicDefence, int normalDefence, int health, int mana) {
         this.magicAttack = magicAttack;
         this.normalAttack = normalAttack;
@@ -16,7 +20,31 @@ public class Stats {
         this.normalDefence = normalDefence;
         this.health = health;
         this.mana = mana;
+
+
+        stats = new int[6];
+
+        stats[0] = magicAttack;
+        stats[1] = normalAttack;
+        stats[2] = magicDefence;
+        stats[3] = normalDefence;
+        stats[4] = health;
+        stats[5] = mana;
+
     }
+
+    public int getStatFromEnum(Stat statEnum){
+        return stats[statEnum.ordinal()];
+    }
+
+    public void increaseStatFromEnum(Stat statEnum){
+        stats[statEnum.ordinal()]++;
+    }
+
+    public void decreaseStatFromEnum(Stat statEnum){
+        stats[statEnum.ordinal()]--;
+    }
+
 
     public int getMagicAttack() {
         return magicAttack;

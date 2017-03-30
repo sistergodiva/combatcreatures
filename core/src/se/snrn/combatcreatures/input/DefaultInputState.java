@@ -72,6 +72,9 @@ public class DefaultInputState implements InputState{
                 return new InventoryInputState(player);
             }
 
+            case Input.Keys.Y: {
+                return new LevelingInputState(player);
+            }
             case Input.Keys.M: {
                 MissionScreen.ui.getMiniMap().setMapScale(8);
                 break;

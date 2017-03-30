@@ -5,8 +5,9 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import se.snrn.combatcreatures.entities.player.Player;
 import se.snrn.combatcreatures.interfaces.Renderable;
 import se.snrn.combatcreatures.interfaces.Updatable;
-import se.snrn.combatcreatures.inventory.Inventory;
+import se.snrn.combatcreatures.userinterface.inventory.Inventory;
 import se.snrn.combatcreatures.map.MapManager;
+import se.snrn.combatcreatures.userinterface.leveling.SkillWindow;
 
 import static se.snrn.combatcreatures.CombatCreatures.TILE_SIZE;
 
@@ -22,6 +23,7 @@ public class Ui implements Updatable, Renderable{
     private TextLog textLog;
     private InfoBox infoBox;
     private AbilityBar abilityBar;
+    private SkillWindow skillWindow;
 
     public Ui(Player player, MapManager mapManager) {
         margin = 8;
@@ -35,6 +37,7 @@ public class Ui implements Updatable, Renderable{
         inventory.setPosition(Gdx.graphics.getWidth()-200, Gdx.graphics.getHeight()-miniMap.getMiniMapHeight());
         infoBox = new InfoBox(mapManager, player, 0,144);
         abilityBar = new AbilityBar(player, 300+margin, 0);
+        skillWindow = new SkillWindow(300, 300, player);
 
     }
 
@@ -48,6 +51,9 @@ public class Ui implements Updatable, Renderable{
         if(inventory.isOpen()){
             inventory.render(batch);
         }
+        if(skillWindow.isOpen()){
+            skillWindow.render(batch);
+        }
         healthBar.render(batch);
         manaBar.render(batch);
         kariesBar.render(batch);
@@ -55,9 +61,14 @@ public class Ui implements Updatable, Renderable{
         textLog.render(batch);
         infoBox.render(batch);
         abilityBar.render(batch);
+
     }
 
     public MiniMap getMiniMap() {
         return miniMap;
+    }
+
+    public SkillWindow getSkillWindow() {
+        return skillWindow;
     }
 }

@@ -3,7 +3,7 @@ package se.snrn.combatcreatures.input;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import se.snrn.combatcreatures.entities.player.Player;
-import se.snrn.combatcreatures.inventory.Inventory;
+import se.snrn.combatcreatures.userinterface.inventory.Inventory;
 import se.snrn.combatcreatures.items.Item;
 
 public class InventoryInputState implements InputState {
