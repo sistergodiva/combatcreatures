@@ -2,15 +2,16 @@ package se.snrn.combatcreatures;
 
 
 import se.snrn.combatcreatures.interfaces.Fighter;
+import se.snrn.combatcreatures.items.Equipment.Stat;
 
 public class AttackResolver {
 
     public static int resolveMagicAttack(Fighter attacker, Fighter defender) {
-        return attacker.getStats().getMagicAttack() - defender.getStats().getMagicDefence();
+        return attacker.getStats().getStatFromEnum(Stat.MAT) - defender.getStats().getStatFromEnum(Stat.MDE);
     }
 
     public static int resolveNormalAttack(Fighter attacker, Fighter defender) {
-        return attacker.getStats().getNormalAttack() - defender.getStats().getNormalDefence();
+        return attacker.getStats().getStatFromEnum(Stat.NAT) - defender.getStats().getStatFromEnum(Stat.NDE);
     }
 
 }
