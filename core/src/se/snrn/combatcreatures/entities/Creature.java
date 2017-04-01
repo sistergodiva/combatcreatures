@@ -172,6 +172,11 @@ public class Creature implements Updatable, Renderable, Mapped, Ai, Living, Figh
         GameLog.addMessage(name +" died.");
     }
 
+    @Override
+    public void tick() {
+
+    }
+
     public void setFinished(boolean finished) {
         this.finished = finished;
     }

@@ -17,6 +17,11 @@ public class CreatureManager implements Updatable, Renderable {
     ArrayList<Creature> creaturesToAdd;
     ArrayList<Corpse> corpses;
     ArrayList<Corpse> corpsesToAdd;
+
+    public Player getPlayer() {
+        return player;
+    }
+
     private Player player;
 
     public CreatureManager() {
@@ -108,5 +113,9 @@ public class CreatureManager implements Updatable, Renderable {
 
     public void setPlayer(Player player) {
         this.player = player;
+    }
+
+    public ArrayList<Creature> getCreatures() {
+        return creatures;
     }
 }

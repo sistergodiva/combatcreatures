@@ -1,11 +1,12 @@
 package se.snrn.combatcreatures;
 
 
+import se.snrn.combatcreatures.entities.Creature;
 import se.snrn.combatcreatures.entities.CreatureManager;
 
 public class TurnManager {
 
-    private int turn;
+    private static int turn;
     private TurnType turnType;
     private CreatureManager creatureManager;
 
@@ -27,9 +28,15 @@ public class TurnManager {
 
     public void advanceTurn(){
         turn++;
+        System.out.println("Next turn");
+        creatureManager.getPlayer().tick();
+        for (Creature creature : creatureManager.getCreatures()
+                ) {
+            creature.tick();
+        }
     }
 
-    public int getTurn() {
+    public static int getTurn() {
         return turn;
     }
 

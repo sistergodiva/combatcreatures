@@ -4,6 +4,7 @@ package se.snrn.combatcreatures.userinterface;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import se.snrn.combatcreatures.ResourceManager;
+import se.snrn.combatcreatures.TurnManager;
 import se.snrn.combatcreatures.entities.player.Player;
 import se.snrn.combatcreatures.interfaces.Renderable;
 import se.snrn.combatcreatures.interfaces.Updatable;
@@ -37,7 +38,7 @@ public class InfoBox implements Updatable, Renderable{
         ResourceManager.pinkBox.draw(batch, x,(Gdx.graphics.getHeight()-y)-80, 128,80);
 
         ResourceManager.font.draw(batch, "Level: "+player.getLevel()+" XP: "+player.getXp()+" skillsLeft: "+player.getSkillPoints(), x+margin, (Gdx.graphics.getHeight()-y)-((ResourceManager.glyphLayout.height+margin)));
-        ResourceManager.font.draw(batch, "Floor: "+player.getFloor(), x+margin, (Gdx.graphics.getHeight()-y)-((ResourceManager.glyphLayout.height+margin*2+TILE_SIZE)));
+        ResourceManager.font.draw(batch, "Floor: "+player.getFloor()+" Turn: "+ TurnManager.getTurn(), x+margin, (Gdx.graphics.getHeight()-y)-((ResourceManager.glyphLayout.height+margin*2+TILE_SIZE)));
 
     }
 }

@@ -8,4 +8,6 @@ public interface Living {
     void healDamage(int damage);
     int getHealth();
     void die();
+
+    void tick();
 }

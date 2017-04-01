@@ -172,6 +172,11 @@ public class Player implements Updatable, Renderable, Mapped, Living, Fighter {
     }
 
     @Override
+    public void tick() {
+
+    }
+
+    @Override
     public Stats getStats() {
         return stats;
     }
