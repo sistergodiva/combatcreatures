@@ -7,13 +7,16 @@ import se.snrn.combatcreatures.CombatCreatures;
 import se.snrn.combatcreatures.MissionScreen;
 import se.snrn.combatcreatures.entities.Direction;
 import se.snrn.combatcreatures.entities.player.Player;
+import se.snrn.combatcreatures.map.MapManager;
 import se.snrn.combatcreatures.userinterface.GameLog;
 
 public class DefaultInputState implements InputState{
     private Player player;
+    private MapManager mapManager;
 
-    public DefaultInputState(Player player) {
+    public DefaultInputState(Player player, MapManager mapManager) {
         this.player = player;
+        this.mapManager = mapManager;
     }
 
     @Override
@@ -57,10 +60,10 @@ public class DefaultInputState implements InputState{
                 break;
             }
             case Input.Keys.J: {
-                return new JumpInputState(player);
+                return new JumpInputState(player, mapManager);
             }
             case Input.Keys.K: {
-                return new DigInputState(player);
+                return new DigInputState(player, mapManager);
             }
 
             case Input.Keys.L: {
@@ -69,11 +72,11 @@ public class DefaultInputState implements InputState{
             }
 
             case Input.Keys.I: {
-                return new InventoryInputState(player);
+                return new InventoryInputState(player, mapManager);
             }
 
             case Input.Keys.Y: {
-                return new LevelingInputState(player);
+                return new LevelingInputState(player, mapManager);
             }
             case Input.Keys.M: {
                 MissionScreen.ui.getMiniMap().setMapScale(8);
@@ -87,6 +90,9 @@ public class DefaultInputState implements InputState{
             case Input.Keys.Z: {
                 player.setSkillPoints(player.getSkillPoints()-1);
                 break;
+            }
+            case Input.Keys.V: {
+                return new RangedInputState(player, mapManager);
             }
         }
         return null;

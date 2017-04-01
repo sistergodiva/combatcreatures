@@ -2,9 +2,13 @@ package se.snrn.combatcreatures.input;
 
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import se.snrn.combatcreatures.AttackResolver;
 import se.snrn.combatcreatures.ResourceManager;
+import se.snrn.combatcreatures.entities.Creature;
 import se.snrn.combatcreatures.entities.Direction;
 import se.snrn.combatcreatures.entities.player.Player;
+import se.snrn.combatcreatures.interfaces.Fighter;
+import se.snrn.combatcreatures.interfaces.Mapped;
 import se.snrn.combatcreatures.map.MapManager;
 import se.snrn.combatcreatures.map.Tile;
 import se.snrn.combatcreatures.map.TileMap;
@@ -16,16 +20,17 @@ import static se.snrn.combatcreatures.CombatCreatures.TILE_SIZE;
 import static se.snrn.combatcreatures.MissionScreen.turnManager;
 
 
-public class JumpInputState implements InputState {
+public class RangedInputState implements InputState {
 
 
     private TileMap tileMap;
     private MapManager mapManager;
-    private ArrayList<Tile> allowedTargets;
+    private ArrayList<Mapped> allowedTargets;
     private Player player;
     private boolean done;
+    private Mapped target;
 
-    public JumpInputState(Player player, MapManager mapManager) {
+    public RangedInputState(Player player, MapManager mapManager) {
         this.player = player;
 
         tileMap = player.getMap();
@@ -33,9 +38,13 @@ public class JumpInputState implements InputState {
 
         allowedTargets = new ArrayList<>();
 
-        for (Direction direction : Direction.values()) {
-            allowedTargets.add(tileMap.getTile(player.getTile().getX() + (direction.getX() * 2), player.getTile().getY() + (direction.getY() * 2)));
+        for (Tile tile : mapManager.getVision()) {
+            if (tile.getMapped() instanceof Fighter) {
+                allowedTargets.add((Mapped) tile.getMapped());
+            }
         }
+
+        target = allowedTargets.get(0);
 
     }
 
@@ -46,11 +55,15 @@ public class JumpInputState implements InputState {
 
     @Override
     public void render(Batch batch) {
-        for (Tile allowedTarget : allowedTargets) {
-            if(allowedTarget.getType() == TileType.FLOOR) {
-                ResourceManager.target.setPosition(allowedTarget.getX() * TILE_SIZE, allowedTarget.getY() * TILE_SIZE);
-                ResourceManager.target.draw(batch);
-            }
+
+        ResourceManager.cursor.setPosition(target.getTile().getX() * TILE_SIZE, target.getTile().getY() * TILE_SIZE);
+        ResourceManager.cursor.draw(batch);
+
+        for (Mapped allowedTarget : allowedTargets) {
+
+            ResourceManager.target.setPosition(allowedTarget.getTile().getX() * TILE_SIZE, allowedTarget.getTile().getY() * TILE_SIZE);
+            ResourceManager.target.draw(batch);
+
         }
     }
 
@@ -67,38 +80,22 @@ public class JumpInputState implements InputState {
     @Override
     public InputState handleInput(int input) {
         switch (input) {
-            case Input.Keys.W: {
-                if(allowedTargets.get(0).getType() == TileType.FLOOR) {
-                    player.changeTile(allowedTargets.get(0));
-                    done = true;
-                }
-                break;
-            }
-            case Input.Keys.D: {
-                if(allowedTargets.get(1).getType() == TileType.FLOOR) {
-                    player.changeTile(allowedTargets.get(1));
-                    done = true;
-                }
+            case Input.Keys.ENTER: {
+                AttackResolver.resolveRangedAttack(player, target);
                 break;
             }
             case Input.Keys.S: {
-                if(allowedTargets.get(2).getType() == TileType.FLOOR) {
-                    player.changeTile(allowedTargets.get(2));
-                    done = true;
-                }
+
                 break;
             }
             case Input.Keys.A: {
-                if(allowedTargets.get(3).getType() == TileType.FLOOR) {
-                    player.changeTile(allowedTargets.get(3));
-                    done = true;
-                }
+
                 break;
             }
             default:
                 return null;
         }
-        if(done) {
+        if (done) {
             turnManager.endPlayerTurn();
             return new DefaultInputState(player, mapManager);
         }

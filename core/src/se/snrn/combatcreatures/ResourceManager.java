@@ -29,14 +29,16 @@ public class ResourceManager {
     public static Sprite magic = new Sprite(new Texture(Gdx.files.internal("ui/magic.png")));
     public static Sprite tooth = new Sprite(new Texture(Gdx.files.internal("ui/tooth.png")));
     public static Sprite white = new Sprite(new Texture(Gdx.files.internal("ui/white.png")));
-    public static Sprite black= new Sprite(new Texture(Gdx.files.internal("ui/black.png")));
-    public static Sprite red= new Sprite(new Texture(Gdx.files.internal("ui/red.png")));
-    public static Sprite blue= new Sprite(new Texture(Gdx.files.internal("ui/blue.png")));
-    public static Sprite pink= new Sprite(new Texture(Gdx.files.internal("ui/pink.png")));
-    public static Sprite up= new Sprite(new Texture(Gdx.files.internal("tiles/up.png")));
-    public static Sprite down= new Sprite(new Texture(Gdx.files.internal("tiles/down.png")));
+    public static Sprite black = new Sprite(new Texture(Gdx.files.internal("ui/black.png")));
+    public static Sprite red = new Sprite(new Texture(Gdx.files.internal("ui/red.png")));
+    public static Sprite blue = new Sprite(new Texture(Gdx.files.internal("ui/blue.png")));
+    public static Sprite pink = new Sprite(new Texture(Gdx.files.internal("ui/pink.png")));
+    public static Sprite up = new Sprite(new Texture(Gdx.files.internal("tiles/up.png")));
+    public static Sprite down = new Sprite(new Texture(Gdx.files.internal("tiles/down.png")));
 
-    public static NinePatch pinkBox = new NinePatch(new Texture(Gdx.files.internal("ui/pink_box.png")), 6,6,6,6);
+    public static Sprite bullet = new Sprite(new Texture(Gdx.files.internal("bullet.png")));
+
+    public static NinePatch pinkBox = new NinePatch(new Texture(Gdx.files.internal("ui/pink_box.png")), 6, 6, 6, 6);
     public static Sprite doorClosed = new Sprite(new Texture(Gdx.files.internal("tiles/door_closed.png")));
     private static ArrayList<Sprite> rainbowWalls;
     public static Sprite cloud = new Sprite(new Texture(Gdx.files.internal("rainbow/cloud.png")));
@@ -46,15 +48,15 @@ public class ResourceManager {
     public ResourceManager() {
         walls = new ArrayList<>();
         for (int i = 0; i < 16; i++) {
-            walls.add(new Sprite(new Texture(Gdx.files.internal("tiles/wall_"+i+".png"))));
+            walls.add(new Sprite(new Texture(Gdx.files.internal("tiles/wall_" + i + ".png"))));
         }
         dreamyWalls = new ArrayList<>();
         for (int i = 0; i < 16; i++) {
-            dreamyWalls.add(new Sprite(new Texture(Gdx.files.internal("dreamy/dreamy_"+i+".png"))));
+            dreamyWalls.add(new Sprite(new Texture(Gdx.files.internal("dreamy/dreamy_" + i + ".png"))));
         }
         rainbowWalls = new ArrayList<>();
         for (int i = 0; i < 16; i++) {
-            rainbowWalls.add(new Sprite(new Texture(Gdx.files.internal("rainbow/rainbow_"+i+".png"))));
+            rainbowWalls.add(new Sprite(new Texture(Gdx.files.internal("rainbow/rainbow_" + i + ".png"))));
         }
     }
 
@@ -62,15 +64,18 @@ public class ResourceManager {
 
         return walls.get(tileValue);
     }
+
     public static Sprite getDreamyWallFromBitMask(int tileValue) {
 
         return dreamyWalls.get(tileValue);
     }
+
     public static Sprite getCreatureSpriteFromString(String spriteString) {
-        return new Sprite(new Texture(Gdx.files.internal("creature/"+spriteString)));
+        return new Sprite(new Texture(Gdx.files.internal("creature/" + spriteString)));
     }
+
     public static Sprite getSpriteFromString(String spriteString) {
-        return new Sprite(new Texture(Gdx.files.internal("item/"+spriteString)));
+        return new Sprite(new Texture(Gdx.files.internal("item/" + spriteString)));
     }
 
     public static Sprite getRainbowWallFromBitMask(int tileValue) {

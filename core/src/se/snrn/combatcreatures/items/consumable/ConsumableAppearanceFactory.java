@@ -4,10 +4,6 @@ package se.snrn.combatcreatures.items.consumable;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
-import se.snrn.combatcreatures.effects.Effect;
-
-import java.util.ArrayList;
-import java.util.HashMap;
 
 public class ConsumableAppearanceFactory {
 

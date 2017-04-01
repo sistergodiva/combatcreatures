@@ -4,15 +4,18 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import se.snrn.combatcreatures.MissionScreen;
 import se.snrn.combatcreatures.entities.player.Player;
+import se.snrn.combatcreatures.map.MapManager;
 import se.snrn.combatcreatures.userinterface.leveling.SkillWindow;
 
 public class LevelingInputState implements InputState {
 
     private SkillWindow skillWindow;
     private Player player;
+    private MapManager mapManager;
 
-    public LevelingInputState(Player player) {
+    public LevelingInputState(Player player, MapManager mapManager) {
         this.player = player;
+        this.mapManager = mapManager;
         this.skillWindow = MissionScreen.getUi().getSkillWindow();
     }
 
@@ -59,7 +62,7 @@ public class LevelingInputState implements InputState {
             }
             case Input.Keys.Y: {
 
-                return new DefaultInputState(player);
+                return new DefaultInputState(player, mapManager);
             }
 
 

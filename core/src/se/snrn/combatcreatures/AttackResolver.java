@@ -2,6 +2,7 @@ package se.snrn.combatcreatures;
 
 
 import se.snrn.combatcreatures.interfaces.Fighter;
+import se.snrn.combatcreatures.interfaces.Mapped;
 import se.snrn.combatcreatures.items.Equipment.Stat;
 
 public class AttackResolver {
@@ -14,5 +15,8 @@ public class AttackResolver {
         return attacker.getStats().getStatFromEnum(Stat.NAT) - defender.getStats().getStatFromEnum(Stat.NDE);
     }
 
+    public static void resolveRangedAttack(Mapped attacker, Mapped defender) {
+
+    }
 }
 

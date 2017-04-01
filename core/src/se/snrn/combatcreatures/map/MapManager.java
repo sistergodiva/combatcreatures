@@ -34,6 +34,8 @@ public class MapManager implements Renderable {
 
         vision = new ArrayList<>();
 
+        enemySpawner.spawnTargetDummies(creatureManager, this, 200);
+
         //MapMerger mapMerger = new MapMerger();
         //currentMap = mapMerger.getMergedMap();
     }
@@ -131,5 +133,9 @@ public class MapManager implements Renderable {
 
     public int getFloor() {
         return currentFloor;
+    }
+
+    public ArrayList<Tile> getVision() {
+        return vision;
     }
 }

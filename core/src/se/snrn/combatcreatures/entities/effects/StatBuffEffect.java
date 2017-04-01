@@ -1,4 +1,4 @@
-package se.snrn.combatcreatures.effects;
+package se.snrn.combatcreatures.entities.effects;
 
 
 import se.snrn.combatcreatures.entities.Stats;

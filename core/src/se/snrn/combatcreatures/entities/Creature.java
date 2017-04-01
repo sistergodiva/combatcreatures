@@ -8,16 +8,12 @@ import se.snrn.combatcreatures.RandomNumber;
 import se.snrn.combatcreatures.ResourceManager;
 import se.snrn.combatcreatures.entities.player.Player;
 import se.snrn.combatcreatures.interfaces.*;
-import se.snrn.combatcreatures.items.Item;
-import se.snrn.combatcreatures.items.consumable.Consumable;
 import se.snrn.combatcreatures.items.consumable.ConsumableFactory;
 import se.snrn.combatcreatures.map.MapManager;
 import se.snrn.combatcreatures.map.Tile;
 import se.snrn.combatcreatures.map.TileMap;
 import se.snrn.combatcreatures.map.TileType;
 import se.snrn.combatcreatures.userinterface.GameLog;
-
-import java.util.ArrayList;
 
 import static se.snrn.combatcreatures.CombatCreatures.TILE_SIZE;
 
@@ -42,7 +38,7 @@ public class Creature implements Updatable, Renderable, Mapped, Ai, Living, Figh
     MapManager mapManager;
 
 
-    public Creature(Tile tile, MapManager mapManager, JsonValue stats, JsonValue appearance) {
+    public Creature(Tile tile, MapManager mapManager, JsonValue stats, JsonValue appearance, AiCore aiCore) {
         this.mapManager = mapManager;
         this.tileMap = mapManager.getMap();
         this.floor = mapManager.getFloor();
@@ -54,7 +50,7 @@ public class Creature implements Updatable, Renderable, Mapped, Ai, Living, Figh
         this.spriteString = appearance.getString(2);
         this.deadSpriteString = appearance.getString(3);
         this.xp = stats.getInt(6);
-        aiCore = new AiCore();
+        this.aiCore = aiCore;
         alive = true;
         health = 3;
         sprite = ResourceManager.getCreatureSpriteFromString(spriteString);

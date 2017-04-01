@@ -63,7 +63,7 @@ public class MissionScreen implements Screen {
         new ResourceManager();
         this.batch = batch;
         this.uiBatch = uiBatch;
-
+        new CreatureFactory();
         consumableFactory = new ConsumableFactory();
 
 
@@ -72,11 +72,11 @@ public class MissionScreen implements Screen {
         player = new Player(mapManager.getStartTile(), mapManager, new Stats(1, 1, 1, 1, 1, 1));
         creatureManager.setPlayer(player);
         turnManager = new TurnManager(creatureManager);
-        inputStateMachine = new InputStateMachine(player);
+        inputStateMachine = new InputStateMachine(player, mapManager);
         inputHandler = new InputHandler(inputStateMachine, player);
         Gdx.input.setInputProcessor(inputHandler);
 
-        new CreatureFactory();
+
 
 
         ui = new Ui(player, mapManager);

@@ -2,7 +2,7 @@ package se.snrn.combatcreatures.items.Equipment;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import se.snrn.combatcreatures.effects.PermanentBuffEffect;
+import se.snrn.combatcreatures.entities.effects.PermanentBuffEffect;
 import se.snrn.combatcreatures.items.Ability;
 import se.snrn.combatcreatures.items.Item;
 
