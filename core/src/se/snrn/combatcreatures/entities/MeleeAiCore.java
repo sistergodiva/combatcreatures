@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class MeleeAiCore implements AiCore {
     @Override
-    public void act(Creature player, Player creature) {
+    public void act(Creature creature, Player player) {
         if (AStar.isReachable(creature.getTile(), player.getTile(), creature.getMap())) {
             ArrayList<Tile> path = AStar.calculateAStarNoTerrain(creature.getTile(), player.getTile(), creature.getMap());
             if (path != null) {

@@ -34,7 +34,7 @@ public class MapManager implements Renderable {
 
         vision = new ArrayList<>();
 
-        //enemySpawner.spawnTargetDummies(creatureManager, this, 200);
+        enemySpawner.spawnTargetDummies(creatureManager, this, 200);
 
         //MapMerger mapMerger = new MapMerger();
         //currentMap = mapMerger.getMergedMap();
