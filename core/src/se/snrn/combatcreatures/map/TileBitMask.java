@@ -14,6 +14,7 @@ public class TileBitMask {
                 bitMask += direction.getBitMask();
             }
         }
+
         return bitMask;
     }
 

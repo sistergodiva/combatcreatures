@@ -33,6 +33,14 @@ public class Tile implements Renderable {
 
     }
 
+    public Tile(int x, int y, TileType type) {
+        this.x = x;
+        this.y = y;
+        this.type = type;
+        this.tileMap = tileMap;
+        items = new ArrayList<>();
+    }
+
     @Override
     public void render(Batch batch) {
         if (explored) {
@@ -54,7 +62,12 @@ public class Tile implements Renderable {
             if (this.type == TileType.WALL) {
                 ResourceManager.cloud.setPosition(x * TILE_SIZE, y * TILE_SIZE);
                 ResourceManager.cloud.draw(batch);
-                int tileValue = TileBitMask.getBitMask(this, tileMap);
+                int tileValue;
+                if(tileMap != null) {
+                    tileValue = TileBitMask.getBitMask(this, tileMap);
+                } else {
+                    tileValue = 0;
+                }
                 ResourceManager.getRainbowWallFromBitMask(tileValue).setPosition(x * TILE_SIZE, y * TILE_SIZE);
                 ResourceManager.getRainbowWallFromBitMask(tileValue).draw(batch);
             }
@@ -148,5 +161,14 @@ public class Tile implements Renderable {
 
     public void removeItem(Item item) {
         items.remove(item);
+    }
+
+    public void setMap(TileMap map) {
+        this.tileMap = map;
+    }
+
+    public void setPosition(int x, int y) {
+        this.x = x;
+        this.y = y;
     }
 }

@@ -12,7 +12,7 @@ public class TileMap implements Renderable {
 
     private final int width;
     private final int height;
-    public Tile[][] tiles;
+    private Tile[][] tiles;
     private ArrayList<Tile> filled;
     private ArrayList<Tile> walls;
     private ArrayList<Tile> spawns;
@@ -35,6 +35,18 @@ public class TileMap implements Renderable {
             }
         }
     }
+
+    public void addMapComponent(MapComponent mapComponent, int x, int y){
+        for (Tile[] tile : mapComponent.getTiles()) {
+            for (Tile aTile : tile) {
+                tiles[aTile.getX()+x][aTile.getY()+y] = aTile;
+                aTile.setPosition(aTile.getX()+x,aTile.getY()+y);
+                aTile.setMap(this);
+                System.out.println(aTile.getX()+" : "+aTile.getY());
+            }
+        }
+    }
+
 
     public Tile getTile(int x, int y) {
         if (x < width &&

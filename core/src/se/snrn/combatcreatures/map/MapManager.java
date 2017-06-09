@@ -27,12 +27,14 @@ public class MapManager implements Renderable {
             floors.add(MapFactory.generateTileMap());
             floors.get(0).setVisited(false);
         }
-        enemySpawner = new EnemySpawner();
-
         currentMap = floors.get(currentFloor);
         currentMap.setVisited(true);
+        currentMap.addMapComponent(new Train(10,10,0,0), 10, 10);
+        enemySpawner = new EnemySpawner();
 
         vision = new ArrayList<>();
+
+
 
         //enemySpawner.spawnTargetDummies(creatureManager, this, 200);
         enemySpawner.spawnEnemies(creatureManager, this, 200);
@@ -44,6 +46,7 @@ public class MapManager implements Renderable {
     public void render(Batch batch) {
 
         currentMap.render(batch);
+
     }
 
     public Tile getStartTile() {

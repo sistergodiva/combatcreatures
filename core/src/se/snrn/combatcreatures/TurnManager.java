@@ -25,6 +25,7 @@ public class TurnManager {
 
     public void endEnemyTurn() {
         advanceTurn();
+        GameLog.logs.add("Ending enemy turn");
         turnType = TurnType.PLAYER;
     }
 

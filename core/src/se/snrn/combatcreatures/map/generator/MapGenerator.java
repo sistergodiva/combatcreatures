@@ -3,6 +3,7 @@ package se.snrn.combatcreatures.map.generator;
 
 import se.snrn.combatcreatures.map.Tile;
 import se.snrn.combatcreatures.map.TileMap;
+import se.snrn.combatcreatures.map.Train;
 import se.snrn.combatcreatures.map.pathfinding.FloodFill;
 
 import java.util.ArrayList;
@@ -82,10 +83,10 @@ public class MapGenerator {
             for (int j = 0; j < height; j++) {
 
                 if (cellGrid[i][j]) {
-                    map.tiles[i][j] = new Tile(i, j, WALL, map);
+                    map.getTileArray()[i][j] = new Tile(i, j, WALL, map);
                 }
                 if (!cellGrid[i][j]) {
-                    map.tiles[i][j] = new Tile(i, j, FLOOR, map);
+                    map.getTileArray()[i][j] = new Tile(i, j, FLOOR, map);
                 }
 
             }
