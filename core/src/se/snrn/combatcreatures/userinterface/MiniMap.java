@@ -3,7 +3,7 @@ package se.snrn.combatcreatures.userinterface;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import se.snrn.combatcreatures.ResourceManager;
-import se.snrn.combatcreatures.entities.Creature;
+import se.snrn.combatcreatures.entities.enemies.Creature;
 import se.snrn.combatcreatures.entities.player.Player;
 import se.snrn.combatcreatures.interfaces.Renderable;
 import se.snrn.combatcreatures.interfaces.Updatable;

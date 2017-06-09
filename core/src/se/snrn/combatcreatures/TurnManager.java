@@ -1,8 +1,9 @@
 package se.snrn.combatcreatures;
 
 
-import se.snrn.combatcreatures.entities.Creature;
-import se.snrn.combatcreatures.entities.CreatureManager;
+import se.snrn.combatcreatures.entities.enemies.Creature;
+import se.snrn.combatcreatures.entities.enemies.CreatureManager;
+import se.snrn.combatcreatures.userinterface.GameLog;
 
 public class TurnManager {
 
@@ -18,6 +19,7 @@ public class TurnManager {
 
     public void endPlayerTurn() {
         creatureManager.setAllUnfinished();
+        GameLog.logs.add("Ending player turn");
         turnType = TurnType.ENEMY;
     }
 
@@ -28,7 +30,7 @@ public class TurnManager {
 
     public void advanceTurn(){
         turn++;
-        System.out.println("Next turn");
+        GameLog.logs.add("Next turn");
         creatureManager.getPlayer().tick();
         for (Creature creature : creatureManager.getCreatures()
                 ) {

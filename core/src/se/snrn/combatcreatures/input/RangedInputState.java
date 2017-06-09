@@ -4,15 +4,12 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import se.snrn.combatcreatures.AttackResolver;
 import se.snrn.combatcreatures.ResourceManager;
-import se.snrn.combatcreatures.entities.Creature;
-import se.snrn.combatcreatures.entities.Direction;
 import se.snrn.combatcreatures.entities.player.Player;
 import se.snrn.combatcreatures.interfaces.Fighter;
 import se.snrn.combatcreatures.interfaces.Mapped;
 import se.snrn.combatcreatures.map.MapManager;
 import se.snrn.combatcreatures.map.Tile;
 import se.snrn.combatcreatures.map.TileMap;
-import se.snrn.combatcreatures.map.TileType;
 
 import java.util.ArrayList;
 
@@ -29,9 +26,12 @@ public class RangedInputState implements InputState {
     private Player player;
     private boolean done;
     private Mapped target;
+    private int targetNumber;
 
     public RangedInputState(Player player, MapManager mapManager) {
         this.player = player;
+
+        targetNumber = 0;
 
         tileMap = player.getMap();
         this.mapManager = mapManager;
@@ -39,12 +39,14 @@ public class RangedInputState implements InputState {
         allowedTargets = new ArrayList<>();
 
         for (Tile tile : mapManager.getVision()) {
-            if (tile.getMapped() instanceof Fighter) {
-                allowedTargets.add((Mapped) tile.getMapped());
+            if (tile.getMapped() instanceof Fighter && !(tile.getMapped() instanceof Player)) {
+                if(!allowedTargets.contains(tile.getMapped())) {
+                    allowedTargets.add(tile.getMapped());
+                }
             }
         }
 
-        target = allowedTargets.get(0);
+        target = allowedTargets.get(targetNumber);
 
     }
 
@@ -82,14 +84,27 @@ public class RangedInputState implements InputState {
         switch (input) {
             case Input.Keys.ENTER: {
                 AttackResolver.resolveRangedAttack(player, target);
+                done = true;
                 break;
             }
             case Input.Keys.S: {
-
+                if(targetNumber < allowedTargets.size()-1) {
+                    targetNumber++;
+                } else {
+                    targetNumber = 0;
+                }
+                target = allowedTargets.get(targetNumber);
+                System.out.println("targetnumber: " + targetNumber + " number of targets: "+allowedTargets.size());
                 break;
             }
             case Input.Keys.A: {
-
+                if(targetNumber > 0) {
+                    targetNumber--;
+                } else {
+                    targetNumber = allowedTargets.size()-1;
+                }
+                target = allowedTargets.get(targetNumber);
+                System.out.println("targetnumber: " + targetNumber + " number of targets: "+allowedTargets.size());
                 break;
             }
             default:

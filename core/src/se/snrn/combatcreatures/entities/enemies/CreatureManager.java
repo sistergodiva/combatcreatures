@@ -1,6 +1,7 @@
-package se.snrn.combatcreatures.entities;
+package se.snrn.combatcreatures.entities.enemies;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
+import se.snrn.combatcreatures.MissionScreen;
 import se.snrn.combatcreatures.TurnType;
 import se.snrn.combatcreatures.entities.player.Player;
 import se.snrn.combatcreatures.interfaces.Renderable;
@@ -12,11 +13,11 @@ import static se.snrn.combatcreatures.MissionScreen.turnManager;
 
 public class CreatureManager implements Updatable, Renderable {
 
-    ArrayList<Creature> creatures;
-    ArrayList<Creature> creaturesToRemove;
-    ArrayList<Creature> creaturesToAdd;
-    ArrayList<Corpse> corpses;
-    ArrayList<Corpse> corpsesToAdd;
+    private ArrayList<Creature> creatures;
+    private ArrayList<Creature> creaturesToRemove;
+    private ArrayList<Creature> creaturesToAdd;
+    private ArrayList<Corpse> corpses;
+    private ArrayList<Corpse> corpsesToAdd;
 
     public Player getPlayer() {
         return player;
@@ -69,16 +70,20 @@ public class CreatureManager implements Updatable, Renderable {
                 addCorpse(new Corpse(creature));
                 removeCreature(creature);
             } else if (turnManager.getTurnType() == TurnType.ENEMY) {
-                if (creature.isActive()) {
-                    if (creature.isFinished()) {
+                if (creature.isFinished() || !creature.isActive()) {
+                    finishedCreatures++;
+                } else {
+                    if (creature.isActive()) {
 
-                        finishedCreatures++;
-                    } else {
-                        creature.act(player);
+                        if (MissionScreen.visualEffectManager.isDone()) {
+                            creature.act(player);
+                        }
+
                     }
                 }
             }
         }
+
         if (finishedCreatures == creatures.size()) {
             turnManager.endEnemyTurn();
         }

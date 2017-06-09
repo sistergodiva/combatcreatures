@@ -3,8 +3,8 @@ package se.snrn.combatcreatures.map;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.GridPoint2;
-import se.snrn.combatcreatures.EnemySpawner;
-import se.snrn.combatcreatures.entities.CreatureManager;
+import se.snrn.combatcreatures.entities.enemies.EnemySpawner;
+import se.snrn.combatcreatures.entities.enemies.CreatureManager;
 import se.snrn.combatcreatures.interfaces.Renderable;
 import se.snrn.combatcreatures.map.los.LineOfSight;
 
@@ -34,10 +34,9 @@ public class MapManager implements Renderable {
 
         vision = new ArrayList<>();
 
-        enemySpawner.spawnTargetDummies(creatureManager, this, 200);
+        //enemySpawner.spawnTargetDummies(creatureManager, this, 200);
+        enemySpawner.spawnEnemies(creatureManager, this, 200);
 
-        //MapMerger mapMerger = new MapMerger();
-        //currentMap = mapMerger.getMergedMap();
     }
 
 

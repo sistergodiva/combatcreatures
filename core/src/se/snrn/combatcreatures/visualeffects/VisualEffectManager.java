@@ -12,9 +12,11 @@ public class VisualEffectManager implements Updatable, Renderable {
     private ArrayList<VisualEffect> effects;
     private ArrayList<VisualEffect> effectsToAdd;
     private ArrayList<VisualEffect> effectsToRemove;
+    private boolean done;
 
     public VisualEffectManager() {
 
+        done = true;
         effects = new ArrayList<>();
         effectsToAdd = new ArrayList<>();
         effectsToRemove = new ArrayList<>();
@@ -25,12 +27,13 @@ public class VisualEffectManager implements Updatable, Renderable {
 
     public void addEffect(VisualEffect effect){
         effectsToAdd.add(effect);
+        done = false;
     }
 
 
     @Override
     public void update(float delta) {
-
+        done = true;
 
         if (!effectsToAdd.isEmpty()) {
             effects.addAll(effectsToAdd);
@@ -47,9 +50,12 @@ public class VisualEffectManager implements Updatable, Renderable {
              ) {
             if(effect.isDone()){
                 effectsToRemove.add(effect);
+            }else {
+                done = false;
+                effect.update(delta);
             }
-            effect.update(delta);
         }
+
     }
 
     @Override
@@ -58,5 +64,9 @@ public class VisualEffectManager implements Updatable, Renderable {
                 ) {
             effect.render(batch);
         }
+    }
+
+    public boolean isDone() {
+        return done;
     }
 }

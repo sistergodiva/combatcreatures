@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import se.snrn.combatcreatures.AttackResolver;
 import se.snrn.combatcreatures.ResourceManager;
 import se.snrn.combatcreatures.entities.effects.Effect;
-import se.snrn.combatcreatures.entities.Creature;
+import se.snrn.combatcreatures.entities.enemies.Creature;
 import se.snrn.combatcreatures.entities.Direction;
 import se.snrn.combatcreatures.entities.Stats;
 import se.snrn.combatcreatures.interfaces.*;

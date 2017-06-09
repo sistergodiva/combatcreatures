@@ -2,7 +2,7 @@ package se.snrn.combatcreatures.items;
 
 
 import se.snrn.combatcreatures.RandomNumber;
-import se.snrn.combatcreatures.entities.Creature;
+import se.snrn.combatcreatures.entities.enemies.Creature;
 import se.snrn.combatcreatures.items.Equipment.Equipment;
 import se.snrn.combatcreatures.items.Equipment.EquipmentSlot;
 import se.snrn.combatcreatures.items.Equipment.Prefix;

@@ -8,27 +8,20 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.GridPoint2;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import se.snrn.combatcreatures.entities.CreatureFactory;
-import se.snrn.combatcreatures.entities.CreatureManager;
+import se.snrn.combatcreatures.entities.enemies.CreatureFactory;
+import se.snrn.combatcreatures.entities.enemies.CreatureManager;
 import se.snrn.combatcreatures.entities.Stats;
 import se.snrn.combatcreatures.entities.player.Experience;
 import se.snrn.combatcreatures.entities.player.Player;
 import se.snrn.combatcreatures.input.InputHandler;
 import se.snrn.combatcreatures.input.InputStateMachine;
-import se.snrn.combatcreatures.items.LootGenerator;
-import se.snrn.combatcreatures.items.consumable.Consumable;
 import se.snrn.combatcreatures.items.consumable.ConsumableFactory;
 import se.snrn.combatcreatures.map.*;
-import se.snrn.combatcreatures.map.los.LineOfSight;
 import se.snrn.combatcreatures.userinterface.GameLog;
 import se.snrn.combatcreatures.userinterface.Ui;
-import sun.security.provider.SHA;
-
-import java.util.ArrayList;
+import se.snrn.combatcreatures.visualeffects.VisualEffectManager;
 
 import static se.snrn.combatcreatures.CombatCreatures.TILE_SIZE;
 
@@ -52,6 +45,7 @@ public class MissionScreen implements Screen {
     private Batch uiBatch;
     private ConsumableFactory consumableFactory;
     private ShapeRenderer shapeRenderer;
+    public static VisualEffectManager visualEffectManager;
 
 
     public MissionScreen(Batch batch, SpriteBatch uiBatch, CombatCreatures combatCreatures) {
@@ -74,9 +68,10 @@ public class MissionScreen implements Screen {
         turnManager = new TurnManager(creatureManager);
         inputStateMachine = new InputStateMachine(player, mapManager);
         inputHandler = new InputHandler(inputStateMachine, player);
+
+        visualEffectManager = new VisualEffectManager();
+
         Gdx.input.setInputProcessor(inputHandler);
-
-
 
 
         ui = new Ui(player, mapManager);
@@ -86,7 +81,6 @@ public class MissionScreen implements Screen {
 
 
         new Experience();
-
 
 
     }
@@ -109,8 +103,11 @@ public class MissionScreen implements Screen {
             cc.setScreen(cc.highScoreScreen);
         }
         orthographicCamera.update();
+
         player.update(delta);
+        visualEffectManager.update(delta);
         creatureManager.update(delta);
+
         inputStateMachine.update(delta);
         ui.update(delta);
         Gdx.graphics.setTitle("FPS: " + Gdx.graphics.getFramesPerSecond());
@@ -132,6 +129,7 @@ public class MissionScreen implements Screen {
         creatureManager.render(batch);
         player.render(batch);
         inputStateMachine.render(batch);
+        visualEffectManager.render(batch);
 //        for (Tile tile : line
 //                ) {
 //            ResourceManager.player.setPosition(tile.getX() * TILE_SIZE, tile.getY() * TILE_SIZE);

@@ -1,7 +1,7 @@
 package se.snrn.combatcreatures.items.consumable.consumableeffect;
 
 import se.snrn.combatcreatures.RandomNumber;
-import se.snrn.combatcreatures.entities.Creature;
+import se.snrn.combatcreatures.entities.enemies.Creature;
 import se.snrn.combatcreatures.entities.player.Player;
 import se.snrn.combatcreatures.map.Tile;
 

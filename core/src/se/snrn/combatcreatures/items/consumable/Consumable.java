@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.utils.JsonValue;
 import se.snrn.combatcreatures.ResourceManager;
-import se.snrn.combatcreatures.entities.Creature;
+import se.snrn.combatcreatures.entities.enemies.Creature;
 import se.snrn.combatcreatures.entities.player.Player;
 import se.snrn.combatcreatures.items.Item;
 import se.snrn.combatcreatures.items.consumable.consumableeffect.ConsumableEffect;

@@ -87,6 +87,10 @@ public class DefaultInputState implements InputState{
                 break;
             }
 
+            case  Input.Keys.Q: {
+                return new RangedInputState(player, mapManager);
+            }
+
             case Input.Keys.Z: {
                 player.setSkillPoints(player.getSkillPoints()-1);
                 break;

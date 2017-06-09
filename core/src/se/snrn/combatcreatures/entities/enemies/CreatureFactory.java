@@ -1,4 +1,4 @@
-package se.snrn.combatcreatures.entities;
+package se.snrn.combatcreatures.entities.enemies;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.JsonReader;

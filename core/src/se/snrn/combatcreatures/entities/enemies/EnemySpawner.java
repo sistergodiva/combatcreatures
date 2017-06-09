@@ -1,8 +1,5 @@
-package se.snrn.combatcreatures;
+package se.snrn.combatcreatures.entities.enemies;
 
-import se.snrn.combatcreatures.entities.Creature;
-import se.snrn.combatcreatures.entities.CreatureFactory;
-import se.snrn.combatcreatures.entities.CreatureManager;
 import se.snrn.combatcreatures.map.MapManager;
 import se.snrn.combatcreatures.map.Tile;
 import se.snrn.combatcreatures.map.TileMap;

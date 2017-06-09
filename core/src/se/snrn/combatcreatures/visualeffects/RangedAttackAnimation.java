@@ -30,14 +30,13 @@ public class RangedAttackAnimation implements VisualEffect {
     @Override
     public void update(float delta) {
 
-        time += delta/10;
+        time += delta;
 
         currentPosition = startVector.lerp(endVector, time);
 
         ResourceManager.bullet.setPosition(currentPosition.x, currentPosition.y);
 
         if(time > 1){
-            System.out.println("Done");
             done = true;
         }
 

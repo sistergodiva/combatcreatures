@@ -1,8 +1,9 @@
-package se.snrn.combatcreatures.entities;
+package se.snrn.combatcreatures.entities.enemies;
 
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import se.snrn.combatcreatures.entities.Direction;
 import se.snrn.combatcreatures.interfaces.Container;
 import se.snrn.combatcreatures.interfaces.Mapped;
 import se.snrn.combatcreatures.interfaces.Renderable;

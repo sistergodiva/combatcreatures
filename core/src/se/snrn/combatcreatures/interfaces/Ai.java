@@ -1,6 +1,6 @@
 package se.snrn.combatcreatures.interfaces;
 
-import se.snrn.combatcreatures.entities.AiCore;
+import se.snrn.combatcreatures.entities.enemies.AiCore;
 import se.snrn.combatcreatures.entities.player.Player;
 
 public interface Ai {
