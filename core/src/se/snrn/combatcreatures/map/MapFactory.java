@@ -11,6 +11,11 @@ public class MapFactory {
         return mapGenerator.getCellAutoMap(0.45, 3, 4, 3);
     }
 
+    public static TileMap createEmptyMap(){
+
+        return new TileMap(81,81);
+    }
+
 }
 
 

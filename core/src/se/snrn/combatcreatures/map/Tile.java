@@ -20,7 +20,7 @@ public class Tile implements Renderable {
     private TileType type;
     private TileMap tileMap;
     private boolean visible;
-    private boolean explored;
+    private boolean explored = true;
     private Mapped mapped;
     private ArrayList<Item> items;
 
@@ -44,6 +44,29 @@ public class Tile implements Renderable {
     @Override
     public void render(Batch batch) {
         if (explored) {
+
+            if (this.type == TileType.TRACK_TOP) {
+                ResourceManager.grass.setPosition(x * TILE_SIZE, y * TILE_SIZE);
+                ResourceManager.grass.draw(batch);
+                ResourceManager.trackTop.setPosition(x * TILE_SIZE, y * TILE_SIZE);
+                ResourceManager.trackTop.draw(batch);
+            }
+
+
+            if (this.type == TileType.TRACK_BOTTOM) {
+                ResourceManager.grass.setPosition(x * TILE_SIZE, y * TILE_SIZE);
+                ResourceManager.grass.draw(batch);
+                ResourceManager.trackBottom.setPosition(x * TILE_SIZE, y * TILE_SIZE);
+                ResourceManager.trackBottom.draw(batch);
+            }
+
+
+            if (this.type == TileType.TRACK_MIDDLE) {
+                ResourceManager.grass.setPosition(x * TILE_SIZE, y * TILE_SIZE);
+                ResourceManager.grass.draw(batch);
+                ResourceManager.trackMiddle.setPosition(x * TILE_SIZE, y * TILE_SIZE);
+                ResourceManager.trackMiddle.draw(batch);
+            }
 
             if (this.type == TileType.DOOR) {
                 ResourceManager.doorClosed.setPosition(x * TILE_SIZE, y * TILE_SIZE);

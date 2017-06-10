@@ -3,7 +3,6 @@ package se.snrn.combatcreatures.map.generator;
 
 import se.snrn.combatcreatures.map.Tile;
 import se.snrn.combatcreatures.map.TileMap;
-import se.snrn.combatcreatures.map.Train;
 import se.snrn.combatcreatures.map.pathfinding.FloodFill;
 
 import java.util.ArrayList;

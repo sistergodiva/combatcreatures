@@ -84,6 +84,13 @@ public class MiniMap implements Updatable, Renderable {
                     white.setPosition(startX + point.getX() * mapScale, startY + point.getY() * mapScale);
                     white.draw(batch);
                 }
+
+                if (point.getType() == TileType.TRACK_TOP || point.getType() == TileType.TRACK_BOTTOM || point.getType() == TileType.TRACK_MIDDLE && point.isExplored()) {
+                    white.setSize(mapScale, mapScale);
+                    white.setPosition(startX + point.getX() * mapScale, startY + point.getY() * mapScale);
+                    white.draw(batch);
+                }
+
                 if (point.getType() == TileType.WALL && point.isExplored()) {
                     pink.setSize(mapScale, mapScale);
                     pink.setPosition(startX + point.getX() * mapScale, startY + point.getY() * mapScale);

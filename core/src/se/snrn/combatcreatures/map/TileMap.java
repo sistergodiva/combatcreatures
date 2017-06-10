@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import se.snrn.combatcreatures.entities.Direction;
 import se.snrn.combatcreatures.entities.DirectionDiagonal;
 import se.snrn.combatcreatures.interfaces.Renderable;
+import se.snrn.combatcreatures.map.prefabs.MapComponent;
 
 import java.util.ArrayList;
 

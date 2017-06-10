@@ -33,6 +33,7 @@ public class MissionScreen implements Screen {
     public static boolean debug = false;
     public static Ui ui;
     private final CombatCreatures cc;
+    private Train train;
     private InputStateMachine inputStateMachine;
     private Batch batch;
     private InputHandler inputHandler;
@@ -82,6 +83,7 @@ public class MissionScreen implements Screen {
 
         new Experience();
 
+        train = new Train();
 
     }
 
@@ -135,6 +137,7 @@ public class MissionScreen implements Screen {
 //            ResourceManager.player.setPosition(tile.getX() * TILE_SIZE, tile.getY() * TILE_SIZE);
 //            ResourceManager.player.draw(batch);
 //        }
+        train.render(batch);
         batch.end();
         uiBatch.begin();
         ui.render(uiBatch);

@@ -1,34 +1,56 @@
-package se.snrn.combatcreatures.map;
+package se.snrn.combatcreatures;
 
 
 import com.badlogic.gdx.graphics.g2d.Batch;
+import se.snrn.combatcreatures.map.Tile;
+import se.snrn.combatcreatures.map.TileType;
+import se.snrn.combatcreatures.map.prefabs.MapComponent;
 
 public class Train implements MapComponent {
 
-    private int posX;
-    private int posY;
+
     private int width;
     private int height;
     public Tile[][] tiles;
 
-    public Train(int width, int height, int posX, int posY) {
-        this.width = width;
-        this.height = height;
-        this.posX = posX;
-        this.posY = posY;
+    public Train() {
 
+        this.width = 12;
+        this.height = 6;
 
         tiles = new Tile[width][height];
 
 
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
-                tiles[x][y] = new Tile(x, y, TileType.FLOOR);
+
+
+                if (y == 0 || y == height - 1) {
+                    tiles[x][y] = new Tile(x, y, TileType.WALL);
+                } else {
+                    tiles[x][y] = new Tile(x, y, TileType.FLOOR);
+                }
             }
         }
 
+        //tiles = rotateCW(tiles);
+
+
     }
 
+
+    Tile[][] rotateCW(Tile[][] mat) {
+        final int M = mat.length;
+        final int N = mat[0].length;
+        Tile[][] ret = new Tile[N][M];
+        for (int r = 0; r < M; r++) {
+            for (int c = 0; c < N; c++) {
+                ret[c][M - 1 - r] = mat[r][c];
+                ret[c][M - 1 - r].setPosition(c, M - 1 - r);
+            }
+        }
+        return ret;
+    }
 
     @Override
     public void render(Batch batch) {
@@ -57,13 +79,6 @@ public class Train implements MapComponent {
         return tiles;
     }
 
-    @Override
-    public void setPosition(int x, int y) {
-
-        posX = x;
-        posY = y;
-
-    }
 
     @Override
     public int getWidth() {

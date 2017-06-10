@@ -7,6 +7,8 @@ import se.snrn.combatcreatures.entities.enemies.EnemySpawner;
 import se.snrn.combatcreatures.entities.enemies.CreatureManager;
 import se.snrn.combatcreatures.interfaces.Renderable;
 import se.snrn.combatcreatures.map.los.LineOfSight;
+import se.snrn.combatcreatures.map.prefabs.MapSegment;
+import se.snrn.combatcreatures.map.prefabs.Tracks;
 
 import java.util.ArrayList;
 
@@ -27,9 +29,20 @@ public class MapManager implements Renderable {
             floors.add(MapFactory.generateTileMap());
             floors.get(0).setVisited(false);
         }
+
         currentMap = floors.get(currentFloor);
         currentMap.setVisited(true);
-        currentMap.addMapComponent(new Train(10,10,0,0), 10, 10);
+        currentMap = MapFactory.createEmptyMap();
+
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                currentMap.addMapComponent(new MapSegment(true), 9*i,9*j);
+
+            }
+        }
+        currentMap.addMapComponent(new Tracks(), 0, 0);
+
+        currentMap.setStartTile(currentMap.getTile(1,1));
         enemySpawner = new EnemySpawner();
 
         vision = new ArrayList<>();
@@ -37,7 +50,7 @@ public class MapManager implements Renderable {
 
 
         //enemySpawner.spawnTargetDummies(creatureManager, this, 200);
-        enemySpawner.spawnEnemies(creatureManager, this, 200);
+        //enemySpawner.spawnEnemies(creatureManager, this, 200);
 
     }
 

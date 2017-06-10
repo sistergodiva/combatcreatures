@@ -44,6 +44,9 @@ public class ResourceManager {
     public static Sprite cloud = new Sprite(new Texture(Gdx.files.internal("rainbow/cloud.png")));
     public static Sprite sky = new Sprite(new Texture(Gdx.files.internal("rainbow/sky.png")));
     public static Sprite grass = new Sprite(new Texture(Gdx.files.internal("rainbow/grass.png")));
+    public static Sprite trackTop = new Sprite(new Texture(Gdx.files.internal("tiles/track_top.png")));
+    public static Sprite trackBottom = new Sprite(new Texture(Gdx.files.internal("tiles/track_bottom.png")));
+    public static Sprite trackMiddle = new Sprite(new Texture(Gdx.files.internal("tiles/track_middle.png")));
 
     public ResourceManager() {
         walls = new ArrayList<>();

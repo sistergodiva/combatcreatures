@@ -2,6 +2,7 @@ package se.snrn.combatcreatures.entities.enemies;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import se.snrn.combatcreatures.MissionScreen;
+import se.snrn.combatcreatures.TurnManager;
 import se.snrn.combatcreatures.TurnType;
 import se.snrn.combatcreatures.entities.player.Player;
 import se.snrn.combatcreatures.interfaces.Renderable;
@@ -84,7 +85,7 @@ public class CreatureManager implements Updatable, Renderable {
             }
         }
 
-        if (finishedCreatures == creatures.size()) {
+        if (finishedCreatures == creatures.size() && turnManager.getTurnType() == TurnType.ENEMY) {
             turnManager.endEnemyTurn();
         }
     }
