@@ -3,20 +3,20 @@ package se.snrn.combatcreatures.input;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import se.snrn.combatcreatures.entities.player.Player;
-import se.snrn.combatcreatures.map.MapManager;
-import se.snrn.combatcreatures.userinterface.inventory.Inventory;
 import se.snrn.combatcreatures.items.Item;
+import se.snrn.combatcreatures.map.trainstops.TrainStopMap;
+import se.snrn.combatcreatures.userinterface.inventory.Inventory;
 
 public class InventoryInputState implements InputState {
 
     private Inventory inventory;
-    private MapManager mapManager;
+    private TrainStopMap trainStopMap;
     private Player player;
 
-    public InventoryInputState(Player player, MapManager mapManager) {
+    public InventoryInputState(Player player, TrainStopMap trainStopMap) {
         this.player = player;
         inventory = player.getInventory();
-        this.mapManager = mapManager;
+        this.trainStopMap = trainStopMap;
     }
 
     @Override
@@ -56,7 +56,7 @@ public class InventoryInputState implements InputState {
             case Input.Keys.ENTER: {
                 System.out.println(inventory.getItemAtCursor());
                 inventory.setOpen(false);
-                return new DefaultInputState(player, mapManager);
+                return new DefaultInputState(player, trainStopMap);
 
             }
             case Input.Keys.O: {
@@ -66,7 +66,7 @@ public class InventoryInputState implements InputState {
                     player.getTile().addItem(item);
                 }
                 inventory.setOpen(false);
-                return new DefaultInputState(player, mapManager);
+                return new DefaultInputState(player, trainStopMap);
 
             }
         }

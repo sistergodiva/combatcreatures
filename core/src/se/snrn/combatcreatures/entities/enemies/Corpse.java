@@ -29,7 +29,6 @@ public class Corpse implements Updatable, Renderable, Mapped, Container {
         tile = creature.getTile();
         tileMap = creature.getMap();
         sprite = creature.getDeadSprite();
-        floor = creature.mapManager.getFloor();
     }
 
     @Override

@@ -1,35 +1,29 @@
-package se.snrn.combatcreatures.map;
+package se.snrn.combatcreatures.map.trainstops;
 
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import se.snrn.combatcreatures.entities.Direction;
 import se.snrn.combatcreatures.entities.DirectionDiagonal;
 import se.snrn.combatcreatures.interfaces.Renderable;
-import se.snrn.combatcreatures.map.prefabs.MapComponent;
+import se.snrn.combatcreatures.map.Tile;
+import se.snrn.combatcreatures.map.TileType;
 
 import java.util.ArrayList;
 
-public class TileMap implements Renderable {
+public abstract class TrainStopMap implements Renderable {
 
     private final int width;
     private final int height;
     private Tile[][] tiles;
-    private ArrayList<Tile> filled;
-    private ArrayList<Tile> walls;
-    private ArrayList<Tile> spawns;
     private Tile startTile;
-    private Tile endTile;
-    private boolean visited;
+    private ArrayList<Tile> emptyTiles;
 
-    public TileMap(int width, int height) {
-        this.width = width;
-        this.height = height;
-        tiles = new Tile[width][height];
-    }
-    public TileMap(Tile[][] tiles) {
+
+    public TrainStopMap(Tile[][] tiles) {
         this.tiles = tiles;
         this.width = tiles.length;
         this.height = tiles[0].length;
+        startTile = getTile(10,10);
     }
 
 
@@ -38,17 +32,6 @@ public class TileMap implements Renderable {
         for (Tile[] tile : tiles) {
             for (Tile aTile : tile) {
                 aTile.render(batch);
-            }
-        }
-    }
-
-    public void addMapComponent(MapComponent mapComponent, int x, int y){
-        for (Tile[] tile : mapComponent.getTiles()) {
-            for (Tile aTile : tile) {
-                tiles[aTile.getX()+x][aTile.getY()+y] = aTile;
-                aTile.setPosition(aTile.getX()+x,aTile.getY()+y);
-                aTile.setMap(this);
-                System.out.println(aTile.getX()+" : "+aTile.getY());
             }
         }
     }
@@ -65,41 +48,41 @@ public class TileMap implements Renderable {
         return null;
     }
 
-    public ArrayList<Tile> getOrthoNeighbours(Tile tile) {
-        ArrayList<Tile> allNeighbours = new ArrayList<>();
+    public ArrayList<Tile> getOrthogonalNeighbours(Tile tile) {
+        ArrayList<Tile> neighbours = new ArrayList<>();
         for (Direction dir : Direction.values()
                 ) {
             Tile t = this.getTile(tile.getX() + dir.getX(), tile.getY() + dir.getY());
             if (t != null) {
-                allNeighbours.add(t);
+                neighbours.add(t);
             }
         }
-        return allNeighbours;
+        return neighbours;
 
     }
 
     public ArrayList<Tile> getAllNeighbours(Tile tile) {
-        ArrayList<Tile> allNeighbours = new ArrayList<>();
+        ArrayList<Tile> neighbours = new ArrayList<>();
         for (DirectionDiagonal dir : DirectionDiagonal.values()
                 ) {
             Tile t = this.getTile(tile.getX() + dir.getX(), tile.getY() + dir.getY());
             if (t != null) {
-                allNeighbours.add(t);
+                neighbours.add(t);
             }
         }
-        return allNeighbours;
+        return neighbours;
     }
 
-    public ArrayList<Tile> getOrthoNeighboursTerrain(Tile tile) {
-        ArrayList<Tile> orthoNeighbours = new ArrayList<>();
+    public ArrayList<Tile> getOrthogonalNeighboursTerrain(Tile tile) {
+        ArrayList<Tile> neighbours = new ArrayList<>();
         for (Direction dir : Direction.values()
                 ) {
             Tile t = getTile(tile.getX() + dir.getX(), tile.getY() + dir.getY());
             if (t != null && t.getType() == TileType.FLOOR && t.getMapped() == null) {
-                orthoNeighbours.add(t);
+                neighbours.add(t);
             }
         }
-        return orthoNeighbours;
+        return neighbours;
     }
 
     public Tile getTileAtDirection(Tile tile, Direction dir) {
@@ -123,6 +106,7 @@ public class TileMap implements Renderable {
 
     }
 
+
     public int getWidth() {
         return width;
     }
@@ -131,57 +115,16 @@ public class TileMap implements Renderable {
         return height;
     }
 
-    public void setFilled(ArrayList<Tile> filled) {
-        this.filled = filled;
+    public Tile[][] getTiles() {
+        return tiles;
     }
 
-    public void setWalls(ArrayList<Tile> walls) {
-        this.walls = walls;
-    }
-
-    public void setSpawns(ArrayList<Tile> spawns) {
-
-        this.spawns = spawns;
-    }
-
-    public ArrayList<Tile> getFilled() {
-        return filled;
-    }
-
-    public ArrayList<Tile> getWalls() {
-        return walls;
-    }
-
-    public ArrayList<Tile> getSpawns() {
-        return spawns;
-    }
-
-
-    public void setStartTile(Tile startTile) {
-        this.startTile = startTile;
-    }
 
     public Tile getStartTile() {
         return startTile;
     }
 
-    public Tile getEndTile() {
-        return endTile;
-    }
-
-    public void setEndTile(Tile endTile) {
-        this.endTile = endTile;
-    }
-
-    public void setVisited(boolean visited) {
-        this.visited = visited;
-    }
-
-    public boolean isVisited() {
-        return visited;
-    }
-
-    public Tile[][] getTileArray() {
-        return tiles;
+    public ArrayList<Tile> getEmptyTiles() {
+        return emptyTiles;
     }
 }

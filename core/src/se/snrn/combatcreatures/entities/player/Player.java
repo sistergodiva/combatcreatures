@@ -10,8 +10,9 @@ import se.snrn.combatcreatures.entities.Direction;
 import se.snrn.combatcreatures.entities.Stats;
 import se.snrn.combatcreatures.interfaces.*;
 import se.snrn.combatcreatures.items.Equipment.Stat;
+import se.snrn.combatcreatures.map.los.LineOfSight;
+import se.snrn.combatcreatures.map.trainstops.TrainStopMap;
 import se.snrn.combatcreatures.userinterface.inventory.Inventory;
-import se.snrn.combatcreatures.map.MapManager;
 import se.snrn.combatcreatures.map.Tile;
 import se.snrn.combatcreatures.map.TileMap;
 import se.snrn.combatcreatures.map.TileType;
@@ -28,26 +29,23 @@ public class Player implements Updatable, Renderable, Mapped, Living, Fighter {
     private int skillPoints;
     private int health;
     private Tile tile;
-    private MapManager mapManager;
-    private TileMap tileMap;
     private Sprite sprite;
     private boolean alive;
+    private TrainStopMap trainStopMap;
     private Stats stats;
     private PlayerEquipment playerEquipment;
     private ArrayList<Effect> effects;
     private int karies;
     private Inventory inventory;
     private int mana;
-    private int floor;
     private int level;
     private int score;
     private int xp;
 
 
-    public Player(Tile tile, MapManager mapManager, Stats stats) {
+    public Player(Tile tile, TrainStopMap trainStopMap, Stats stats) {
         this.tile = tile;
-        this.mapManager = mapManager;
-        tileMap = mapManager.getMap();
+        this.trainStopMap = trainStopMap;
         this.stats = stats;
         sprite = ResourceManager.player;
         alive = true;
@@ -58,7 +56,7 @@ public class Player implements Updatable, Renderable, Mapped, Living, Fighter {
         inventory = new Inventory();
         effects = new ArrayList<>();
         level = 0;
-        mapManager.qdLoS(tile);
+        LineOfSight.getLineOfSight(tile, trainStopMap.getTiles());
 
         skillPoints = 0;
 
@@ -94,7 +92,7 @@ public class Player implements Updatable, Renderable, Mapped, Living, Fighter {
 
     @Override
     public TileMap getMap() {
-        return tileMap;
+        return null;
     }
 
     @Override
@@ -103,12 +101,12 @@ public class Player implements Updatable, Renderable, Mapped, Living, Fighter {
         tile.setMapped(this);
         this.tile = tile;
         tile.stepOn(this);
-        mapManager.qdLoS(tile);
+        LineOfSight.getLineOfSight(tile,trainStopMap.getTiles());
     }
 
     @Override
     public boolean move(Direction direction) {
-        Tile newTile = tileMap.getTile(tile.getX() + direction.getX(), tile.getY() + direction.getY());
+        Tile newTile = trainStopMap.getTile(tile.getX() + direction.getX(), tile.getY() + direction.getY());
         if (newTile != null && newTile.getType() == TileType.FLOOR) {
             if (newTile.getMapped() instanceof Creature) {
                 Creature creature = (Creature) newTile.getMapped();
@@ -121,20 +119,6 @@ public class Player implements Updatable, Renderable, Mapped, Living, Fighter {
 
             changeTile(newTile);
             turnManager.endPlayerTurn();
-            return true;
-        }
-        if (newTile != null && newTile.getType() == TileType.DOWN) {
-            mapManager.moveDown();
-            tileMap = mapManager.getMap();
-            floor++;
-            changeTile(mapManager.getStartTile());
-            return true;
-        }
-        if (newTile != null && newTile.getType() == TileType.UP) {
-            mapManager.moveUp();
-            tileMap = mapManager.getMap();
-            floor--;
-            changeTile(mapManager.getEndTile());
             return true;
         }
         return false;
@@ -201,9 +185,6 @@ public class Player implements Updatable, Renderable, Mapped, Living, Fighter {
         return stats.getStatFromEnum(Stat.MP);
     }
 
-    public int getFloor() {
-        return floor;
-    }
 
     public int getLevel() {
         return level;
@@ -238,6 +219,10 @@ public class Player implements Updatable, Renderable, Mapped, Living, Fighter {
 
     public void setSkillPoints(int skillPoints) {
         this.skillPoints = skillPoints;
+    }
+
+    public TrainStopMap getTrainStopMap() {
+        return trainStopMap;
     }
 }
 

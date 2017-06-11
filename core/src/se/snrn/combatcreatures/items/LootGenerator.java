@@ -6,12 +6,12 @@ import se.snrn.combatcreatures.entities.enemies.Creature;
 import se.snrn.combatcreatures.items.Equipment.Equipment;
 import se.snrn.combatcreatures.items.Equipment.EquipmentSlot;
 import se.snrn.combatcreatures.items.Equipment.Prefix;
-import se.snrn.combatcreatures.map.MapManager;
+import se.snrn.combatcreatures.map.trainstops.TrainStopMap;
 
 public class LootGenerator {
 
-    public static Item generateMonsterLoot(MapManager mapManager, Creature creature){
-        int lootValue = mapManager.getFloor()+creature.getXp();
+    public static Item generateMonsterLoot(TrainStopMap trainStopMap, Creature creature){
+        int lootValue = creature.getXp();
         return null;
     }
 

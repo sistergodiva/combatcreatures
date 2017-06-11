@@ -10,6 +10,7 @@ import se.snrn.combatcreatures.interfaces.Updatable;
 import se.snrn.combatcreatures.map.Tile;
 import se.snrn.combatcreatures.map.TileMap;
 import se.snrn.combatcreatures.map.TileType;
+import se.snrn.combatcreatures.map.trainstops.TrainStopMap;
 
 
 import static se.snrn.combatcreatures.ResourceManager.*;
@@ -22,10 +23,9 @@ public class MiniMap implements Updatable, Renderable {
     private float miniMapHeight;
     private float startY;
     private float startX;
-    private TileMap tileMap;
+    private TrainStopMap trainStopMap;
     private Player player;
     private float mapScale;
-    private int mapLevel;
 
 
     public MiniMap(Player player) {
@@ -34,13 +34,12 @@ public class MiniMap implements Updatable, Renderable {
         this.player = player;
 
 
-        tileMap = player.getMap();
-        mapLevel = player.getFloor();
+        trainStopMap = player.getTrainStopMap();
         mapScale = 4;
         margin = 8;
 
-        miniMapWidth = mapScale * tileMap.getWidth();
-        miniMapHeight = mapScale * tileMap.getHeight();
+        miniMapWidth = mapScale * trainStopMap.getWidth();
+        miniMapHeight = mapScale * trainStopMap.getHeight();
 
         startX = Gdx.graphics.getWidth() - miniMapWidth - margin;
         startY = Gdx.graphics.getHeight() - miniMapHeight - margin;
@@ -52,8 +51,8 @@ public class MiniMap implements Updatable, Renderable {
             mapScale = 4;
         }
         this.mapScale = mapScale;
-        miniMapWidth = mapScale * tileMap.getWidth();
-        miniMapHeight = mapScale * tileMap.getHeight();
+        miniMapWidth = mapScale * trainStopMap.getWidth();
+        miniMapHeight = mapScale * trainStopMap.getHeight();
 
         startX = Gdx.graphics.getWidth() - miniMapWidth - margin;
         startY = Gdx.graphics.getHeight() - miniMapHeight - margin;
@@ -61,19 +60,16 @@ public class MiniMap implements Updatable, Renderable {
 
     @Override
     public void update(float delta) {
-        if(player.getFloor() != mapLevel) {
-            this.tileMap = player.getMap();
-            mapLevel = player.getFloor();
-        }
+
     }
 
     @Override
     public void render(Batch batch) {
 
         ResourceManager.pinkBox.draw(batch, startX-margin, startY-margin, miniMapWidth+margin*2, miniMapHeight+margin*2);
-        for (int x = 0; x < tileMap.getWidth(); x++) {
-            for (int y = 0; y < tileMap.getHeight(); y++) {
-                Tile point = tileMap.getTile(x, y);
+        for (int x = 0; x < trainStopMap.getWidth(); x++) {
+            for (int y = 0; y < trainStopMap.getHeight(); y++) {
+                Tile point = trainStopMap.getTile(x, y);
                 if (point.getType() == TileType.DOOR && point.isExplored()) {
                     red.setSize(mapScale, mapScale);
                     red.setPosition(startX + point.getX() * mapScale, startY + point.getY() * mapScale);

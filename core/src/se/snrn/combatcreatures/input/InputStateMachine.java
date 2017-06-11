@@ -4,25 +4,22 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import se.snrn.combatcreatures.entities.player.Player;
 import se.snrn.combatcreatures.interfaces.Renderable;
 import se.snrn.combatcreatures.interfaces.Updatable;
-import se.snrn.combatcreatures.map.MapManager;
-import se.snrn.combatcreatures.map.TileMap;
+import se.snrn.combatcreatures.map.trainstops.TrainStopMap;
 
 
 public class InputStateMachine implements Updatable, Renderable {
 
     private InputState currentInputState;
     private InputState newInputState;
-    private TileMap tileMap;
-    private MapManager mapManager;
     private Player player;
+    private TrainStopMap trainStopMap;
 
 
-    public InputStateMachine(Player player, MapManager mapManager) {
+    public InputStateMachine(Player player, TrainStopMap trainStopMap) {
 
-        tileMap = player.getMap();
-        this.mapManager = mapManager;
-        currentInputState = new DefaultInputState(player, mapManager);
+        currentInputState = new DefaultInputState(player, trainStopMap);
         this.player = player;
+        this.trainStopMap = trainStopMap;
     }
 
 

@@ -19,6 +19,9 @@ import se.snrn.combatcreatures.input.InputHandler;
 import se.snrn.combatcreatures.input.InputStateMachine;
 import se.snrn.combatcreatures.items.consumable.ConsumableFactory;
 import se.snrn.combatcreatures.map.*;
+import se.snrn.combatcreatures.map.trainstops.StopType;
+import se.snrn.combatcreatures.map.trainstops.TrainStopFactory;
+import se.snrn.combatcreatures.map.trainstops.TrainStopMap;
 import se.snrn.combatcreatures.userinterface.GameLog;
 import se.snrn.combatcreatures.userinterface.Ui;
 import se.snrn.combatcreatures.visualeffects.VisualEffectManager;
@@ -37,7 +40,6 @@ public class MissionScreen implements Screen {
     private InputStateMachine inputStateMachine;
     private Batch batch;
     private InputHandler inputHandler;
-    private MapManager mapManager;
     private OrthographicCamera orthographicCamera;
     private Viewport viewport;
     private Player player;
@@ -47,6 +49,7 @@ public class MissionScreen implements Screen {
     private ConsumableFactory consumableFactory;
     private ShapeRenderer shapeRenderer;
     public static VisualEffectManager visualEffectManager;
+    public TrainStopMap trainStopMap;
 
 
     public MissionScreen(Batch batch, SpriteBatch uiBatch, CombatCreatures combatCreatures) {
@@ -61,13 +64,13 @@ public class MissionScreen implements Screen {
         new CreatureFactory();
         consumableFactory = new ConsumableFactory();
 
+        trainStopMap = TrainStopFactory.getTrainStop(StopType.SWITCH, true);
 
         creatureManager = new CreatureManager();
-        mapManager = new MapManager(creatureManager);
-        player = new Player(mapManager.getStartTile(), mapManager, new Stats(1, 1, 1, 1, 1, 1));
+        player = new Player(trainStopMap.getStartTile(), trainStopMap, new Stats(1, 1, 1, 1, 1, 1));
         creatureManager.setPlayer(player);
         turnManager = new TurnManager(creatureManager);
-        inputStateMachine = new InputStateMachine(player, mapManager);
+        inputStateMachine = new InputStateMachine(player, trainStopMap);
         inputHandler = new InputHandler(inputStateMachine, player);
 
         visualEffectManager = new VisualEffectManager();
@@ -75,7 +78,7 @@ public class MissionScreen implements Screen {
         Gdx.input.setInputProcessor(inputHandler);
 
 
-        ui = new Ui(player, mapManager);
+        ui = new Ui(player, trainStopMap);
 
 
         shapeRenderer = new ShapeRenderer();
@@ -125,7 +128,7 @@ public class MissionScreen implements Screen {
 
         batch.setProjectionMatrix(orthographicCamera.combined);
         batch.begin();
-        mapManager.render(batch);
+        trainStopMap.render(batch);
 
 
         creatureManager.render(batch);
@@ -137,7 +140,7 @@ public class MissionScreen implements Screen {
 //            ResourceManager.player.setPosition(tile.getX() * TILE_SIZE, tile.getY() * TILE_SIZE);
 //            ResourceManager.player.draw(batch);
 //        }
-        train.render(batch);
+//        train.render(batch);
         batch.end();
         uiBatch.begin();
         ui.render(uiBatch);

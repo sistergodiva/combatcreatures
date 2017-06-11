@@ -3,20 +3,18 @@ package se.snrn.combatcreatures.input;
 
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import se.snrn.combatcreatures.CombatCreatures;
 import se.snrn.combatcreatures.MissionScreen;
 import se.snrn.combatcreatures.entities.Direction;
 import se.snrn.combatcreatures.entities.player.Player;
-import se.snrn.combatcreatures.map.MapManager;
-import se.snrn.combatcreatures.userinterface.GameLog;
+import se.snrn.combatcreatures.map.trainstops.TrainStopMap;
 
 public class DefaultInputState implements InputState{
     private Player player;
-    private MapManager mapManager;
+    private TrainStopMap trainStopMap;
 
-    public DefaultInputState(Player player, MapManager mapManager) {
+    public DefaultInputState(Player player, TrainStopMap trainStopMap) {
         this.player = player;
-        this.mapManager = mapManager;
+        this.trainStopMap = trainStopMap;
     }
 
     @Override
@@ -60,10 +58,10 @@ public class DefaultInputState implements InputState{
                 break;
             }
             case Input.Keys.J: {
-                return new JumpInputState(player, mapManager);
+                return new JumpInputState(player, trainStopMap);
             }
             case Input.Keys.K: {
-                return new DigInputState(player, mapManager);
+                return new DigInputState(player, trainStopMap);
             }
 
             case Input.Keys.L: {
@@ -72,11 +70,11 @@ public class DefaultInputState implements InputState{
             }
 
             case Input.Keys.I: {
-                return new InventoryInputState(player, mapManager);
+                return new InventoryInputState(player, trainStopMap);
             }
 
             case Input.Keys.Y: {
-                return new LevelingInputState(player, mapManager);
+                return new LevelingInputState(player, trainStopMap);
             }
             case Input.Keys.M: {
                 MissionScreen.ui.getMiniMap().setMapScale(8);
@@ -88,7 +86,7 @@ public class DefaultInputState implements InputState{
             }
 
             case  Input.Keys.Q: {
-                return new RangedInputState(player, mapManager);
+                return new RangedInputState(player, trainStopMap);
             }
 
             case Input.Keys.Z: {
@@ -96,7 +94,7 @@ public class DefaultInputState implements InputState{
                 break;
             }
             case Input.Keys.V: {
-                return new RangedInputState(player, mapManager);
+                return new RangedInputState(player, trainStopMap);
             }
         }
         return null;

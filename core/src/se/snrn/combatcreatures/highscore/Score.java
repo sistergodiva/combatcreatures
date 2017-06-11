@@ -16,7 +16,6 @@ public class Score {
         this.player = player;
         this.score = player.getScore();
         this.level = player.getLevel();
-        this.floor = player.getFloor();
     }
 
     public Score(String namn, int score, int level, int floor, String startTime, String endTime) {

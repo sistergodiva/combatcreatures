@@ -2,7 +2,6 @@ package se.snrn.combatcreatures.map.prefabs;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import se.snrn.combatcreatures.map.Tile;
-import se.snrn.combatcreatures.map.TileType;
 
 
 public class MapSegment implements MapComponent {
@@ -13,32 +12,17 @@ public class MapSegment implements MapComponent {
     int height;
 
 
-    public MapSegment(boolean rotate) {
+    public MapSegment(Tile[][] tiles) {
 
         this.width = 9;
         this.height = 9;
 
-        tiles = new Tile[width][height];
+        this.tiles = tiles;
 
 
-        for (int x = 0; x < width; x++) {
-            for (int y = 0; y < height; y++) {
 
 
-                if (y == 0 || y == height - 1 || x == 0 || x == width-1) {
-                    tiles[x][y] = new Tile(x, y, TileType.WALL);
-                } else {
-                    tiles[x][y] = new Tile(x, y, TileType.FLOOR);
-                }
-                if(y == 4 && (x == width-1 || x == 0)){
-                    tiles[x][y] = new Tile(x, y, TileType.FLOOR);
-                }
-            }
-        }
 
-        if(rotate) {
-            tiles = rotateCW(tiles);
-        }
 
     }
 

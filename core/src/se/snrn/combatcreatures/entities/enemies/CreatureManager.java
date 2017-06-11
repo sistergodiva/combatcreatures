@@ -93,14 +93,12 @@ public class CreatureManager implements Updatable, Renderable {
     @Override
     public void render(Batch batch) {
         for (Corpse corpse : corpses) {
-            if (corpse.getFloor() == player.getFloor()) {
-                corpse.render(batch);
-            }
+            corpse.render(batch);
+
         }
         for (Creature creature : creatures) {
-            if (creature.getFloor() == player.getFloor()) {
-                creature.render(batch);
-            }
+            creature.render(batch);
+
         }
 
     }

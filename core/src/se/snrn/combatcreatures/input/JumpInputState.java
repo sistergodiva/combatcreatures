@@ -5,10 +5,9 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import se.snrn.combatcreatures.ResourceManager;
 import se.snrn.combatcreatures.entities.Direction;
 import se.snrn.combatcreatures.entities.player.Player;
-import se.snrn.combatcreatures.map.MapManager;
 import se.snrn.combatcreatures.map.Tile;
-import se.snrn.combatcreatures.map.TileMap;
 import se.snrn.combatcreatures.map.TileType;
+import se.snrn.combatcreatures.map.trainstops.TrainStopMap;
 
 import java.util.ArrayList;
 
@@ -19,22 +18,21 @@ import static se.snrn.combatcreatures.MissionScreen.turnManager;
 public class JumpInputState implements InputState {
 
 
-    private TileMap tileMap;
-    private MapManager mapManager;
+
     private ArrayList<Tile> allowedTargets;
     private Player player;
+    private TrainStopMap trainStopMap;
     private boolean done;
 
-    public JumpInputState(Player player, MapManager mapManager) {
+    public JumpInputState(Player player, TrainStopMap trainStopMap) {
         this.player = player;
+        this.trainStopMap = trainStopMap;
 
-        tileMap = player.getMap();
-        this.mapManager = mapManager;
 
         allowedTargets = new ArrayList<>();
 
         for (Direction direction : Direction.values()) {
-            allowedTargets.add(tileMap.getTile(player.getTile().getX() + (direction.getX() * 2), player.getTile().getY() + (direction.getY() * 2)));
+            allowedTargets.add(trainStopMap.getTile(player.getTile().getX() + (direction.getX() * 2), player.getTile().getY() + (direction.getY() * 2)));
         }
 
     }
@@ -100,7 +98,7 @@ public class JumpInputState implements InputState {
         }
         if(done) {
             turnManager.endPlayerTurn();
-            return new DefaultInputState(player, mapManager);
+            return new DefaultInputState(player, trainStopMap);
         }
         return null;
     }

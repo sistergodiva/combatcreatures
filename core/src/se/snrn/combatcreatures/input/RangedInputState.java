@@ -7,9 +7,9 @@ import se.snrn.combatcreatures.ResourceManager;
 import se.snrn.combatcreatures.entities.player.Player;
 import se.snrn.combatcreatures.interfaces.Fighter;
 import se.snrn.combatcreatures.interfaces.Mapped;
-import se.snrn.combatcreatures.map.MapManager;
 import se.snrn.combatcreatures.map.Tile;
-import se.snrn.combatcreatures.map.TileMap;
+import se.snrn.combatcreatures.map.los.LineOfSight;
+import se.snrn.combatcreatures.map.trainstops.TrainStopMap;
 
 import java.util.ArrayList;
 
@@ -20,27 +20,24 @@ import static se.snrn.combatcreatures.MissionScreen.turnManager;
 public class RangedInputState implements InputState {
 
 
-    private TileMap tileMap;
-    private MapManager mapManager;
     private ArrayList<Mapped> allowedTargets;
     private Player player;
+    private TrainStopMap trainStopMap;
     private boolean done;
     private Mapped target;
     private int targetNumber;
 
-    public RangedInputState(Player player, MapManager mapManager) {
+    public RangedInputState(Player player, TrainStopMap trainStopMap) {
         this.player = player;
+        this.trainStopMap = trainStopMap;
 
         targetNumber = 0;
 
-        tileMap = player.getMap();
-        this.mapManager = mapManager;
-
         allowedTargets = new ArrayList<>();
 
-        for (Tile tile : mapManager.getVision()) {
+        for (Tile tile : LineOfSight.getVision()) {
             if (tile.getMapped() instanceof Fighter && !(tile.getMapped() instanceof Player)) {
-                if(!allowedTargets.contains(tile.getMapped())) {
+                if (!allowedTargets.contains(tile.getMapped())) {
                     allowedTargets.add(tile.getMapped());
                 }
             }
@@ -88,23 +85,23 @@ public class RangedInputState implements InputState {
                 break;
             }
             case Input.Keys.S: {
-                if(targetNumber < allowedTargets.size()-1) {
+                if (targetNumber < allowedTargets.size() - 1) {
                     targetNumber++;
                 } else {
                     targetNumber = 0;
                 }
                 target = allowedTargets.get(targetNumber);
-                System.out.println("targetnumber: " + targetNumber + " number of targets: "+allowedTargets.size());
+                System.out.println("targetnumber: " + targetNumber + " number of targets: " + allowedTargets.size());
                 break;
             }
             case Input.Keys.A: {
-                if(targetNumber > 0) {
+                if (targetNumber > 0) {
                     targetNumber--;
                 } else {
-                    targetNumber = allowedTargets.size()-1;
+                    targetNumber = allowedTargets.size() - 1;
                 }
                 target = allowedTargets.get(targetNumber);
-                System.out.println("targetnumber: " + targetNumber + " number of targets: "+allowedTargets.size());
+                System.out.println("targetnumber: " + targetNumber + " number of targets: " + allowedTargets.size());
                 break;
             }
             default:
@@ -112,7 +109,7 @@ public class RangedInputState implements InputState {
         }
         if (done) {
             turnManager.endPlayerTurn();
-            return new DefaultInputState(player, mapManager);
+            return new DefaultInputState(player, trainStopMap);
         }
         return null;
     }

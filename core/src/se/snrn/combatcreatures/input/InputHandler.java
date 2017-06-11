@@ -2,14 +2,12 @@ package se.snrn.combatcreatures.input;
 
 
 import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.math.Vector3;
 import se.snrn.combatcreatures.entities.player.Player;
 
 public class InputHandler implements InputProcessor {
 
     private Player player;
     private InputStateMachine inputStateMachine;
-    private Vector3 mousePosition;
 
     public InputHandler(InputStateMachine inputStateMachine, Player player) {
         this.inputStateMachine = inputStateMachine;

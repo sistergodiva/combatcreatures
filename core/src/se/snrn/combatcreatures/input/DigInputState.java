@@ -5,10 +5,9 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import se.snrn.combatcreatures.ResourceManager;
 import se.snrn.combatcreatures.entities.Direction;
 import se.snrn.combatcreatures.entities.player.Player;
-import se.snrn.combatcreatures.map.MapManager;
 import se.snrn.combatcreatures.map.Tile;
-import se.snrn.combatcreatures.map.TileMap;
 import se.snrn.combatcreatures.map.TileType;
+import se.snrn.combatcreatures.map.trainstops.TrainStopMap;
 
 import java.util.ArrayList;
 
@@ -19,18 +18,18 @@ public class DigInputState implements InputState {
 
 
     private Player player;
+    private TrainStopMap trainStopMap;
     private ArrayList<Tile> allowedTargets;
-    TileMap tileMap;
-    private MapManager mapManager;
 
-    public DigInputState(Player player, MapManager mapManager) {
+
+    public DigInputState(Player player, TrainStopMap trainStopMap) {
         this.player = player;
-        tileMap = player.getMap();
-        this.mapManager = mapManager;
+        this.trainStopMap = trainStopMap;
+
 
         allowedTargets = new ArrayList<>();
         for (Direction direction : Direction.values()) {
-            allowedTargets.add(tileMap.getTile(player.getTile().getX() + (direction.getX()), player.getTile().getY() + (direction.getY())));
+            allowedTargets.add(trainStopMap.getTile(player.getTile().getX() + (direction.getX()), player.getTile().getY() + (direction.getY())));
         }
     }
 
@@ -60,7 +59,7 @@ public class DigInputState implements InputState {
     }
 
     public InputState defaultInputState() {
-        return new DefaultInputState(player, mapManager);
+        return new DefaultInputState(player, trainStopMap);
     }
 
 
@@ -69,19 +68,19 @@ public class DigInputState implements InputState {
         Tile tile = null;
         switch (input) {
             case Input.Keys.W: {
-                tile = player.getMap().getTileAtDirection(player.getTile(), Direction.NORTH);
+                tile = player.getTrainStopMap().getTileAtDirection(player.getTile(), Direction.NORTH);
                 break;
             }
             case Input.Keys.D: {
-                tile = player.getMap().getTileAtDirection(player.getTile(), Direction.EAST);
+                tile = player.getTrainStopMap().getTileAtDirection(player.getTile(), Direction.EAST);
                 break;
             }
             case Input.Keys.S: {
-                tile = player.getMap().getTileAtDirection(player.getTile(), Direction.SOUTH);
+                tile = player.getTrainStopMap().getTileAtDirection(player.getTile(), Direction.SOUTH);
                 break;
             }
             case Input.Keys.A: {
-                tile = player.getMap().getTileAtDirection(player.getTile(), Direction.WEST);
+                tile = player.getTrainStopMap().getTileAtDirection(player.getTile(), Direction.WEST);
                 break;
             }
 

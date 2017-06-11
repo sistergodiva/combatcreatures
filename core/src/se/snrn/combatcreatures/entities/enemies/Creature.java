@@ -11,10 +11,10 @@ import se.snrn.combatcreatures.entities.Stats;
 import se.snrn.combatcreatures.entities.player.Player;
 import se.snrn.combatcreatures.interfaces.*;
 import se.snrn.combatcreatures.items.consumable.ConsumableFactory;
-import se.snrn.combatcreatures.map.MapManager;
 import se.snrn.combatcreatures.map.Tile;
 import se.snrn.combatcreatures.map.TileMap;
 import se.snrn.combatcreatures.map.TileType;
+import se.snrn.combatcreatures.map.trainstops.TrainStopMap;
 import se.snrn.combatcreatures.userinterface.GameLog;
 
 import static se.snrn.combatcreatures.CombatCreatures.TILE_SIZE;
@@ -26,24 +26,21 @@ public class Creature implements Updatable, Renderable, Mapped, Ai, Living, Figh
     private String deadSpriteString;
     private String name;
     private Tile tile;
-    private TileMap tileMap;
     private Sprite sprite;
     private AiCore aiCore;
     private boolean finished;
     private int health;
     private boolean alive;
+    private TrainStopMap trainStopMap;
     private Stats stats;
     private int cost;
     private Sprite deadSprite;
     private boolean active;
     private int floor;
-    MapManager mapManager;
 
 
-    public Creature(Tile tile, MapManager mapManager, JsonValue stats, JsonValue appearance, AiCore aiCore) {
-        this.mapManager = mapManager;
-        this.tileMap = mapManager.getMap();
-        this.floor = mapManager.getFloor();
+    public Creature(Tile tile, TrainStopMap trainStopMap, JsonValue stats, JsonValue appearance, AiCore aiCore) {
+        this.trainStopMap = trainStopMap;
         this.stats = new Stats(stats.getInt(0), stats.getInt(1), stats.getInt(2), stats.getInt(3), stats.getInt(4), stats.getInt(5));
         this.tile = tile;
         this.tile.setMapped(this);
@@ -88,7 +85,7 @@ public class Creature implements Updatable, Renderable, Mapped, Ai, Living, Figh
 
     @Override
     public TileMap getMap() {
-        return tileMap;
+        return null;
     }
 
     @Override
@@ -100,13 +97,13 @@ public class Creature implements Updatable, Renderable, Mapped, Ai, Living, Figh
 
     @Override
     public boolean move(Direction direction) {
-        Tile newTile = tileMap.getTile(tile.getX() + direction.getX(), tile.getY() + direction.getY());
+        Tile newTile = trainStopMap.getTile(tile.getX() + direction.getX(), tile.getY() + direction.getY());
         if (newTile != null && newTile.getType() == TileType.FLOOR) {
             if (newTile.getMapped() instanceof Player) {
                 Player player = (Player) newTile.getMapped();
                 int damage = AttackResolver.resolveNormalAttack(this, player);
                 player.takeDamage(damage);
-                GameLog.addMessage("You took " +damage+ " damage");
+                GameLog.addMessage("You took " + damage + " damage");
                 return true;
             }
             changeTile(newTile);
@@ -129,11 +126,8 @@ public class Creature implements Updatable, Renderable, Mapped, Ai, Living, Figh
 
     @Override
     public void act(Player player) {
-        if(player.getFloor() == floor) {
             aiCore.act(this, player);
             finished = true;
-        }
-        finished = true;
     }
 
     public boolean isFinished() {
@@ -169,9 +163,9 @@ public class Creature implements Updatable, Renderable, Mapped, Ai, Living, Figh
     public void die() {
         tile.setMapped(null);
         setAlive(false);
-        tile.addItem(ConsumableFactory.getNewConsumable(RandomNumber.range(0,7)));
+        tile.addItem(ConsumableFactory.getNewConsumable(RandomNumber.range(0, 7)));
 
-        GameLog.addMessage(name +" died.");
+        GameLog.addMessage(name + " died.");
     }
 
     @Override
