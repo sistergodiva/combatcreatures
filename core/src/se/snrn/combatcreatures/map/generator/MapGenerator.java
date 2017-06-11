@@ -2,22 +2,28 @@ package se.snrn.combatcreatures.map.generator;
 
 
 import se.snrn.combatcreatures.map.Tile;
-import se.snrn.combatcreatures.map.TileMap;
 import se.snrn.combatcreatures.map.pathfinding.FloodFill;
+import se.snrn.combatcreatures.map.trainstops.CaveStop;
+import se.snrn.combatcreatures.map.trainstops.TrainStopMap;
 
 import java.util.ArrayList;
+import java.util.Random;
 
+import static se.snrn.combatcreatures.map.TileType.EARTH;
 import static se.snrn.combatcreatures.map.TileType.FLOOR;
-import static se.snrn.combatcreatures.map.TileType.WALL;
 
 public class MapGenerator {
 
     private int width;
     private int height;
+    private int seed;
+    private Random randomGenerator;
 
-    public MapGenerator(int width, int height) {
+    public MapGenerator(int width, int height, int seed) {
         this.width = width;
         this.height = height;
+        this.seed = seed;
+        randomGenerator = new Random(seed);
     }
 
     /**
@@ -29,7 +35,7 @@ public class MapGenerator {
      * @param birthLimit         if a dead cell has more than this amount of neighbours, it is born
      * @param numberOfSteps      the amount of times this simulation is run in the initial random map
      */
-    public TileMap getCellAutoMap(double chanceToStartAlive, int deathLimit, int birthLimit, int numberOfSteps) {
+    public TrainStopMap getCellAutoMap(double chanceToStartAlive, int deathLimit, int birthLimit, int numberOfSteps) {
         //create 2d array of booleans set to false
         boolean[][] cellmap = new boolean[width][height];
         //inititalize the map with 0-100% chance for each tile to start alive
@@ -41,9 +47,9 @@ public class MapGenerator {
 
 
         //make true tiles FULL and false tiles OPEN
-        TileMap map = getMapFromBool(cellmap, width, height);
-        if(!acceptableMap(map)) {
-            return getCellAutoMap(chanceToStartAlive,deathLimit,birthLimit,numberOfSteps );
+        TrainStopMap map = getMapFromBool(cellmap, width, height);
+        if (!acceptableMap(map)) {
+            return getCellAutoMap(chanceToStartAlive, deathLimit, birthLimit, numberOfSteps);
         } else {
             MapParser mapParser = new MapParser();
             mapParser.parseMap(map);
@@ -51,41 +57,27 @@ public class MapGenerator {
         }
     }
 
-    private boolean acceptableMap(TileMap tileMap){
-        Tile tile =  MapParser.getRandomEmptyTile(tileMap);
+    private boolean acceptableMap(TrainStopMap map) {
+        Tile tile = MapParser.getRandomEmptyTile(map);
         ArrayList<Tile> emptyTiles;
-        emptyTiles = FloodFill.getFloodFromTile(tileMap, tile);
-        tileMap.setStartTile(tile);
+        emptyTiles = FloodFill.getFloodFromTile(map, tile);
+        map.setStartTile(tile);
         System.out.println(emptyTiles.size());
-        return emptyTiles.size() > tileMap.getHeight() * tileMap.getWidth() * 0.40;
+        return emptyTiles.size() > map.getHeight() * map.getWidth() * 0.40;
     }
 
 
-    public boolean[][] getBooleanMap(double chanceToStartAlive, int deathLimit, int birthLimit, int numberOfSteps) {
-        //create 2d array of booleans set to false
-        boolean[][] cellmap = new boolean[width][height];
-        //inititalize the map with 0-100% chance for each tile to start alive
-        cellmap = initialiseMap(cellmap, chanceToStartAlive);
-        //run through the rules a number of times
-        for (int i = 0; i < numberOfSteps; i++) {
-            cellmap = doSimulationStep(cellmap, deathLimit, birthLimit);
-        }
-        //make true tiles FULL and false tiles OPEN
-        return cellmap;
-    }
-
-
-    private TileMap getMapFromBool(boolean[][] cellGrid, int width, int height) {
-        TileMap map = new TileMap(width, height);
+    private TrainStopMap getMapFromBool(boolean[][] cellGrid, int width, int height) {
+        TrainStopMap map = new CaveStop(new Tile[width][height]);
 
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
 
                 if (cellGrid[i][j]) {
-                    map.getTileArray()[i][j] = new Tile(i, j, WALL, map);
+                    map.getTiles()[i][j] = new Tile(i, j, EARTH);
                 }
                 if (!cellGrid[i][j]) {
-                    map.getTileArray()[i][j] = new Tile(i, j, FLOOR, map);
+                    map.getTiles()[i][j] = new Tile(i, j, FLOOR);
                 }
 
             }
@@ -97,8 +89,8 @@ public class MapGenerator {
     private boolean[][] initialiseMap(boolean[][] map, double chanceToStartAlive) {
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
-                if (Math.random() < chanceToStartAlive) {
-                    map[x][y] = true;
+                if (randomGenerator.nextDouble() < chanceToStartAlive) {
+                    map[x][y] = y >= 6;
                 }
             }
         }

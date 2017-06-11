@@ -10,15 +10,15 @@ public class TeleportConsumable implements ConsumableEffect {
 
     @Override
     public void eat(Player player) {
-        int numberOfFilledTiles = player.getMap().getFilled().size();
-        Tile tile = player.getMap().getFilled().get(RandomNumber.range(0, numberOfFilledTiles));
+        int numberOfFilledTiles = player.getMap().getOpenTiles().size();
+        Tile tile = player.getMap().getOpenTiles().get(RandomNumber.range(0, numberOfFilledTiles));
         player.changeTile(tile);
     }
 
     @Override
     public void toss(Creature creature) {
-        int numberOfFilledTiles = creature.getMap().getFilled().size();
-        Tile tile = creature.getMap().getFilled().get(RandomNumber.range(0, numberOfFilledTiles));
+        int numberOfFilledTiles = creature.getMap().getOpenTiles().size();
+        Tile tile = creature.getMap().getOpenTiles().get(RandomNumber.range(0, numberOfFilledTiles));
         creature.changeTile(tile);
     }
 }

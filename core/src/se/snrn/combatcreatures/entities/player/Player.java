@@ -14,8 +14,6 @@ import se.snrn.combatcreatures.map.los.LineOfSight;
 import se.snrn.combatcreatures.map.trainstops.TrainStopMap;
 import se.snrn.combatcreatures.userinterface.inventory.Inventory;
 import se.snrn.combatcreatures.map.Tile;
-import se.snrn.combatcreatures.map.TileMap;
-import se.snrn.combatcreatures.map.TileType;
 import se.snrn.combatcreatures.userinterface.GameLog;
 
 import java.util.ArrayList;
@@ -91,7 +89,7 @@ public class Player implements Updatable, Renderable, Mapped, Living, Fighter {
     }
 
     @Override
-    public TileMap getMap() {
+    public TrainStopMap getMap() {
         return null;
     }
 
@@ -107,7 +105,7 @@ public class Player implements Updatable, Renderable, Mapped, Living, Fighter {
     @Override
     public boolean move(Direction direction) {
         Tile newTile = trainStopMap.getTile(tile.getX() + direction.getX(), tile.getY() + direction.getY());
-        if (newTile != null && newTile.getType() == TileType.FLOOR) {
+        if (newTile != null && newTile.getType().isWalkable()) {
             if (newTile.getMapped() instanceof Creature) {
                 Creature creature = (Creature) newTile.getMapped();
                 int damage = AttackResolver.resolveNormalAttack(this, creature);

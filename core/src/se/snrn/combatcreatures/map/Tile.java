@@ -2,12 +2,15 @@ package se.snrn.combatcreatures.map;
 
 
 import com.badlogic.gdx.graphics.g2d.Batch;
+import se.snrn.combatcreatures.MissionScreen;
 import se.snrn.combatcreatures.ResourceManager;
 import se.snrn.combatcreatures.entities.enemies.Creature;
 import se.snrn.combatcreatures.entities.player.Player;
 import se.snrn.combatcreatures.interfaces.Mapped;
 import se.snrn.combatcreatures.interfaces.Renderable;
 import se.snrn.combatcreatures.items.Item;
+import se.snrn.combatcreatures.map.trainstops.MapRoom;
+import se.snrn.combatcreatures.map.trainstops.TrainStopMap;
 
 import java.util.ArrayList;
 
@@ -18,28 +21,21 @@ public class Tile implements Renderable {
     private int x;
     private int y;
     private TileType type;
-    private TileMap tileMap;
     private boolean visible;
     private boolean explored = true;
     private Mapped mapped;
     private ArrayList<Item> items;
-
-    public Tile(int x, int y, TileType type, TileMap tileMap) {
-        this.x = x;
-        this.y = y;
-        this.type = type;
-        this.tileMap = tileMap;
-        items = new ArrayList<>();
-
-    }
+    private MapRoom mapRoom;
 
     public Tile(int x, int y, TileType type) {
         this.x = x;
         this.y = y;
         this.type = type;
-        this.tileMap = tileMap;
         items = new ArrayList<>();
+        mapRoom = null;
     }
+
+
 
     @Override
     public void render(Batch batch) {
@@ -82,15 +78,17 @@ public class Tile implements Renderable {
                 ResourceManager.down.setPosition(x * TILE_SIZE, y * TILE_SIZE);
                 ResourceManager.down.draw(batch);
             }
+            if (this.type == TileType.EARTH) {
+                ResourceManager.cloud.setPosition(x * TILE_SIZE, y * TILE_SIZE);
+                ResourceManager.cloud.draw(batch);
+            }
             if (this.type == TileType.WALL) {
                 ResourceManager.cloud.setPosition(x * TILE_SIZE, y * TILE_SIZE);
                 ResourceManager.cloud.draw(batch);
                 int tileValue;
-                if(tileMap != null) {
-                    tileValue = TileBitMask.getBitMask(this, tileMap);
-                } else {
-                    tileValue = 0;
-                }
+
+                tileValue = TileBitMask.getBitMaskFromArray(this, MissionScreen.trainStopMap);
+
                 ResourceManager.getRainbowWallFromBitMask(tileValue).setPosition(x * TILE_SIZE, y * TILE_SIZE);
                 ResourceManager.getRainbowWallFromBitMask(tileValue).draw(batch);
             }
@@ -143,8 +141,8 @@ public class Tile implements Renderable {
 
     public void setExplored(boolean explored) {
         this.explored = explored;
-        if(mapped != null && mapped instanceof Creature){
-            Creature creature = (Creature)mapped;
+        if (mapped != null && mapped instanceof Creature) {
+            Creature creature = (Creature) mapped;
             creature.setActive(true);
         }
     }
@@ -157,9 +155,9 @@ public class Tile implements Renderable {
         return mapped;
     }
 
-    public void stepOn(Player player){
-        for (Item item: items
-             ) {
+    public void stepOn(Player player) {
+        for (Item item : items
+                ) {
             player.getInventory().addItem(item);
 
         }
@@ -186,12 +184,17 @@ public class Tile implements Renderable {
         items.remove(item);
     }
 
-    public void setMap(TileMap map) {
-        this.tileMap = map;
-    }
 
     public void setPosition(int x, int y) {
         this.x = x;
         this.y = y;
+    }
+
+    public void setMapRoom(MapRoom mapRoom) {
+        this.mapRoom = mapRoom;
+    }
+
+    public MapRoom getMapRoom() {
+        return mapRoom;
     }
 }

@@ -9,7 +9,7 @@ import java.util.Collections;
 public class EnemySpawner {
 
     public void spawnTargetDummies(CreatureManager creatureManager, TrainStopMap trainStopMap, int enemyBudget) {
-        ArrayList<Tile> emptyTiles = trainStopMap.getEmptyTiles();
+        ArrayList<Tile> emptyTiles = trainStopMap.getOpenTiles();
         int usedBudget = 0;
 
         Collections.shuffle(emptyTiles);
@@ -28,10 +28,10 @@ public class EnemySpawner {
     }
 
     public void spawnEnemies(CreatureManager creatureManager, TrainStopMap trainStopMap, int enemyBudget) {
-        ArrayList<Tile> emptyTiles = trainStopMap.getEmptyTiles();
+        ArrayList<Tile> emptyTiles = trainStopMap.getSpawns();
         int usedBudget = 0;
 
-        Collections.shuffle(emptyTiles);
+        //Collections.shuffle(emptyTiles);
 
         for (Tile emptyTile : emptyTiles) {
             if (usedBudget >= enemyBudget) {

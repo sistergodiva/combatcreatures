@@ -2,7 +2,7 @@ package se.snrn.combatcreatures.map.pathfinding;
 
 
 import se.snrn.combatcreatures.map.Tile;
-import se.snrn.combatcreatures.map.TileMap;
+import se.snrn.combatcreatures.map.trainstops.TrainStopMap;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,7 +21,7 @@ public class BreadthFirstSearch {
     private java.util.Map<Tile, Node> nodes = new HashMap<>();
 
 
-    private void generateNodes(TileMap map) {
+    private void generateNodes(TrainStopMap map) {
 
         this.nodes.clear();
 
@@ -34,7 +34,7 @@ public class BreadthFirstSearch {
     }
 
 
-    public ArrayList<Node> getHighlight(Tile start, int distance, TileMap map) {
+    public ArrayList<Node> getHighlight(Tile start, int distance, TrainStopMap map) {
         generateNodes(map);
         range = distance;
         frontier = new ArrayList<>();
@@ -56,7 +56,7 @@ public class BreadthFirstSearch {
             if (currentDepth == range - 1) {
                 nextElementsToDepthIncrease += map.getAllNeighbours(current.tile).size();
             } else {
-                nextElementsToDepthIncrease += map.getOrthoNeighboursTerrain(current.tile).size();
+                nextElementsToDepthIncrease += map.getOrthogonalNeighboursTerrain(current.tile).size();
             }
             if (--elementsToDepthIncrease == 0) {
                 if (++currentDepth > range) {
@@ -74,8 +74,8 @@ public class BreadthFirstSearch {
                     frontier.add(nodes.get(map.getAllNeighbours(current.tile).get(i)));
                 }
             } else {
-                for (int i = 0; i < map.getOrthoNeighboursTerrain(current.tile).size(); i++) {
-                    frontier.add(nodes.get(map.getOrthoNeighboursTerrain(current.tile).get(i)));
+                for (int i = 0; i < map.getOrthogonalNeighboursTerrain(current.tile).size(); i++) {
+                    frontier.add(nodes.get(map.getOrthogonalNeighboursTerrain(current.tile).get(i)));
                 }
             }
             if (frontier.get(0).tile.getMapped() == null && !visited.contains(frontier.get(0))) {

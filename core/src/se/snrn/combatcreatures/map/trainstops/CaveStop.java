@@ -3,8 +3,8 @@ package se.snrn.combatcreatures.map.trainstops;
 import se.snrn.combatcreatures.map.Tile;
 
 
-public class BrokenStop extends TrainStopMap {
-    public BrokenStop(Tile[][] tiles) {
+public class CaveStop extends TrainStopMap {
+    public CaveStop(Tile[][] tiles) {
         super(tiles);
     }
 }

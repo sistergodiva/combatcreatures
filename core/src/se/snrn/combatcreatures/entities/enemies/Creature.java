@@ -12,7 +12,6 @@ import se.snrn.combatcreatures.entities.player.Player;
 import se.snrn.combatcreatures.interfaces.*;
 import se.snrn.combatcreatures.items.consumable.ConsumableFactory;
 import se.snrn.combatcreatures.map.Tile;
-import se.snrn.combatcreatures.map.TileMap;
 import se.snrn.combatcreatures.map.TileType;
 import se.snrn.combatcreatures.map.trainstops.TrainStopMap;
 import se.snrn.combatcreatures.userinterface.GameLog;
@@ -36,7 +35,6 @@ public class Creature implements Updatable, Renderable, Mapped, Ai, Living, Figh
     private int cost;
     private Sprite deadSprite;
     private boolean active;
-    private int floor;
 
 
     public Creature(Tile tile, TrainStopMap trainStopMap, JsonValue stats, JsonValue appearance, AiCore aiCore) {
@@ -84,8 +82,8 @@ public class Creature implements Updatable, Renderable, Mapped, Ai, Living, Figh
     }
 
     @Override
-    public TileMap getMap() {
-        return null;
+    public TrainStopMap getMap() {
+        return trainStopMap;
     }
 
     @Override
@@ -200,10 +198,6 @@ public class Creature implements Updatable, Renderable, Mapped, Ai, Living, Figh
 
     public boolean isActive() {
         return active;
-    }
-
-    public int getFloor() {
-        return floor;
     }
 
     public int getXp() {

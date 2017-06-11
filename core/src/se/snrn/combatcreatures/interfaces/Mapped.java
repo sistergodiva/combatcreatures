@@ -3,12 +3,12 @@ package se.snrn.combatcreatures.interfaces;
 
 import se.snrn.combatcreatures.entities.Direction;
 import se.snrn.combatcreatures.map.Tile;
-import se.snrn.combatcreatures.map.TileMap;
+import se.snrn.combatcreatures.map.trainstops.TrainStopMap;
 
 public interface Mapped {
 
     Tile getTile();
-    TileMap getMap();
+    TrainStopMap getMap();
 
     void changeTile(Tile tile);
     boolean move(Direction direction);

@@ -3,6 +3,7 @@ package se.snrn.combatcreatures.map.trainstops;
 
 import se.snrn.combatcreatures.map.MapFactory;
 import se.snrn.combatcreatures.map.Tile;
+import se.snrn.combatcreatures.map.generator.DungeonGenerator;
 import se.snrn.combatcreatures.map.prefabs.MapComponent;
 import se.snrn.combatcreatures.map.prefabs.Tracks;
 
@@ -11,7 +12,7 @@ public class TrainStopFactory {
     public static TrainStopMap getTrainStop(StopType type, boolean verticalTrack) {
         switch (type) {
             case SWITCH: {
-                return new SwitchStop(getTiles(type, verticalTrack));
+                return new CaveStop(getTiles(type, verticalTrack));
             }
             case BROKEN: {
                 return new BrokenStop(new Tile[10][10]);
@@ -20,10 +21,15 @@ public class TrainStopFactory {
         return null;
     }
 
+    public static TrainStopMap getDungeonMap(){
+        return DungeonGenerator.getDungeonMap(60,40);
+    }
+
 
     public static Tile[][] getTiles(StopType type, boolean verticalTrack){
-        Tile[][] tiles = MapFactory.generateCellularTileMap().getTileArray();
-        tiles = addMapComponent(tiles, new Tracks(), 0,0);
+        Tile[][] tiles = MapFactory.generateCellularTileMap(666).getTiles();
+        tiles = addMapComponent(tiles, new Tracks(tiles.length), 0,0);
+
         return tiles;
     }
 
@@ -36,4 +42,5 @@ public class TrainStopFactory {
         }
         return tiles;
     }
+
 }

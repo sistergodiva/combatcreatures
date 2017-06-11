@@ -8,10 +8,8 @@ import se.snrn.combatcreatures.entities.player.Player;
 import se.snrn.combatcreatures.interfaces.Renderable;
 import se.snrn.combatcreatures.interfaces.Updatable;
 import se.snrn.combatcreatures.map.Tile;
-import se.snrn.combatcreatures.map.TileMap;
 import se.snrn.combatcreatures.map.TileType;
 import se.snrn.combatcreatures.map.trainstops.TrainStopMap;
-
 
 import static se.snrn.combatcreatures.ResourceManager.*;
 
@@ -87,7 +85,7 @@ public class MiniMap implements Updatable, Renderable {
                     white.draw(batch);
                 }
 
-                if (point.getType() == TileType.WALL && point.isExplored()) {
+                if (point.getType() == TileType.WALL || point.getType() == TileType.EARTH && point.isExplored()) {
                     pink.setSize(mapScale, mapScale);
                     pink.setPosition(startX + point.getX() * mapScale, startY + point.getY() * mapScale);
                     pink.draw(batch);

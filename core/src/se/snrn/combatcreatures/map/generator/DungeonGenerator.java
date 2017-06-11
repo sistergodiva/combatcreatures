@@ -1,128 +1,109 @@
 package se.snrn.combatcreatures.map.generator;
 
-
 import se.snrn.combatcreatures.RandomNumber;
-import se.snrn.combatcreatures.entities.Direction;
-import se.snrn.combatcreatures.entities.DirectionDiagonal;
 import se.snrn.combatcreatures.map.Tile;
 import se.snrn.combatcreatures.map.TileType;
-import se.snrn.combatcreatures.map.prefabs.ImageToPrefab;
 import se.snrn.combatcreatures.map.prefabs.MapComponent;
-import se.snrn.combatcreatures.map.prefabs.PrefabFactory;
+import se.snrn.combatcreatures.map.prefabs.Room;
+import se.snrn.combatcreatures.map.prefabs.Tracks;
+import se.snrn.combatcreatures.map.trainstops.SwitchStop;
+import se.snrn.combatcreatures.map.trainstops.TrainStopMap;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import static se.snrn.combatcreatures.map.TileType.*;
 
 public class DungeonGenerator {
 
-    private static List<MapComponent> placedRoomsArray;
+    public static Tile prevTile;
+    public static Tile nextTile;
+    static ArrayList<Room> rooms;
 
+    public static TrainStopMap getDungeonMap(int width, int height) {
+        Tile[][] tiles = getFilledMap(width, height);
 
-    public static Tile[][] createDungeonFromAutomata(int width, int height) {
-        placedRoomsArray = new ArrayList<>();
+        rooms = new ArrayList<>();
 
-        MapGenerator mapGenerator = new MapGenerator(width, height);
+        tiles = addMapComponent(tiles, new Tracks(width), 0, 0);
 
-        Tile[][] tiles = mapGenerator.getCellAutoMap(0.45, 3, 4, 3).getTileArray();
+        SwitchStop switchStop = new SwitchStop(tiles);
 
+        Tile startTile = tiles[RandomNumber.range(0, width - 1)][6];
+        startTile.setType(TileType.DOWN);
+        switchStop.setStartTile(startTile);
 
-        int tries = 1000;
-        int placedRooms = 0;
-        for (int i = 0; i < tries; i++) {
-            if (placeRoom(tiles, PrefabFactory.getRandomRoom())) {
-                placedRooms++;
-            }
+        prevTile = startTile;
+
+        for (int i = 0; i < 10; i++) {
+
+            addRandomRoom(tiles);
+            makeCorridor(tiles, prevTile, nextTile);
+            prevTile = nextTile;
         }
 
 
-        digCorridor(tiles, tiles[1][1], 10, Direction.EAST);
-        digCorridor(tiles, tiles[1][1], 10, Direction.NORTH);
+        return switchStop;
+    }
 
-        placedRoomsArray.get(1).getTiles()[0][RandomNumber.range(1, placedRoomsArray.get(1).getHeight())].setType(DOOR);
-        int placedX = placedRoomsArray.get(0).getTiles()[1][1].getX();
-        int placedY = placedRoomsArray.get(0).getTiles()[1][1].getY();
+    private static Tile[][] addRandomRoom(Tile[][] tiles) {
+        Room room = new Room(RandomNumber.range(4, 9), RandomNumber.range(4, 9));
+        rooms.add(room);
+        nextTile = room.getMiddle();
+        room.getMiddle().setType(TileType.DOWN);
+        return addMapComponent(tiles, room, RandomNumber.range(0, (tiles.length - room.getWidth()) - 1), RandomNumber.range(6, (tiles[0].length - room.getHeight()) - 1));
+    }
 
-        tiles[placedX][placedY].setType(WALL);
+    private static Tile[][] makeCorridor(Tile[][] tiles, Tile start, Tile end) {
+        int currentX = start.getX();
+        int currentY = start.getY();
 
-        System.out.println("placed rooms: " + placedRooms);
+        int endX = end.getX();
+        int endY = end.getY();
+
+        while (currentX != endX) {
+            if (currentX > endX) {
+                currentX--;
+                tiles[currentX][currentY].setType(TileType.FLOOR);
+            } else if (currentX < endX) {
+                currentX++;
+                tiles[currentX][currentY].setType(TileType.FLOOR);
+            }
+        }
+        while (currentY != endY) {
+            if (currentY > endY) {
+                currentY--;
+                tiles[currentX][currentY].setType(TileType.FLOOR);
+            } else if (currentY < endY) {
+                currentY++;
+                tiles[currentX][currentY].setType(TileType.FLOOR);
+            }
+        }
         return tiles;
     }
 
-
-    public static Tile[][] createDungeon(int width, int height) {
-        placedRoomsArray = new ArrayList<>();
-        Tile[][] tiles = new Tile[width][height];
-
-        for (int i = 0; i < width; i++) {
-            for (int j = 0; j < height; j++) {
-                tiles[i][j] = new Tile(i, j, WALL);
-            }
-        }
-
-
-        int tries = 1000;
-        int placedRooms = 0;
-        for (int i = 0; i < tries; i++) {
-            if (placeRoom(tiles, PrefabFactory.getRandomRoom())) {
-                placedRooms++;
-                if (!placedRoomsArray.isEmpty()) {
-                    MapComponent lastRoomPlaced = placedRoomsArray.get(placedRoomsArray.size() - 1);
-                    digCorridor(tiles, lastRoomPlaced.getTiles()[lastRoomPlaced.getWidth() - 2][lastRoomPlaced.getHeight() - 2], 15, Direction.values()[RandomNumber.range(0, Direction.values().length - 1)]);
-                }
-            }
-        }
-
-//        digCorridor(tiles, tiles[1][1], 10, Direction.EAST);
-//        digCorridor(tiles, tiles[1][1], 10, Direction.NORTH);
-
-        int placedX = placedRoomsArray.get(0).getTiles()[1][1].getX();
-        int placedY = placedRoomsArray.get(0).getTiles()[1][1].getY();
-
-        tiles[placedX][placedY].setType(WALL);
-
-        System.out.println("placed rooms: " + placedRooms);
-        return tiles;
-    }
-
-
-    public static void digCorridor(Tile[][] tiles, Tile startTile, int length, Direction direction) {
-        for (int i = 0; i < length; i++) {
-
-            int xHere = startTile.getX() + direction.getX() * i;
-            int yHere = startTile.getY() + direction.getY() * i;
-            if (xHere >= 0 && yHere >= 0 && xHere < tiles.length && yHere < tiles[0].length && tiles[xHere] != null && tiles[xHere][yHere] != null) {
-                tiles[xHere][yHere].setType(TileType.FLOOR);
-            }
-        }
-    }
-
-    public static boolean placeRoom(Tile[][] tiles, MapComponent room) {
-        int xTry = RandomNumber.range(0, tiles.length - room.getTiles().length);
-        int yTry = RandomNumber.range(0, tiles[0].length - room.getTiles()[0].length);
-
-        boolean success = true;
-
-        for (Tile[] tile : room.getTiles()) {
+    private static Tile[][] addMapComponent(Tile[][] tiles, MapComponent mapComponent, int x, int y) {
+        for (Tile[] tile : mapComponent.getTiles()) {
             for (Tile aTile : tile) {
-                if (tiles[aTile.getX() + xTry][aTile.getY() + yTry].getType() == FLOOR) {
-                    success = false;
+
+                if(tiles[aTile.getX() + x][aTile.getY() + y].getType() == TileType.FLOOR
+                        && aTile.getType() == TileType.WALL){
+                    aTile.setType(TileType.FLOOR);
                 }
+
+                tiles[aTile.getX() + x][aTile.getY() + y] = aTile;
+                aTile.setPosition(aTile.getX() + x, aTile.getY() + y);
+
             }
         }
-        if (success) {
-            placedRoomsArray.add(room);
-            for (Tile[] tile : room.getTiles()) {
-                for (Tile aTile : tile) {
-                    if (tiles[aTile.getX() + xTry][aTile.getY() + yTry].getType() == WALL) {
-                        tiles[aTile.getX() + xTry][aTile.getY() + yTry] = aTile;
-                        aTile.setPosition(aTile.getX() + xTry, aTile.getY() + yTry);
-                    }
-                }
-            }
-        }
-        return success;
+        return tiles;
     }
 
+    private static Tile[][] getFilledMap(int width, int height) {
+        Tile[][] tiles = new Tile[width][height];
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++) {
+                tiles[x][y] = new Tile(x, y, TileType.EARTH);
+            }
+        }
+        return tiles;
+    }
 }

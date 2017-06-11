@@ -13,6 +13,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import se.snrn.combatcreatures.entities.enemies.CreatureFactory;
 import se.snrn.combatcreatures.entities.enemies.CreatureManager;
 import se.snrn.combatcreatures.entities.Stats;
+import se.snrn.combatcreatures.entities.enemies.EnemySpawner;
 import se.snrn.combatcreatures.entities.player.Experience;
 import se.snrn.combatcreatures.entities.player.Player;
 import se.snrn.combatcreatures.input.InputHandler;
@@ -25,6 +26,8 @@ import se.snrn.combatcreatures.map.trainstops.TrainStopMap;
 import se.snrn.combatcreatures.userinterface.GameLog;
 import se.snrn.combatcreatures.userinterface.Ui;
 import se.snrn.combatcreatures.visualeffects.VisualEffectManager;
+
+import java.util.Random;
 
 import static se.snrn.combatcreatures.CombatCreatures.TILE_SIZE;
 
@@ -49,7 +52,7 @@ public class MissionScreen implements Screen {
     private ConsumableFactory consumableFactory;
     private ShapeRenderer shapeRenderer;
     public static VisualEffectManager visualEffectManager;
-    public TrainStopMap trainStopMap;
+    public static TrainStopMap trainStopMap;
 
 
     public MissionScreen(Batch batch, SpriteBatch uiBatch, CombatCreatures combatCreatures) {
@@ -65,6 +68,7 @@ public class MissionScreen implements Screen {
         consumableFactory = new ConsumableFactory();
 
         trainStopMap = TrainStopFactory.getTrainStop(StopType.SWITCH, true);
+        //trainStopMap = TrainStopFactory.getDungeonMap();
 
         creatureManager = new CreatureManager();
         player = new Player(trainStopMap.getStartTile(), trainStopMap, new Stats(1, 1, 1, 1, 1, 1));
@@ -87,6 +91,9 @@ public class MissionScreen implements Screen {
         new Experience();
 
         train = new Train();
+        System.out.println(trainStopMap.getSpawns());
+        EnemySpawner enemySpawner = new EnemySpawner();
+        enemySpawner.spawnEnemies(creatureManager, trainStopMap, 200);
 
     }
 

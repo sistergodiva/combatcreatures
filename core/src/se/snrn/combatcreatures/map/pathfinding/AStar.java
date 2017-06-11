@@ -3,8 +3,7 @@ package se.snrn.combatcreatures.map.pathfinding;
 
 import com.badlogic.gdx.Gdx;
 import se.snrn.combatcreatures.map.Tile;
-import se.snrn.combatcreatures.map.TileMap;
-
+import se.snrn.combatcreatures.map.trainstops.TrainStopMap;
 
 import java.util.*;
 
@@ -24,7 +23,7 @@ public class AStar {
     };
 
 
-    private static void generateNodes(TileMap tileMap) {
+    private static void generateNodes(TrainStopMap tileMap) {
         nodes.clear();
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
@@ -34,7 +33,7 @@ public class AStar {
         }
     }
 
-    public static ArrayList<Tile> calculateAStarNoTerrain(Tile p1, Tile p2, TileMap tileMap) {
+    public static ArrayList<Tile> calculateAStarNoTerrain(Tile p1, Tile p2, TrainStopMap tileMap) {
         Gdx.app.log("AStar", "Doing expensive AStar");
         width = tileMap.getWidth();
         height = tileMap.getHeight();
@@ -61,7 +60,7 @@ public class AStar {
             openList.remove(currentNode);
             closedList.add(currentNode);
 
-            for (Tile adjPoint : tileMap.getOrthoNeighbours(currentNode.tile)
+            for (Tile adjPoint : tileMap.getOrthogonalNeighbours(currentNode.tile)
                     ) {
                 if (!isInsideBounds(adjPoint.getX(), adjPoint.getY())) {
                     continue;
@@ -90,7 +89,7 @@ public class AStar {
         return null;
     }
 
-    public static boolean isReachable(Tile start, Tile goal, TileMap map) {
+    public static boolean isReachable(Tile start, Tile goal, TrainStopMap map) {
         return calculateAStarNoTerrain(start, goal, map) != null;
     }
 
@@ -113,7 +112,7 @@ public class AStar {
                 y < height;
     }
 
-    public static int getDistance(Tile start, Tile goal, TileMap map) {
+    public static int getDistance(Tile start, Tile goal, TrainStopMap map) {
         return calculateAStarNoTerrain(start, goal, map).size();
     }
 }

@@ -7,9 +7,6 @@ import se.snrn.combatcreatures.RandomNumber;
 import se.snrn.combatcreatures.map.Tile;
 import se.snrn.combatcreatures.map.TileType;
 
-/**
- * Created by snrn on 6/10/17.
- */
 public class ImageToPrefab {
 
 
