@@ -28,16 +28,43 @@ public class MapParser {
         generateStairs(map);
         findRooms(map);
         markWalls(map);
-        map.setSpawns(getSpawnLocations(map, map.getOpenTiles()));
+        findSpawnLocations(map);
+        //map.setSpawns(getSpawnLocations(map, map.getOpenTiles()));
         System.out.println("set spawns");
-//        ArrayList<MapRoom> rooms = map.getRooms();
-//        for (MapRoom room: rooms
-//             ) {
-//
-//            for (Tile tile : room.getRoomTiles()) {
-//                tile.setType(DOWN);
-//            }
-//        }
+        ArrayList<MapRoom> rooms = map.getRooms();
+        for (MapRoom room: rooms
+             ) {
+
+            if(findPath(room.getRoomTiles().get(0), startTile, map) == null) {
+                for (Tile tile : room.getRoomTiles()) {
+                    tile.setType(DOWN);
+                }
+            }
+        }
+    }
+
+    private void findSpawnLocations(TrainStopMap map) {
+        int fullNeighbours = 0;
+        ArrayList<Tile> spawnLocations = new ArrayList<>();
+
+        for (Tile tile : map.getOpenTiles()
+                ) {
+            if (!tile.isVisible()) {
+                ArrayList<Tile> neighbours = map.getOrthogonalNeighbours(tile);
+                for (Tile neighbour : neighbours
+                        ) {
+                    if (neighbour.getType() == WALL) {
+                        fullNeighbours++;
+                    }
+                }
+                if (fullNeighbours >= 2) {
+                    spawnLocations.add(tile);
+                    fullNeighbours = 0;
+                }
+            }
+        }
+        map.setSpawns(spawnLocations);
+        System.out.println(map.getSpawns().size());
     }
 
     public static Tile getRandomEmptyTile(TrainStopMap tileMap) {
@@ -117,28 +144,5 @@ public class MapParser {
 
     private ArrayList<Tile> findPath(Tile start, Tile goal, TrainStopMap tileMap) {
         return AStar.calculateAStarNoTerrain(start, goal, tileMap);
-    }
-
-    private ArrayList<Tile> getSpawnLocations(TrainStopMap map, ArrayList<Tile> filled) {
-        int fullNeighbours = 0;
-        ArrayList<Tile> spawnLocations = new ArrayList<>();
-
-        for (Tile tile : filled
-                ) {
-            if (!tile.isVisible()) {
-                ArrayList<Tile> neighbours = map.getOrthogonalNeighbours(tile);
-                for (Tile neighbour : neighbours
-                        ) {
-                    if (neighbour.getType() == WALL) {
-                        fullNeighbours++;
-                    }
-                }
-                if (fullNeighbours >= 2) {
-                    spawnLocations.add(tile);
-                    fullNeighbours = 0;
-                }
-            }
-        }
-        return spawnLocations;
     }
 }

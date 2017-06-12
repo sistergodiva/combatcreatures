@@ -18,12 +18,14 @@ public class MapGenerator {
     private int height;
     private int seed;
     private Random randomGenerator;
+    MapParser mapParser;
 
     public MapGenerator(int width, int height, int seed) {
         this.width = width;
         this.height = height;
         this.seed = seed;
         randomGenerator = new Random(seed);
+        mapParser = new MapParser();
     }
 
     /**
@@ -51,7 +53,7 @@ public class MapGenerator {
         if (!acceptableMap(map)) {
             return getCellAutoMap(chanceToStartAlive, deathLimit, birthLimit, numberOfSteps);
         } else {
-            MapParser mapParser = new MapParser();
+
             mapParser.parseMap(map);
             return map;
         }

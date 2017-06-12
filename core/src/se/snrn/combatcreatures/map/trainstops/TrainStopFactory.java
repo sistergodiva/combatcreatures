@@ -12,7 +12,9 @@ public class TrainStopFactory {
     public static TrainStopMap getTrainStop(StopType type, boolean verticalTrack) {
         switch (type) {
             case SWITCH: {
-                return new CaveStop(getTiles(type, verticalTrack));
+                TrainStopMap trainStopMap = MapFactory.generateCellularTileMap(666);
+                addMapComponent(trainStopMap.getTiles(), new Tracks(trainStopMap.getWidth()), 0,0);
+                return trainStopMap;
             }
             case BROKEN: {
                 return new BrokenStop(new Tile[10][10]);

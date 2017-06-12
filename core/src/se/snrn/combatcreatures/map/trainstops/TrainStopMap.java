@@ -29,7 +29,7 @@ public abstract class TrainStopMap implements Renderable {
         this.width = tiles.length;
         this.height = tiles[0].length;
         startTile = getTile(0,0);
-        this.spawns = new ArrayList<>();
+        //spawns = new ArrayList<>();
         walls = new ArrayList<>();
         openTiles = new ArrayList<>();
 

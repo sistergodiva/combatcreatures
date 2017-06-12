@@ -92,8 +92,8 @@ public class MissionScreen implements Screen {
 
         train = new Train();
         System.out.println(trainStopMap.getSpawns());
-        EnemySpawner enemySpawner = new EnemySpawner();
-        enemySpawner.spawnEnemies(creatureManager, trainStopMap, 200);
+
+        EnemySpawner.spawnEnemies(creatureManager, trainStopMap, 200);
 
     }
 
