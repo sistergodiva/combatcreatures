@@ -47,6 +47,12 @@ public class ResourceManager {
     public static Sprite trackTop = new Sprite(new Texture(Gdx.files.internal("tiles/track_top.png")));
     public static Sprite trackBottom = new Sprite(new Texture(Gdx.files.internal("tiles/track_bottom.png")));
     public static Sprite trackMiddle = new Sprite(new Texture(Gdx.files.internal("tiles/track_middle.png")));
+    public static Sprite hill = new Sprite(new Texture(Gdx.files.internal("map/hill.png")));
+
+    public static Sprite train = new Sprite(new Texture(Gdx.files.internal("map/train.png")));
+
+    public static Sprite brokenTrack= new Sprite(new Texture(Gdx.files.internal("map/track_broken.png")));
+
 
     public ResourceManager() {
         walls = new ArrayList<>();
@@ -83,6 +89,11 @@ public class ResourceManager {
 
     public static Sprite getRainbowWallFromBitMask(int tileValue) {
         return rainbowWalls.get(tileValue);
+
+    }
+
+    public static Sprite getTrackFromBitMask(int tileValue) {
+        return new Sprite(new Texture(Gdx.files.internal("map/track_"+tileValue+".png")));
 
     }
 }

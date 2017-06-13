@@ -14,16 +14,26 @@ public class Node {
     public int gValue;
 
     private int hValue;
-    private final int MOVEMENT_COST = 10;
+    private int MOVEMENT_COST = 10;
 
     private final int x;
     private final int y;
+    private int movementCost;
 
     public Node(Tile tile) {
         this.tile = tile;
         this.type = tile.getType();
         this.x = tile.getX();
         this.y = tile.getY();
+    }
+
+    public Node(Tile tile, int movementCost) {
+        this.tile = tile;
+        this.type = tile.getType();
+        this.x = tile.getX();
+        this.y = tile.getY();
+        this.movementCost = movementCost;
+        MOVEMENT_COST = movementCost;
     }
 
     public int getX() {

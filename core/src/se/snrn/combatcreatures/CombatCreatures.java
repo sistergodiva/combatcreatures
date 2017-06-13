@@ -13,6 +13,7 @@ public class CombatCreatures extends Game{
     SpriteBatch spriteBatch;
     SpriteBatch uiBatch;
     HighScoreScreen highScoreScreen;
+    WorldScreen worldScreen;
 
 
     public CombatCreatures() {
@@ -27,8 +28,10 @@ public class CombatCreatures extends Game{
         uiBatch = new SpriteBatch();
         missionScreen = new MissionScreen(spriteBatch,uiBatch, this);
         highScoreScreen = new HighScoreScreen(spriteBatch, uiBatch, this);
+        worldScreen = new WorldScreen(spriteBatch, uiBatch, this);
 
-        setScreen(missionScreen);
+    //    setScreen(missionScreen);
+        setScreen(worldScreen);
     }
 
     @Override

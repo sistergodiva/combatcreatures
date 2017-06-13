@@ -2,8 +2,10 @@ package se.snrn.combatcreatures.map;
 
 
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import se.snrn.combatcreatures.MissionScreen;
 import se.snrn.combatcreatures.ResourceManager;
+import se.snrn.combatcreatures.WorldScreen;
 import se.snrn.combatcreatures.entities.enemies.Creature;
 import se.snrn.combatcreatures.entities.player.Player;
 import se.snrn.combatcreatures.interfaces.Mapped;
@@ -40,6 +42,33 @@ public class Tile implements Renderable {
     @Override
     public void render(Batch batch) {
         if (explored) {
+
+            if (this.type == TileType.HILL) {
+                ResourceManager.hill.setPosition(x * TILE_SIZE, y * TILE_SIZE);
+                ResourceManager.hill.draw(batch);
+            }
+
+
+            if (this.type == TileType.TRACK) {
+                ResourceManager.grass.setPosition(x * TILE_SIZE, y * TILE_SIZE);
+                ResourceManager.grass.draw(batch);
+
+                int tileValue = TileBitMask.getBitMaskFromArray(this, WorldScreen.worldMap);
+                Sprite sprite = ResourceManager.getTrackFromBitMask(tileValue);
+                sprite.setPosition(x * TILE_SIZE, y * TILE_SIZE);
+                sprite.draw(batch);
+            }
+
+            if (this.type == TileType.BROKEN_TRACK) {
+                ResourceManager.grass.setPosition(x * TILE_SIZE, y * TILE_SIZE);
+                ResourceManager.grass.draw(batch);
+
+
+                ResourceManager.brokenTrack.setPosition(x * TILE_SIZE, y * TILE_SIZE);
+                ResourceManager.brokenTrack.draw(batch);
+
+            }
+
 
             if (this.type == TileType.TRACK_TOP) {
                 ResourceManager.grass.setPosition(x * TILE_SIZE, y * TILE_SIZE);
