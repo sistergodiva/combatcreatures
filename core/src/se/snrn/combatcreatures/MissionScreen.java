@@ -25,7 +25,6 @@ import se.snrn.combatcreatures.map.trainstops.TrainStopMap;
 import se.snrn.combatcreatures.userinterface.GameLog;
 import se.snrn.combatcreatures.userinterface.Ui;
 import se.snrn.combatcreatures.visualeffects.VisualEffectManager;
-import se.snrn.combatcreatures.worldmap.WorldMap;
 
 import static se.snrn.combatcreatures.CombatCreatures.TILE_SIZE;
 
@@ -51,7 +50,6 @@ public class MissionScreen implements Screen {
     private ShapeRenderer shapeRenderer;
     public static VisualEffectManager visualEffectManager;
     public static TrainStopMap trainStopMap;
-    public WorldMap worldMap;
 
 
     public MissionScreen(Batch batch, SpriteBatch uiBatch, CombatCreatures combatCreatures) {
@@ -104,14 +102,14 @@ public class MissionScreen implements Screen {
         orthographicCamera.position.set(WORLD_WIDTH / 2, WORLD_HEIGHT / 2, 0);
         orthographicCamera.update();
         viewport.apply();
+        Gdx.input.setInputProcessor(inputHandler);
+
     }
 
     private void update(float delta) {
         orthographicCamera.position.set(player.getTile().getX() * TILE_SIZE, player.getTile().getY() * TILE_SIZE, 0);
 
-        if (!player.isAlive()) {
-            cc.setScreen(cc.highScoreScreen);
-        }
+
         orthographicCamera.update();
 
         player.update(delta);
@@ -144,7 +142,7 @@ public class MissionScreen implements Screen {
 //            ResourceManager.player.setPosition(tile.getX() * TILE_SIZE, tile.getY() * TILE_SIZE);
 //            ResourceManager.player.draw(batch);
 //        }
-//        train.render(batch);
+        train.render(batch);
         batch.end();
         uiBatch.begin();
         ui.render(uiBatch);

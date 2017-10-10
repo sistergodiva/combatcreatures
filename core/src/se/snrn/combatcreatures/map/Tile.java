@@ -5,14 +5,12 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import se.snrn.combatcreatures.MissionScreen;
 import se.snrn.combatcreatures.ResourceManager;
-import se.snrn.combatcreatures.WorldScreen;
 import se.snrn.combatcreatures.entities.enemies.Creature;
 import se.snrn.combatcreatures.entities.player.Player;
 import se.snrn.combatcreatures.interfaces.Mapped;
 import se.snrn.combatcreatures.interfaces.Renderable;
 import se.snrn.combatcreatures.items.Item;
 import se.snrn.combatcreatures.map.trainstops.MapRoom;
-import se.snrn.combatcreatures.map.trainstops.TrainStopMap;
 
 import java.util.ArrayList;
 
@@ -49,15 +47,6 @@ public class Tile implements Renderable {
             }
 
 
-            if (this.type == TileType.TRACK) {
-                ResourceManager.grass.setPosition(x * TILE_SIZE, y * TILE_SIZE);
-                ResourceManager.grass.draw(batch);
-
-                int tileValue = TileBitMask.getBitMaskFromArray(this, WorldScreen.worldMap);
-                Sprite sprite = ResourceManager.getTrackFromBitMask(tileValue);
-                sprite.setPosition(x * TILE_SIZE, y * TILE_SIZE);
-                sprite.draw(batch);
-            }
 
             if (this.type == TileType.BROKEN_TRACK) {
                 ResourceManager.grass.setPosition(x * TILE_SIZE, y * TILE_SIZE);
