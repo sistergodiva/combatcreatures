@@ -4,6 +4,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import se.snrn.combatcreatures.ResourceManager;
 import se.snrn.combatcreatures.entities.Direction;
+import se.snrn.combatcreatures.entities.DirectionDiagonal;
 import se.snrn.combatcreatures.entities.player.Player;
 import se.snrn.combatcreatures.map.Tile;
 import se.snrn.combatcreatures.map.TileType;
@@ -68,19 +69,19 @@ public class DigInputState implements InputState {
         Tile tile = null;
         switch (input) {
             case Input.Keys.W: {
-                tile = player.getTrainStopMap().getTileAtDirection(player.getTile(), Direction.NORTH);
+                tile = player.getTrainStopMap().getTileAtDirection(player.getTile(), DirectionDiagonal.NORTH);
                 break;
             }
             case Input.Keys.D: {
-                tile = player.getTrainStopMap().getTileAtDirection(player.getTile(), Direction.EAST);
+                tile = player.getTrainStopMap().getTileAtDirection(player.getTile(), DirectionDiagonal.EAST);
                 break;
             }
             case Input.Keys.S: {
-                tile = player.getTrainStopMap().getTileAtDirection(player.getTile(), Direction.SOUTH);
+                tile = player.getTrainStopMap().getTileAtDirection(player.getTile(), DirectionDiagonal.SOUTH);
                 break;
             }
             case Input.Keys.A: {
-                tile = player.getTrainStopMap().getTileAtDirection(player.getTile(), Direction.WEST);
+                tile = player.getTrainStopMap().getTileAtDirection(player.getTile(), DirectionDiagonal.WEST);
                 break;
             }
 

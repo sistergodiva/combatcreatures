@@ -13,7 +13,7 @@ public class TrainStopFactory {
         switch (type) {
             case SWITCH: {
                 TrainStopMap trainStopMap = MapFactory.generateCellularTileMap(666);
-                addMapComponent(trainStopMap.getTiles(), new Tracks(trainStopMap.getWidth()), 0,0);
+                //addMapComponent(trainStopMap.getTiles(), new Tracks(trainStopMap.getWidth()), 0,0);
                 return trainStopMap;
             }
             case BROKEN: {

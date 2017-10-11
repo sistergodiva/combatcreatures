@@ -5,7 +5,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class CombatCreatures extends Game{
-    public static final int TILE_SIZE = 32;
+    public static final int TILE_SIZE = 16;
     MissionScreen missionScreen;
     SpriteBatch spriteBatch;
     SpriteBatch uiBatch;

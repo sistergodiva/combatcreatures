@@ -3,6 +3,7 @@ package se.snrn.combatcreatures.map.generator;
 
 import se.snrn.combatcreatures.RandomNumber;
 import se.snrn.combatcreatures.entities.Direction;
+import se.snrn.combatcreatures.entities.DirectionDiagonal;
 import se.snrn.combatcreatures.map.Tile;
 import se.snrn.combatcreatures.map.TileType;
 import se.snrn.combatcreatures.map.pathfinding.AStar;
@@ -114,10 +115,10 @@ public class MapParser {
         for (Tile tile : tileMap.getOpenTiles()) {
 
 
-            Tile westTile = tileMap.getTileAtDirection(tile, Direction.WEST);
-            Tile eastTile = tileMap.getTileAtDirection(tile, Direction.EAST);
-            Tile northTile = tileMap.getTileAtDirection(tile, Direction.NORTH);
-            Tile southTile = tileMap.getTileAtDirection(tile, Direction.SOUTH);
+            Tile westTile = tileMap.getTileAtDirection(tile, DirectionDiagonal.WEST);
+            Tile eastTile = tileMap.getTileAtDirection(tile, DirectionDiagonal.EAST);
+            Tile northTile = tileMap.getTileAtDirection(tile, DirectionDiagonal.NORTH);
+            Tile southTile = tileMap.getTileAtDirection(tile, DirectionDiagonal.SOUTH);
             if (westTile != null && eastTile != null && southTile != null && northTile != null) {
                 if (westTile.getType() == eastTile.getType() && northTile.getType() == southTile.getType() && westTile.getType() != northTile.getType()) {
                     tile.setType(DOOR);

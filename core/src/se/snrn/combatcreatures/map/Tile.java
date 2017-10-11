@@ -15,6 +15,7 @@ import se.snrn.combatcreatures.map.trainstops.MapRoom;
 import java.util.ArrayList;
 
 import static se.snrn.combatcreatures.CombatCreatures.TILE_SIZE;
+import static se.snrn.combatcreatures.map.TileBitmask2.getTileNumber;
 
 public class Tile implements Renderable {
 
@@ -39,6 +40,9 @@ public class Tile implements Renderable {
 
     @Override
     public void render(Batch batch) {
+
+        System.out.println(getTileNumber(this, MissionScreen.trainStopMap));
+
         if (explored) {
 
             if (this.type == TileType.HILL) {
@@ -101,14 +105,16 @@ public class Tile implements Renderable {
                 ResourceManager.cloud.draw(batch);
             }
             if (this.type == TileType.WALL) {
-                ResourceManager.cloud.setPosition(x * TILE_SIZE, y * TILE_SIZE);
-                ResourceManager.cloud.draw(batch);
+//                ResourceManager.cloud.setPosition(x * TILE_SIZE, y * TILE_SIZE);
+//                ResourceManager.cloud.draw(batch);
                 int tileValue;
 
-                tileValue = TileBitMask.getBitMaskFromArray(this, MissionScreen.trainStopMap);
-
-                ResourceManager.getRainbowWallFromBitMask(tileValue).setPosition(x * TILE_SIZE, y * TILE_SIZE);
-                ResourceManager.getRainbowWallFromBitMask(tileValue).draw(batch);
+                //tileValue = TileBitMask.getBitMaskFromArray(this, MissionScreen.trainStopMap);
+                tileValue = TileBitmask2.getTileNumber(this, MissionScreen.trainStopMap);
+                ResourceManager.getWallFromBitmask(tileValue).setPosition(x * TILE_SIZE, y * TILE_SIZE);
+                ResourceManager.getWallFromBitmask(tileValue).draw(batch);
+//                ResourceManager.getRainbowWallFromBitMask(tileValue).setPosition(x * TILE_SIZE, y * TILE_SIZE);
+//                ResourceManager.getRainbowWallFromBitMask(tileValue).draw(batch);
             }
 //            if (this.type == TileType.WALL) {
 //                int tileValue = TileBitMask.getBitMask(this, tileMap);

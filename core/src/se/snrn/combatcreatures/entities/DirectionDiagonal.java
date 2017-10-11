@@ -1,14 +1,16 @@
 package se.snrn.combatcreatures.entities;
 
 public enum DirectionDiagonal {
-    NORTH(0, 1), NORTHEAST(1,1), EAST(1, 0), SOUTHEAST(1,-1), SOUTH(0, -1),SOUTHWEST(-1,-1), WEST(-1, 0), NORTHWEST(-1,1);
+    NORTHWEST(-1, 1,0), NORTH(0, 1,2), NORTHEAST(1, 1,4), WEST(-1, 0,8), EAST(1, 0,16), SOUTHWEST(-1, -1,32), SOUTH(0, -1,64), SOUTHEAST(1, -1,128);
 
     private int x;
     private int y;
+    private int bitMask;
 
-    DirectionDiagonal(int x, int y) {
+    DirectionDiagonal(int x, int y, int bitMask) {
         this.x = x;
         this.y = y;
+        this.bitMask = bitMask;
     }
 
     public int getX() {
@@ -17,5 +19,16 @@ public enum DirectionDiagonal {
 
     public int getY() {
         return y;
+    }
+
+    public int getBitmask() {
+        return bitMask;
+    }
+
+    public static boolean isDiagonal(DirectionDiagonal directionDiagonal) {
+        return directionDiagonal == DirectionDiagonal.NORTHEAST
+                || directionDiagonal == DirectionDiagonal.NORTHWEST
+                || directionDiagonal == DirectionDiagonal.SOUTHEAST
+                || directionDiagonal == DirectionDiagonal.SOUTHWEST;
     }
 }

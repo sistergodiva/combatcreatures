@@ -94,21 +94,21 @@ public abstract class TrainStopMap implements Renderable {
         return neighbours;
     }
 
-    public Tile getTileAtDirection(Tile tile, Direction dir) {
-        return getTile(tile.getX() + dir.getX(), tile.getY() + dir.getY());
+    public Tile getTileAtDirection(Tile tile, DirectionDiagonal directionDiagonal) {
+        return getTile(tile.getX() + directionDiagonal.getX(), tile.getY() + directionDiagonal.getY());
     }
 
     public Direction getDirectionFromTile(Tile start, Tile goal) {
-        if (getTileAtDirection(start, Direction.NORTH) == goal) {
+        if (getTileAtDirection(start, DirectionDiagonal.NORTH) == goal) {
             return Direction.NORTH;
         }
-        if (getTileAtDirection(start, Direction.EAST) == goal) {
+        if (getTileAtDirection(start, DirectionDiagonal.EAST) == goal) {
             return Direction.EAST;
         }
-        if (getTileAtDirection(start, Direction.SOUTH) == goal) {
+        if (getTileAtDirection(start, DirectionDiagonal.SOUTH) == goal) {
             return Direction.SOUTH;
         }
-        if (getTileAtDirection(start, Direction.WEST) == goal) {
+        if (getTileAtDirection(start, DirectionDiagonal.WEST) == goal) {
             return Direction.WEST;
         }
         return null;
