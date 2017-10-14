@@ -6,7 +6,7 @@ import se.snrn.combatcreatures.AttackResolver;
 import se.snrn.combatcreatures.ResourceManager;
 import se.snrn.combatcreatures.entities.effects.Effect;
 import se.snrn.combatcreatures.entities.enemies.Creature;
-import se.snrn.combatcreatures.entities.Direction;
+import se.snrn.combatcreatures.map.Direction;
 import se.snrn.combatcreatures.entities.Stats;
 import se.snrn.combatcreatures.interfaces.*;
 import se.snrn.combatcreatures.items.Equipment.Stat;

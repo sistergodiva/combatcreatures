@@ -1,4 +1,4 @@
-package se.snrn.combatcreatures.entities;
+package se.snrn.combatcreatures.map;
 
 public enum Direction {
     NORTH(0, 1, 1), EAST(1, 0, 4), SOUTH(0, -1, 8), WEST(-1, 0, 2);

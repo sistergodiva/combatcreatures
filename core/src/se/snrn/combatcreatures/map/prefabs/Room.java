@@ -3,11 +3,11 @@ package se.snrn.combatcreatures.map.prefabs;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import se.snrn.combatcreatures.RandomNumber;
-import se.snrn.combatcreatures.entities.Direction;
+import se.snrn.combatcreatures.map.Direction;
 import se.snrn.combatcreatures.map.Tile;
 import se.snrn.combatcreatures.map.TileType;
 
-import static se.snrn.combatcreatures.entities.Direction.SOUTH;
+import static se.snrn.combatcreatures.map.Direction.SOUTH;
 
 public class Room implements MapComponent {
 

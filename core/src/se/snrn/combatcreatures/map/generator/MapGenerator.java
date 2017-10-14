@@ -3,7 +3,7 @@ package se.snrn.combatcreatures.map.generator;
 
 import se.snrn.combatcreatures.map.Tile;
 import se.snrn.combatcreatures.map.pathfinding.FloodFill;
-import se.snrn.combatcreatures.map.trainstops.CaveStop;
+import se.snrn.combatcreatures.map.trainstops.SwitchStop;
 import se.snrn.combatcreatures.map.trainstops.TrainStopMap;
 
 import java.util.ArrayList;
@@ -16,14 +16,12 @@ public class MapGenerator {
 
     private int width;
     private int height;
-    private int seed;
     private Random randomGenerator;
-    MapParser mapParser;
+    private MapParser mapParser;
 
     public MapGenerator(int width, int height, int seed) {
         this.width = width;
         this.height = height;
-        this.seed = seed;
         randomGenerator = new Random(seed);
         mapParser = new MapParser();
     }
@@ -70,7 +68,7 @@ public class MapGenerator {
 
 
     private TrainStopMap getMapFromBool(boolean[][] cellGrid, int width, int height) {
-        TrainStopMap map = new CaveStop(new Tile[width][height]);
+        TrainStopMap map = new SwitchStop(new Tile[width][height]);
 
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
@@ -91,16 +89,14 @@ public class MapGenerator {
     private boolean[][] initialiseMap(boolean[][] map, double chanceToStartAlive) {
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
-                if (randomGenerator.nextDouble() < chanceToStartAlive) {
-                    map[x][y] = y >= 6;
-                }
+                    map[x][y] = randomGenerator.nextDouble() < chanceToStartAlive;
             }
         }
         return map;
     }
 
 
-    public boolean[][] doSimulationStep(boolean[][] oldMap, int deathLimit, int birthLimit) {
+    private boolean[][] doSimulationStep(boolean[][] oldMap, int deathLimit, int birthLimit) {
 
         boolean[][] newMap = new boolean[width][height];
         for (int x = 0; x < oldMap.length; x++) {

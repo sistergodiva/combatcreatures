@@ -19,7 +19,6 @@ import se.snrn.combatcreatures.entities.player.Player;
 import se.snrn.combatcreatures.input.InputHandler;
 import se.snrn.combatcreatures.input.InputStateMachine;
 import se.snrn.combatcreatures.items.consumable.ConsumableFactory;
-import se.snrn.combatcreatures.map.trainstops.StopType;
 import se.snrn.combatcreatures.map.trainstops.TrainStopFactory;
 import se.snrn.combatcreatures.map.trainstops.TrainStopMap;
 import se.snrn.combatcreatures.userinterface.GameLog;
@@ -36,7 +35,6 @@ public class MissionScreen implements Screen {
     public static boolean debug = false;
     public static Ui ui;
     private final CombatCreatures cc;
-    private Train train;
     private InputStateMachine inputStateMachine;
     private Batch batch;
     private InputHandler inputHandler;
@@ -63,8 +61,7 @@ public class MissionScreen implements Screen {
         this.uiBatch = uiBatch;
         new CreatureFactory();
         consumableFactory = new ConsumableFactory();
-        trainStopMap = TrainStopFactory.getTrainStop(StopType.SWITCH, true);
-        //trainStopMap = TrainStopFactory.getDungeonMap();
+        trainStopMap = TrainStopFactory.getTrainStop();
 
         creatureManager = new CreatureManager();
         player = new Player(trainStopMap.getStartTile(), trainStopMap, new Stats(1, 1, 1, 1, 1, 1));
@@ -86,10 +83,9 @@ public class MissionScreen implements Screen {
 
         new Experience();
 
-        train = new Train();
-        System.out.println(trainStopMap.getSpawns());
 
         EnemySpawner.spawnEnemies(creatureManager, trainStopMap, 200);
+        orthographicCamera.zoom = 0.25f;
 
     }
 
@@ -99,7 +95,7 @@ public class MissionScreen implements Screen {
 
     @Override
     public void show() {
-        orthographicCamera.position.set(WORLD_WIDTH / 2, WORLD_HEIGHT / 2, 0);
+        orthographicCamera.position.set(WORLD_WIDTH / 2, WORLD_HEIGHT / 2, 0.25f);
         orthographicCamera.update();
         viewport.apply();
         Gdx.input.setInputProcessor(inputHandler);
@@ -137,12 +133,7 @@ public class MissionScreen implements Screen {
         player.render(batch);
         inputStateMachine.render(batch);
         visualEffectManager.render(batch);
-//        for (Tile tile : line
-//                ) {
-//            ResourceManager.player.setPosition(tile.getX() * TILE_SIZE, tile.getY() * TILE_SIZE);
-//            ResourceManager.player.draw(batch);
-//        }
-        train.render(batch);
+
         batch.end();
         uiBatch.begin();
         ui.render(uiBatch);

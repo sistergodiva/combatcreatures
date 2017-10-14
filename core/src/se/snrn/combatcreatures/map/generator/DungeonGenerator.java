@@ -5,7 +5,6 @@ import se.snrn.combatcreatures.map.Tile;
 import se.snrn.combatcreatures.map.TileType;
 import se.snrn.combatcreatures.map.prefabs.MapComponent;
 import se.snrn.combatcreatures.map.prefabs.Room;
-import se.snrn.combatcreatures.map.prefabs.Tracks;
 import se.snrn.combatcreatures.map.trainstops.SwitchStop;
 import se.snrn.combatcreatures.map.trainstops.TrainStopMap;
 
@@ -23,7 +22,6 @@ public class DungeonGenerator {
 
         rooms = new ArrayList<>();
 
-        tiles = addMapComponent(tiles, new Tracks(width), 0, 0);
 
         SwitchStop switchStop = new SwitchStop(tiles);
 

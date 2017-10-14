@@ -1,15 +1,14 @@
 package se.snrn.combatcreatures.map;
 
-import se.snrn.combatcreatures.entities.DirectionDiagonal;
 import se.snrn.combatcreatures.map.trainstops.TrainStopMap;
 
 import java.util.HashMap;
 
-import static se.snrn.combatcreatures.entities.DirectionDiagonal.isDiagonal;
+import static se.snrn.combatcreatures.map.DirectionDiagonal.*;
 import static se.snrn.combatcreatures.map.TileType.FLOOR;
 
 
-public class TileBitmask2 {
+public class TileBitmask {
 
     private static HashMap<Integer, Integer> gfx;
 
@@ -26,7 +25,7 @@ public class TileBitmask2 {
 
     private static int getBitMask(TrainStopMap trainStopMap, DirectionDiagonal direction, Tile checkedTile, Tile tile) {
 
-        if(checkedTile == null){
+        if (checkedTile == null) {
             return 0;
         }
         if (checkedTile.getType() != FLOOR) {
@@ -42,25 +41,26 @@ public class TileBitmask2 {
     }
 
 
-
     static boolean hasOneEmptyOrthogonalNeighbour(Tile checkedTile, TrainStopMap trainStopMap, DirectionDiagonal directionDiagonal) {
 
-        if (directionDiagonal == DirectionDiagonal.NORTHWEST) {
-            return trainStopMap.getTileAtDirection(checkedTile, directionDiagonal.NORTH).getType() == FLOOR
-                    || trainStopMap.getTileAtDirection(checkedTile, directionDiagonal.WEST).getType() == FLOOR;
+        if (directionDiagonal == NORTHWEST) {
+            return trainStopMap.getTileAtDirection(checkedTile, NORTH).getType() == FLOOR
+                    || trainStopMap.getTileAtDirection(checkedTile, DirectionDiagonal.WEST).getType() == FLOOR;
         }
-        if (directionDiagonal == directionDiagonal.NORTHEAST) {
-            return trainStopMap.getTileAtDirection(checkedTile, directionDiagonal.NORTH).getType() == FLOOR
-                    || trainStopMap.getTileAtDirection(checkedTile, directionDiagonal.EAST).getType() == FLOOR;
+        if (directionDiagonal == NORTHEAST) {
+            return trainStopMap.getTileAtDirection(checkedTile, NORTH).getType() == FLOOR
+                    || trainStopMap.getTileAtDirection(checkedTile, EAST).getType() == FLOOR;
         }
-        if (directionDiagonal == directionDiagonal.SOUTHWEST) {
-            return trainStopMap.getTileAtDirection(checkedTile, directionDiagonal.SOUTH).getType() == FLOOR
-                    || trainStopMap.getTileAtDirection(checkedTile, directionDiagonal.WEST).getType() == FLOOR;
+        if (directionDiagonal == SOUTHWEST) {
+            return trainStopMap.getTileAtDirection(checkedTile, SOUTH).getType() == FLOOR
+                    || trainStopMap.getTileAtDirection(checkedTile, DirectionDiagonal.WEST).getType() == FLOOR;
         }
-        if (directionDiagonal == directionDiagonal.SOUTHEAST) {
-            return trainStopMap.getTileAtDirection(checkedTile, directionDiagonal.SOUTH).getType() == FLOOR
-                    || trainStopMap.getTileAtDirection(checkedTile, directionDiagonal.EAST).getType() == FLOOR;
-        } else return false;
+        if (directionDiagonal == SOUTHEAST) {
+            return trainStopMap.getTileAtDirection(checkedTile, SOUTH).getType() == FLOOR
+                    || trainStopMap.getTileAtDirection(checkedTile, EAST).getType() == FLOOR;
+        } else {
+            return false;
+        }
     }
 
     private static int getDirectionInt(DirectionDiagonal direction) {

@@ -1,6 +1,6 @@
 package se.snrn.combatcreatures.entities.enemies;
 
-import se.snrn.combatcreatures.entities.Direction;
+import se.snrn.combatcreatures.map.Direction;
 import se.snrn.combatcreatures.entities.player.Player;
 import se.snrn.combatcreatures.map.Tile;
 import se.snrn.combatcreatures.map.pathfinding.AStar;

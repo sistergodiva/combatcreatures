@@ -6,7 +6,7 @@ import com.badlogic.gdx.utils.JsonValue;
 import se.snrn.combatcreatures.AttackResolver;
 import se.snrn.combatcreatures.RandomNumber;
 import se.snrn.combatcreatures.ResourceManager;
-import se.snrn.combatcreatures.entities.Direction;
+import se.snrn.combatcreatures.map.Direction;
 import se.snrn.combatcreatures.entities.Stats;
 import se.snrn.combatcreatures.entities.player.Player;
 import se.snrn.combatcreatures.interfaces.*;

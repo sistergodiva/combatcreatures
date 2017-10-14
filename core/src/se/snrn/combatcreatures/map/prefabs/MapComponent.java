@@ -1,7 +1,7 @@
 package se.snrn.combatcreatures.map.prefabs;
 
 
-import se.snrn.combatcreatures.entities.Direction;
+import se.snrn.combatcreatures.map.Direction;
 import se.snrn.combatcreatures.interfaces.Renderable;
 import se.snrn.combatcreatures.map.Tile;
 

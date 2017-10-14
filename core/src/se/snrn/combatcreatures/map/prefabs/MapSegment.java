@@ -1,7 +1,7 @@
 package se.snrn.combatcreatures.map.prefabs;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
-import se.snrn.combatcreatures.entities.Direction;
+import se.snrn.combatcreatures.map.Direction;
 import se.snrn.combatcreatures.map.Tile;
 
 

@@ -12,9 +12,9 @@ public class RangedAttackAnimation implements VisualEffect {
     private boolean done = false;
     private Tile start;
     private Tile end;
-    Vector2 startVector;
-    Vector2 endVector;
-    Vector2 currentPosition;
+    private Vector2 startVector;
+    private Vector2 endVector;
+    private Vector2 currentPosition;
     private float time;
 
     public RangedAttackAnimation(Tile start, Tile end) {

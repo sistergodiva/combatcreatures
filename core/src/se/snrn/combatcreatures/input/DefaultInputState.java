@@ -4,7 +4,7 @@ package se.snrn.combatcreatures.input;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import se.snrn.combatcreatures.MissionScreen;
-import se.snrn.combatcreatures.entities.Direction;
+import se.snrn.combatcreatures.map.Direction;
 import se.snrn.combatcreatures.entities.player.Player;
 import se.snrn.combatcreatures.map.trainstops.TrainStopMap;
 
@@ -92,9 +92,6 @@ public class DefaultInputState implements InputState{
             case Input.Keys.Z: {
                 player.setSkillPoints(player.getSkillPoints()-1);
                 break;
-            }
-            case Input.Keys.V: {
-                return new RangedInputState(player, trainStopMap);
             }
         }
         return null;

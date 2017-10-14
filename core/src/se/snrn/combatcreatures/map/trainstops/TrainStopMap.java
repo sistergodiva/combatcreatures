@@ -2,8 +2,8 @@ package se.snrn.combatcreatures.map.trainstops;
 
 
 import com.badlogic.gdx.graphics.g2d.Batch;
-import se.snrn.combatcreatures.entities.Direction;
-import se.snrn.combatcreatures.entities.DirectionDiagonal;
+import se.snrn.combatcreatures.map.Direction;
+import se.snrn.combatcreatures.map.DirectionDiagonal;
 import se.snrn.combatcreatures.interfaces.Renderable;
 import se.snrn.combatcreatures.map.Tile;
 import se.snrn.combatcreatures.map.TileType;
@@ -22,6 +22,7 @@ public abstract class TrainStopMap implements Renderable {
     private ArrayList<Tile> spawns;
     private Tile endTile;
     private ArrayList<MapRoom> rooms;
+    public boolean dirty;
 
 
     public TrainStopMap(Tile[][] tiles) {
@@ -43,6 +44,7 @@ public abstract class TrainStopMap implements Renderable {
                 aTile.render(batch);
             }
         }
+        dirty = false;
     }
 
 
@@ -55,6 +57,14 @@ public abstract class TrainStopMap implements Renderable {
             return tiles[x][y];
         }
         return null;
+    }
+
+    public boolean isDirty() {
+        return dirty;
+    }
+
+    public void setDirty(boolean dirty) {
+        this.dirty = dirty;
     }
 
     public ArrayList<Tile> getOrthogonalNeighbours(Tile tile) {

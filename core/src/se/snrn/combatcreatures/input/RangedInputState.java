@@ -43,8 +43,9 @@ public class RangedInputState implements InputState {
             }
         }
 
-        target = allowedTargets.get(targetNumber);
-
+        if (!allowedTargets.isEmpty()) {
+            target = allowedTargets.get(targetNumber);
+        }
     }
 
     @Override
@@ -54,15 +55,17 @@ public class RangedInputState implements InputState {
 
     @Override
     public void render(Batch batch) {
+        if (!allowedTargets.isEmpty()) {
+            ResourceManager.cursor.setPosition(target.getTile().getX() * TILE_SIZE, target.getTile().getY() * TILE_SIZE);
 
-        ResourceManager.cursor.setPosition(target.getTile().getX() * TILE_SIZE, target.getTile().getY() * TILE_SIZE);
-        ResourceManager.cursor.draw(batch);
+            ResourceManager.cursor.draw(batch);
 
-        for (Mapped allowedTarget : allowedTargets) {
+            for (Mapped allowedTarget : allowedTargets) {
 
-            ResourceManager.target.setPosition(allowedTarget.getTile().getX() * TILE_SIZE, allowedTarget.getTile().getY() * TILE_SIZE);
-            ResourceManager.target.draw(batch);
+                ResourceManager.target.setPosition(allowedTarget.getTile().getX() * TILE_SIZE, allowedTarget.getTile().getY() * TILE_SIZE);
+                ResourceManager.target.draw(batch);
 
+            }
         }
     }
 

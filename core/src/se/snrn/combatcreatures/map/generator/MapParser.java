@@ -2,8 +2,7 @@ package se.snrn.combatcreatures.map.generator;
 
 
 import se.snrn.combatcreatures.RandomNumber;
-import se.snrn.combatcreatures.entities.Direction;
-import se.snrn.combatcreatures.entities.DirectionDiagonal;
+import se.snrn.combatcreatures.map.DirectionDiagonal;
 import se.snrn.combatcreatures.map.Tile;
 import se.snrn.combatcreatures.map.TileType;
 import se.snrn.combatcreatures.map.pathfinding.AStar;

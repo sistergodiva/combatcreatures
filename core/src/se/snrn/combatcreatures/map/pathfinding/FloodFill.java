@@ -1,8 +1,8 @@
 package se.snrn.combatcreatures.map.pathfinding;
 
 
-import se.snrn.combatcreatures.entities.Direction;
-import se.snrn.combatcreatures.entities.DirectionDiagonal;
+import se.snrn.combatcreatures.map.Direction;
+import se.snrn.combatcreatures.map.DirectionDiagonal;
 import se.snrn.combatcreatures.map.Tile;
 import se.snrn.combatcreatures.map.trainstops.TrainStopMap;
 
