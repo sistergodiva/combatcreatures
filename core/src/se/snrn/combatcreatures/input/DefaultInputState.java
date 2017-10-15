@@ -93,6 +93,10 @@ public class DefaultInputState implements InputState{
                 player.setSkillPoints(player.getSkillPoints()-1);
                 break;
             }
+            case Input.Keys.G: {
+                MissionScreen.box2DWorld.newPhysicsObject(player.getTile());
+                break;
+            }
         }
         return null;
     }

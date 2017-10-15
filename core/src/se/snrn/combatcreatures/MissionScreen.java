@@ -34,6 +34,7 @@ public class MissionScreen implements Screen {
     private static final int WORLD_HEIGHT = 720;
     public static boolean debug = false;
     public static Ui ui;
+    public static Box2DWorld box2DWorld;
     private final CombatCreatures cc;
     private InputStateMachine inputStateMachine;
     private Batch batch;
@@ -48,7 +49,6 @@ public class MissionScreen implements Screen {
     private ShapeRenderer shapeRenderer;
     public static VisualEffectManager visualEffectManager;
     public static TrainStopMap trainStopMap;
-
 
     public MissionScreen(Batch batch, SpriteBatch uiBatch, CombatCreatures combatCreatures) {
         cc = combatCreatures;
@@ -87,6 +87,8 @@ public class MissionScreen implements Screen {
         EnemySpawner.spawnEnemies(creatureManager, trainStopMap, 200);
         orthographicCamera.zoom = 0.25f;
 
+        box2DWorld = new Box2DWorld(orthographicCamera, trainStopMap);
+
     }
 
     public static Ui getUi() {
@@ -95,25 +97,29 @@ public class MissionScreen implements Screen {
 
     @Override
     public void show() {
-        orthographicCamera.position.set(WORLD_WIDTH / 2, WORLD_HEIGHT / 2, 0.25f);
+        orthographicCamera.position.set(WORLD_WIDTH / 2, WORLD_HEIGHT / 2, 0);
         orthographicCamera.update();
         viewport.apply();
         Gdx.input.setInputProcessor(inputHandler);
+
 
     }
 
     private void update(float delta) {
         orthographicCamera.position.set(player.getTile().getX() * TILE_SIZE, player.getTile().getY() * TILE_SIZE, 0);
 
-
+        box2DWorld.update(delta);
         orthographicCamera.update();
 
         player.update(delta);
         visualEffectManager.update(delta);
         creatureManager.update(delta);
+        box2DWorld.setConeLightPosition((player.getTile().getX() * TILE_SIZE) + TILE_SIZE / 2, (player.getTile().getY() * TILE_SIZE) + TILE_SIZE / 2);
 
         inputStateMachine.update(delta);
         ui.update(delta);
+
+
         Gdx.graphics.setTitle("FPS: " + Gdx.graphics.getFramesPerSecond());
     }
 
@@ -128,13 +134,18 @@ public class MissionScreen implements Screen {
         batch.setProjectionMatrix(orthographicCamera.combined);
         batch.begin();
         trainStopMap.render(batch);
-
-        creatureManager.render(batch);
         player.render(batch);
+        creatureManager.render(batch);
         inputStateMachine.render(batch);
         visualEffectManager.render(batch);
-
         batch.end();
+
+//        box2DWorld.render(batch);
+//
+//        batch.begin();
+//        player.render(batch);
+//        batch.end();
+
         uiBatch.begin();
         ui.render(uiBatch);
         uiBatch.end();
@@ -142,8 +153,6 @@ public class MissionScreen implements Screen {
 
         shapeRenderer.setProjectionMatrix(orthographicCamera.combined);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-
-
         shapeRenderer.end();
     }
 

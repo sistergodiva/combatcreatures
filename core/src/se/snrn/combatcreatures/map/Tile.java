@@ -42,6 +42,8 @@ public class Tile implements Renderable {
 
         if (explored) {
             if (this.type == TileType.DOOR) {
+                ResourceManager.grass.setPosition(x * TILE_SIZE, y * TILE_SIZE);
+                ResourceManager.grass.draw(batch);
                 ResourceManager.doorClosed.setPosition(x * TILE_SIZE, y * TILE_SIZE);
                 ResourceManager.doorClosed.draw(batch);
             }
@@ -61,7 +63,8 @@ public class Tile implements Renderable {
                 if(tileValue == 999 || MissionScreen.trainStopMap.isDirty()) {
                     tileValue = TileBitmask.getTileNumber(this, MissionScreen.trainStopMap);
                 }
-
+                ResourceManager.grass.setPosition(x * TILE_SIZE, y * TILE_SIZE);
+                ResourceManager.grass.draw(batch);
                 ResourceManager.getWallFromBitmask(tileValue).setPosition(x * TILE_SIZE, y * TILE_SIZE);
                 ResourceManager.getWallFromBitmask(tileValue).draw(batch);
 

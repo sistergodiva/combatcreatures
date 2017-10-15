@@ -16,9 +16,9 @@ public class ResourceManager {
     public static Sprite wall = new Sprite(new Texture(Gdx.files.internal("wall.png")));
     public static Sprite floor = new Sprite(new Texture(Gdx.files.internal("floor.png")));
     public static Sprite fog = new Sprite(new Texture(Gdx.files.internal("fog.png")));
-    public static Sprite player = new Sprite(new Texture(Gdx.files.internal("llama/llama2.png")));
+    //public static Sprite player = new Sprite(new Texture(Gdx.files.internal("llama/llama2.png")));
     public static Sprite boots = new Sprite(new Texture(Gdx.files.internal("item/boots.png")));
-    //public static Sprite player = new Sprite(new Texture(Gdx.files.internal("llama/llama.png")));
+    public static Sprite player = new Sprite(new Texture(Gdx.files.internal("player2.png")));
     public static Sprite creature = new Sprite(new Texture(Gdx.files.internal("creature/vampire.png")));
     public static Sprite creatureDead = new Sprite(new Texture(Gdx.files.internal("creature_dead.png")));
     public static Sprite target = new Sprite(new Texture(Gdx.files.internal("target.png")));
@@ -39,16 +39,26 @@ public class ResourceManager {
     public static Sprite bullet = new Sprite(new Texture(Gdx.files.internal("bullet.png")));
 
     public static NinePatch pinkBox = new NinePatch(new Texture(Gdx.files.internal("ui/pink_box.png")), 6, 6, 6, 6);
-    public static Sprite doorClosed = new Sprite(new Texture(Gdx.files.internal("tiles/door_closed.png")));
+    public static Sprite doorClosed = new Sprite(new Texture(Gdx.files.internal("door.png")));
 
-    public static Sprite grass = new Sprite(new Texture(Gdx.files.internal("rainbow/grass.png")));
+    public static Sprite grass = new Sprite(new Texture(Gdx.files.internal("tilefloor.png")));
     private static ArrayList<Sprite> sixteenWalls;
+    private static HashMap<Integer, Integer> tileMap;
 
 
     public ResourceManager() {
+//        sixteenWalls = new ArrayList<>();
+//        for (int i = 0; i < 48; i++) {
+//            sixteenWalls.add(new Sprite(new Texture(Gdx.files.internal("awall/" + i + ".png"))));
+//        }
+        mapTiles();
+        TextureRegion[][] test = TextureRegion.split(new Texture(Gdx.files.internal("tile_sheet.png")), 16, 16);
+
         sixteenWalls = new ArrayList<>();
-        for (int i = 0; i < 48; i++) {
-            sixteenWalls.add(new Sprite(new Texture(Gdx.files.internal("newwalls/" + i + ".png"))));
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                sixteenWalls.add(new Sprite(test[i][j]));
+            }
         }
     }
 
@@ -114,6 +124,61 @@ public class ResourceManager {
         return gfx;
     }
 
+    static HashMap<Integer, Integer> mapTiles() {
+        tileMap = new HashMap<>();
+        tileMap.put(0, 7);
+        tileMap.put(1, 55);
+        tileMap.put(2, 62);
+        tileMap.put(3, 54);
+        tileMap.put(4, 18);
+        tileMap.put(5, 56);
+        tileMap.put(6, 40);
+        tileMap.put(7, 35);
+        tileMap.put(8, 1);
+        tileMap.put(9, 61);
+        tileMap.put(10, 60);
+        tileMap.put(11, 57);
+        tileMap.put(12, 59);
+        tileMap.put(13, 7);
+        tileMap.put(14, 24);
+        tileMap.put(15, 5);
+        tileMap.put(16, 47);
+        tileMap.put(17, 39);
+        tileMap.put(18, 0);
+        tileMap.put(19, 16);
+        tileMap.put(20, 19);
+        tileMap.put(21, 2);
+        tileMap.put(22, 53);
+        tileMap.put(23, 46);
+        tileMap.put(24, 17);
+        tileMap.put(25, 45);
+        tileMap.put(26, 28);
+        tileMap.put(27, 15);
+        tileMap.put(28, 31);
+        tileMap.put(29, 26);
+        tileMap.put(30, 10);
+        tileMap.put(31, 52);
+        tileMap.put(32, 44);
+        tileMap.put(33, 38);
+        tileMap.put(34, 9);
+        tileMap.put(35, 25);
+        tileMap.put(36, 33);
+        tileMap.put(37, 11);
+        tileMap.put(38, 27);
+        tileMap.put(39, 36);
+        tileMap.put(40, 41);
+        tileMap.put(41, 21);
+        tileMap.put(42, 12);
+        tileMap.put(43, 13);
+        tileMap.put(44, 42);
+        tileMap.put(45, 37);
+        tileMap.put(46, 22);
+        tileMap.put(47, 22);
+
+
+        return tileMap;
+    }
+
 
     private static HashMap<Integer, Integer> gfx;
 
@@ -121,6 +186,10 @@ public class ResourceManager {
         if (gfx == null) {
             gfx = fillGfxHash();
         }
-        return sixteenWalls.get(tileValue);
+        if (tileMap == null) {
+            tileMap = mapTiles();
+        }
+
+        return sixteenWalls.get(tileMap.get(tileValue));
     }
 }

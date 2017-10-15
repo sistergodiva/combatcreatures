@@ -1,15 +1,15 @@
 {
   "creature": [
     {
-      "name": "Vampire",
-      "description": "A vampire",
-      "sprite": "vampire.png",
+      "name": "Goblin",
+      "description": "A goblin wizard",
+      "sprite": "goblin.png",
       "sprite_dead": "vampire_dead.png"
     },
     {
-      "name": "Ghost",
-      "description": "A ghost",
-      "sprite": "ghost.png",
+      "name": "Beholder",
+      "description": "A beholder",
+      "sprite": "beholder.png",
       "sprite_dead": "ghost_dead.png"
     }
   ]

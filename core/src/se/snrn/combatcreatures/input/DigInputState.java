@@ -2,6 +2,7 @@ package se.snrn.combatcreatures.input;
 
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import se.snrn.combatcreatures.MissionScreen;
 import se.snrn.combatcreatures.ResourceManager;
 import se.snrn.combatcreatures.map.Direction;
 import se.snrn.combatcreatures.map.DirectionDiagonal;
@@ -70,18 +71,22 @@ public class DigInputState implements InputState {
         switch (input) {
             case Input.Keys.W: {
                 tile = player.getTrainStopMap().getTileAtDirection(player.getTile(), DirectionDiagonal.NORTH);
+                MissionScreen.trainStopMap.setDirty(true);
                 break;
             }
             case Input.Keys.D: {
                 tile = player.getTrainStopMap().getTileAtDirection(player.getTile(), DirectionDiagonal.EAST);
+                MissionScreen.trainStopMap.setDirty(true);
                 break;
             }
             case Input.Keys.S: {
                 tile = player.getTrainStopMap().getTileAtDirection(player.getTile(), DirectionDiagonal.SOUTH);
+                MissionScreen.trainStopMap.setDirty(true);
                 break;
             }
             case Input.Keys.A: {
                 tile = player.getTrainStopMap().getTileAtDirection(player.getTile(), DirectionDiagonal.WEST);
+                MissionScreen.trainStopMap.setDirty(true);
                 break;
             }
 
