@@ -74,7 +74,7 @@ public class SkillWindow implements Updatable, Renderable{
 
     @Override
     public void render(Batch batch) {
-        ResourceManager.pinkBox.draw(batch, x,y, 128,128);
+        ResourceManager.uiNinePatch.draw(batch, x,y, 128,128);
         for (SkillSpender skillSpender : skillSpenders
                 ) {
             skillSpender.render(batch);

@@ -27,7 +27,7 @@ public class AbilityBar  implements Updatable, Renderable {
 
     @Override
     public void render(Batch batch) {
-        ResourceManager.pinkBox.draw(batch, x,y, 128,80);
+        ResourceManager.uiNinePatch.draw(batch, x,y, 128,80);
 
     }
 }

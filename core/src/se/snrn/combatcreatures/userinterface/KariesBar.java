@@ -32,7 +32,7 @@ public class KariesBar implements Updatable, Renderable{
 
     @Override
     public void render(Batch batch) {
-        ResourceManager.pinkBox.draw(batch, x,y-margin*2, player.getHealth()*TILE_SIZE+margin*2, TILE_SIZE+margin*2);
+        ResourceManager.uiNinePatch.draw(batch, x,y-margin*2, player.getHealth()*TILE_SIZE+margin*2, TILE_SIZE+margin*2);
         for (int i = 0; i < player.getKaries(); i++) {
             sprite.setPosition(x+(TILE_SIZE*i)+margin, y-margin);
             sprite.draw(batch);

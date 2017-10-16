@@ -119,7 +119,7 @@ public class Inventory implements Renderable {
 
     @Override
     public void render(Batch batch) {
-        ResourceManager.pinkBox.draw(batch, x-margin,y, inventoryWidth, inventoryHeight-y);
+        ResourceManager.uiNinePatch.draw(batch, x-margin,y, inventoryWidth, inventoryHeight-y);
         sortInventory();
 
         for (int i = 0; i < 9; i++) {

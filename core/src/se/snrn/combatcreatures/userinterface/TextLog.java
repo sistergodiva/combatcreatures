@@ -32,7 +32,7 @@ public class TextLog implements Updatable, Renderable{
     @Override
     public void render(Batch batch) {
 
-        ResourceManager.pinkBox.draw(batch, x,y, 300,textTop+margin);
+        ResourceManager.uiNinePatch.draw(batch, x,y, 300,textTop+margin);
 
 
         List<String> messages = GameLog.getLastMessages(4);

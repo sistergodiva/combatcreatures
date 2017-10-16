@@ -106,7 +106,7 @@ public class MissionScreen implements Screen {
     }
 
     private void update(float delta) {
-        orthographicCamera.position.set(player.getTile().getX() * TILE_SIZE, player.getTile().getY() * TILE_SIZE, 0);
+        orthographicCamera.position.set(player.getSprite().getX(), player.getSprite().getY(), 0);
 
         box2DWorld.update(delta);
         orthographicCamera.update();
@@ -134,8 +134,8 @@ public class MissionScreen implements Screen {
         batch.setProjectionMatrix(orthographicCamera.combined);
         batch.begin();
         trainStopMap.render(batch);
-        player.render(batch);
         creatureManager.render(batch);
+        player.render(batch);
         inputStateMachine.render(batch);
         visualEffectManager.render(batch);
         batch.end();

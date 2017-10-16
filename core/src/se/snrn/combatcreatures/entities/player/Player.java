@@ -3,18 +3,21 @@ package se.snrn.combatcreatures.entities.player;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import se.snrn.combatcreatures.AttackResolver;
+import se.snrn.combatcreatures.MissionScreen;
 import se.snrn.combatcreatures.ResourceManager;
+import se.snrn.combatcreatures.entities.Stats;
 import se.snrn.combatcreatures.entities.effects.Effect;
 import se.snrn.combatcreatures.entities.enemies.Creature;
-import se.snrn.combatcreatures.map.Direction;
-import se.snrn.combatcreatures.entities.Stats;
 import se.snrn.combatcreatures.interfaces.*;
 import se.snrn.combatcreatures.items.Equipment.Stat;
+import se.snrn.combatcreatures.map.Direction;
+import se.snrn.combatcreatures.map.Tile;
 import se.snrn.combatcreatures.map.los.LineOfSight;
 import se.snrn.combatcreatures.map.trainstops.TrainStopMap;
-import se.snrn.combatcreatures.userinterface.inventory.Inventory;
-import se.snrn.combatcreatures.map.Tile;
 import se.snrn.combatcreatures.userinterface.GameLog;
+import se.snrn.combatcreatures.userinterface.inventory.Inventory;
+import se.snrn.combatcreatures.visualeffects.AttackEffect;
+import se.snrn.combatcreatures.visualeffects.MoveEffect;
 
 import java.util.ArrayList;
 
@@ -99,25 +102,28 @@ public class Player implements Updatable, Renderable, Mapped, Living, Fighter {
         tile.setMapped(this);
         this.tile = tile;
         tile.stepOn(this);
-        LineOfSight.getLineOfSight(tile,trainStopMap.getTiles());
+        LineOfSight.getLineOfSight(tile, trainStopMap.getTiles());
     }
 
     @Override
     public boolean move(Direction direction) {
-        Tile newTile = trainStopMap.getTile(tile.getX() + direction.getX(), tile.getY() + direction.getY());
-        if (newTile != null && newTile.getType().isWalkable()) {
-            if (newTile.getMapped() instanceof Creature) {
-                Creature creature = (Creature) newTile.getMapped();
-                int damage = AttackResolver.resolveNormalAttack(this, creature);
-                creature.takeDamage(damage);
-                GameLog.addMessage(creature.getName() + " took " + damage + " damage");
+        if (MissionScreen.visualEffectManager.isDone()) {
+            Tile newTile = trainStopMap.getTile(tile.getX() + direction.getX(), tile.getY() + direction.getY());
+            if (newTile != null && newTile.getType().isWalkable()) {
+                if (newTile.getMapped() instanceof Creature) {
+                    MissionScreen.visualEffectManager.addEffect(new AttackEffect(tile, newTile, this));
+                    Creature creature = (Creature) newTile.getMapped();
+                    int damage = AttackResolver.resolveNormalAttack(this, creature);
+                    creature.takeDamage(damage);
+                    GameLog.addMessage(creature.getName() + " took " + damage + " damage");
+                    turnManager.endPlayerTurn();
+                    return true;
+                }
+                MissionScreen.visualEffectManager.addEffect(new MoveEffect(tile, newTile, this));
+                changeTile(newTile);
                 turnManager.endPlayerTurn();
                 return true;
             }
-
-            changeTile(newTile);
-            turnManager.endPlayerTurn();
-            return true;
         }
         return false;
     }
@@ -221,6 +227,10 @@ public class Player implements Updatable, Renderable, Mapped, Living, Fighter {
 
     public TrainStopMap getTrainStopMap() {
         return trainStopMap;
+    }
+
+    public Sprite getSprite() {
+        return sprite;
     }
 }
 

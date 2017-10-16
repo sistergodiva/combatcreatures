@@ -14,6 +14,7 @@ import se.snrn.combatcreatures.map.trainstops.MapRoom;
 import java.util.ArrayList;
 
 import static se.snrn.combatcreatures.CombatCreatures.TILE_SIZE;
+import static se.snrn.combatcreatures.map.TileType.WALL;
 
 public class Tile implements Renderable {
 
@@ -36,43 +37,57 @@ public class Tile implements Renderable {
     }
 
 
-
     @Override
     public void render(Batch batch) {
 
         if (explored) {
             if (this.type == TileType.DOOR) {
-                ResourceManager.grass.setPosition(x * TILE_SIZE, y * TILE_SIZE);
-                ResourceManager.grass.draw(batch);
-                ResourceManager.doorClosed.setPosition(x * TILE_SIZE, y * TILE_SIZE);
-                ResourceManager.doorClosed.draw(batch);
+                if (tileValue == 999 || MissionScreen.trainStopMap.isDirty()) {
+                    if (MissionScreen.trainStopMap.getTileAtDirection(this, DirectionDiagonal.NORTH).getType() == WALL
+                            && MissionScreen.trainStopMap.getTileAtDirection(this, DirectionDiagonal.SOUTH).getType() == WALL) {
+                        tileValue = 1;
+                    }
+                }
+                ResourceManager.floor.setPosition(x * TILE_SIZE, y * TILE_SIZE);
+                ResourceManager.floor.draw(batch);
+                if (tileValue == 1) {
+                    ResourceManager.doorNS.setPosition(x * TILE_SIZE, y * TILE_SIZE);
+                    ResourceManager.doorNS.draw(batch);
+                } else {
+                    ResourceManager.doorClosed.setPosition(x * TILE_SIZE, y * TILE_SIZE);
+                    ResourceManager.doorClosed.draw(batch);
+                }
             }
 
             if (this.type == TileType.UP) {
+                ResourceManager.floor.setPosition(x * TILE_SIZE, y * TILE_SIZE);
+                ResourceManager.floor.draw(batch);
                 ResourceManager.up.setPosition(x * TILE_SIZE, y * TILE_SIZE);
                 ResourceManager.up.draw(batch);
             }
 
             if (this.type == TileType.DOWN) {
+                ResourceManager.floor.setPosition(x * TILE_SIZE, y * TILE_SIZE);
+                ResourceManager.floor.draw(batch);
                 ResourceManager.down.setPosition(x * TILE_SIZE, y * TILE_SIZE);
                 ResourceManager.down.draw(batch);
             }
 
-            if (this.type == TileType.WALL) {
+            if (this.type == WALL) {
 
-                if(tileValue == 999 || MissionScreen.trainStopMap.isDirty()) {
+                if (tileValue == 999 || MissionScreen.trainStopMap.isDirty()) {
                     tileValue = TileBitmask.getTileNumber(this, MissionScreen.trainStopMap);
                 }
-                ResourceManager.grass.setPosition(x * TILE_SIZE, y * TILE_SIZE);
-                ResourceManager.grass.draw(batch);
+                ResourceManager.floor.setPosition(x * TILE_SIZE, y * TILE_SIZE);
+                ResourceManager.floor.draw(batch);
                 ResourceManager.getWallFromBitmask(tileValue).setPosition(x * TILE_SIZE, y * TILE_SIZE);
                 ResourceManager.getWallFromBitmask(tileValue).draw(batch);
 
             }
 
             if (this.type == TileType.FLOOR) {
-                ResourceManager.grass.setPosition(x * TILE_SIZE, y * TILE_SIZE);
-                ResourceManager.grass.draw(batch);
+                ResourceManager.floor.setPosition(x * TILE_SIZE, y * TILE_SIZE);
+                ResourceManager.floor.draw(batch);
             }
             if (!visible) {
                 ResourceManager.fog.setPosition(x * TILE_SIZE, y * TILE_SIZE);

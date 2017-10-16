@@ -64,7 +64,7 @@ public class MiniMap implements Updatable, Renderable {
     @Override
     public void render(Batch batch) {
 
-        ResourceManager.pinkBox.draw(batch, startX-margin, startY-margin, miniMapWidth+margin*2, miniMapHeight+margin*2);
+        ResourceManager.uiNinePatch.draw(batch, startX-margin, startY-margin, miniMapWidth+margin*2, miniMapHeight+margin*2);
         for (int x = 0; x < trainStopMap.getWidth(); x++) {
             for (int y = 0; y < trainStopMap.getHeight(); y++) {
                 Tile point = trainStopMap.getTile(x, y);

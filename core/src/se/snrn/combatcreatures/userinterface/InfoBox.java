@@ -32,7 +32,7 @@ public class InfoBox implements Updatable, Renderable{
 
     @Override
     public void render(Batch batch) {
-        ResourceManager.pinkBox.draw(batch, x,(Gdx.graphics.getHeight()-y)-80, 128,80);
+        ResourceManager.uiNinePatch.draw(batch, x,(Gdx.graphics.getHeight()-y)-80, 128,80);
 
         ResourceManager.font.draw(batch, "Level: "+player.getLevel()+" XP: "+player.getXp()+" skillsLeft: "+player.getSkillPoints(), x+margin, (Gdx.graphics.getHeight()-y)-((ResourceManager.glyphLayout.height+margin)));
         ResourceManager.font.draw(batch, " Turn: "+ TurnManager.getTurn(), x+margin, (Gdx.graphics.getHeight()-y)-((ResourceManager.glyphLayout.height+margin*2+TILE_SIZE)));
