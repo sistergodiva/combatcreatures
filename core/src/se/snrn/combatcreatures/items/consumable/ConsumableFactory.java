@@ -34,7 +34,6 @@ public class ConsumableFactory {
     public static Consumable getNewConsumable(int id) {
         Consumable consumable = ConsumableAppearanceFactory.getConsumableAppearance(id);
         consumable.setConsumableEffect(consumableEffectTable.get(id));
-        System.out.println(consumable);
         return consumable;
     }
 }

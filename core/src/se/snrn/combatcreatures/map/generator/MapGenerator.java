@@ -62,7 +62,6 @@ public class MapGenerator {
         ArrayList<Tile> emptyTiles;
         emptyTiles = FloodFill.getFloodFromTile(map, tile);
         map.setStartTile(tile);
-        System.out.println(emptyTiles.size());
         return emptyTiles.size() > map.getHeight() * map.getWidth() * 0.40;
     }
 

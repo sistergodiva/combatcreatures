@@ -4,11 +4,7 @@ package se.snrn.combatcreatures;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.*;
-import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
-import se.snrn.combatcreatures.items.consumable.Consumable;
-import se.snrn.combatcreatures.map.Tile;
 
-import javax.swing.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -18,12 +14,13 @@ public class ResourceManager {
     public static Sprite fog = new Sprite(new Texture(Gdx.files.internal("fog.png")));
     //public static Sprite player = new Sprite(new Texture(Gdx.files.internal("llama/llama2.png")));
     public static Sprite boots = new Sprite(new Texture(Gdx.files.internal("item/boots.png")));
-    public static Sprite player = new Sprite(new Texture(Gdx.files.internal("player2.png")));
+    public static Sprite player = new Sprite(new Texture(Gdx.files.internal("player4.png")));
     public static Sprite creature = new Sprite(new Texture(Gdx.files.internal("creature/vampire.png")));
     public static Sprite creatureDead = new Sprite(new Texture(Gdx.files.internal("creature_dead.png")));
-    public static Sprite target = new Sprite(new Texture(Gdx.files.internal("target.png")));
-    public static Sprite cursor = new Sprite(new Texture(Gdx.files.internal("ui/cursor.png")));
+    public static Sprite target = new Sprite(new Texture(Gdx.files.internal("ui/target.png")));
+    public static Sprite cursor = new Sprite(new Texture(Gdx.files.internal("ui/cursor1.png")));
     public static BitmapFont font = new BitmapFont();
+    public static Animation<Texture> cursorAnimation = new Animation<>(0.075f, getAnimation("ui/cursor", 4));
     public static GlyphLayout glyphLayout = new GlyphLayout();
     public static Sprite heart = new Sprite(new Texture(Gdx.files.internal("ui/heart.png")));
     public static Sprite magic = new Sprite(new Texture(Gdx.files.internal("ui/magic.png")));
@@ -60,6 +57,16 @@ public class ResourceManager {
                 sixteenWalls.add(new Sprite(test[i][j]));
             }
         }
+    }
+
+    static Texture[] getAnimation(String name, int number) {
+        Texture[] animation = new Texture[number];
+
+        animation[0] = new Texture(Gdx.files.internal("ui/cursor1.png"));
+        animation[1] = new Texture(Gdx.files.internal("ui/cursor2.png"));
+        animation[2] = new Texture(Gdx.files.internal("ui/cursor3.png"));
+        animation[3] = new Texture(Gdx.files.internal("ui/cursor4.png"));
+        return animation;
     }
 
     public static Sprite getCreatureSpriteFromString(String spriteString) {

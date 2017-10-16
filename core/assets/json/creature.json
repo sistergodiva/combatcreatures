@@ -4,13 +4,31 @@
       "name": "Goblin",
       "description": "A goblin wizard",
       "sprite": "goblin.png",
-      "sprite_dead": "vampire_dead.png"
+      "sprite_dead": "dead_creature.png"
     },
     {
       "name": "Beholder",
       "description": "A beholder",
       "sprite": "beholder.png",
-      "sprite_dead": "ghost_dead.png"
+      "sprite_dead": "dead_creature.png"
+    },
+       {
+      "name": "Skeleton",
+      "description": "A skeleton",
+      "sprite": "skeleton.png",
+      "sprite_dead": "dead_creature.png"
+    },
+    {
+      "name": "Flies",
+      "description": "A gaggle of flies",
+      "sprite": "flies1.png",
+      "sprite_dead": "dead_creature.png"
+    },
+    {
+      "name": "Leech",
+      "description": "A leech",
+      "sprite": "leech.png",
+      "sprite_dead": "dead_creature.png"
     }
   ]
 }

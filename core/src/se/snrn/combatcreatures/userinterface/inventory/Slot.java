@@ -37,7 +37,6 @@ public class Slot implements Renderable {
         if (item != null) {
             return item;
         }
-        System.out.println("No item in that slot");
         return null;
     }
 

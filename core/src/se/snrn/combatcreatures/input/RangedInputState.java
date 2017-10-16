@@ -1,6 +1,9 @@
 package se.snrn.combatcreatures.input;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import se.snrn.combatcreatures.AttackResolver;
 import se.snrn.combatcreatures.ResourceManager;
@@ -26,10 +29,15 @@ public class RangedInputState implements InputState {
     private boolean done;
     private Mapped target;
     private int targetNumber;
+    private Texture frame;
+    private Animation<Texture> cursorAnimation;
+    private float elapsedTime;
 
     public RangedInputState(Player player, TrainStopMap trainStopMap) {
         this.player = player;
         this.trainStopMap = trainStopMap;
+
+        cursorAnimation = ResourceManager.cursorAnimation;
 
         targetNumber = 0;
 
@@ -48,21 +56,22 @@ public class RangedInputState implements InputState {
         }
     }
 
+
+
     @Override
     public void update(float delta) {
-
+        elapsedTime += Gdx.graphics.getDeltaTime();
+        frame = cursorAnimation.getKeyFrame(elapsedTime,true);
     }
 
     @Override
     public void render(Batch batch) {
         if (!allowedTargets.isEmpty()) {
-            ResourceManager.cursor.setPosition(target.getTile().getX() * TILE_SIZE, target.getTile().getY() * TILE_SIZE);
-
-            ResourceManager.cursor.draw(batch);
+            batch.draw(frame,target.getTile().getX() * TILE_SIZE, (target.getTile().getY() + 1) * TILE_SIZE);
 
             for (Mapped allowedTarget : allowedTargets) {
 
-                ResourceManager.target.setPosition(allowedTarget.getTile().getX() * TILE_SIZE, allowedTarget.getTile().getY() * TILE_SIZE);
+                ResourceManager.target.setPosition(allowedTarget.getTile().getX() * TILE_SIZE, (allowedTarget.getTile().getY()) * TILE_SIZE);
                 ResourceManager.target.draw(batch);
 
             }
@@ -93,6 +102,7 @@ public class RangedInputState implements InputState {
                 } else {
                     targetNumber = 0;
                 }
+
                 target = allowedTargets.get(targetNumber);
                 System.out.println("targetnumber: " + targetNumber + " number of targets: " + allowedTargets.size());
                 break;
