@@ -81,8 +81,6 @@ public class Player implements Updatable, Renderable, Mapped, Living, Fighter {
     @Override
     public void render(Batch batch) {
         sprite.draw(batch);
-//        ResourceManager.boots.setPosition(tile.getX() * TILE_SIZE, tile.getY() * TILE_SIZE);
-//        ResourceManager.boots.draw(batch);
     }
 
 

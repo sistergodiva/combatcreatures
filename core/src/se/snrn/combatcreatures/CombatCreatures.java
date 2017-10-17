@@ -6,6 +6,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class CombatCreatures extends Game{
     public static final int TILE_SIZE = 16;
+    public static final float DELAY = 0.25f;
+    public static final float SPEED_MULTIPLIER = 8;
     MissionScreen missionScreen;
     SpriteBatch spriteBatch;
     SpriteBatch uiBatch;

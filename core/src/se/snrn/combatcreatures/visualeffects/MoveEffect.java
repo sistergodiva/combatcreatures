@@ -1,50 +1,65 @@
 package se.snrn.combatcreatures.visualeffects;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Interpolation;
-import com.badlogic.gdx.math.Vector2;
+import se.snrn.combatcreatures.entities.enemies.Creature;
 import se.snrn.combatcreatures.entities.player.Player;
-import se.snrn.combatcreatures.interfaces.Mapped;
-import se.snrn.combatcreatures.interfaces.Renderable;
 import se.snrn.combatcreatures.map.Tile;
 
+import static se.snrn.combatcreatures.CombatCreatures.DELAY;
+import static se.snrn.combatcreatures.CombatCreatures.SPEED_MULTIPLIER;
 import static se.snrn.combatcreatures.CombatCreatures.TILE_SIZE;
 
 public class MoveEffect implements VisualEffect {
 
+    private Sprite sprite;
     private boolean done = false;
     private Tile start;
     private Tile end;
-    private Vector2 startVector;
-    private Vector2 endVector;
-    private Player player;
-    private Vector2 currentPosition;
+
     private float time;
+    private float x;
+    private float y;
+    private float delay;
 
     public MoveEffect(Tile start, Tile end, Player player) {
         this.start = start;
         this.end = end;
 
+        x = start.getX() * TILE_SIZE;
+        y = start.getY() * TILE_SIZE;
 
-        startVector = new Vector2(start.getX() * TILE_SIZE, start.getY() * TILE_SIZE);
-        endVector = new Vector2(end.getX() * TILE_SIZE, end.getY() * TILE_SIZE);
-        this.player = player;
-        currentPosition = new Vector2();
+        this.sprite = player.getSprite();
+    }
+
+    public MoveEffect(Tile start, Tile end, Creature creature) {
+        this.start = start;
+        this.end = end;
+
+        delay = DELAY;
+        x = start.getX() * TILE_SIZE;
+        y = start.getY() * TILE_SIZE;
+
+        this.sprite = creature.getSprite();
     }
 
     @Override
     public void update(float delta) {
+        delay -= delta;
+        if (delay < 0) {
+            time += delta * SPEED_MULTIPLIER;
 
-        time += delta*4;
 
-        currentPosition = startVector.interpolate(endVector, time, Interpolation.linear);
-
-        player.getSprite().setPosition(currentPosition.x,currentPosition.y);
-
-        if (time > 1) {
-            done = true;
+            if (time > 1) {
+                time = 1;
+                done = true;
+            }
         }
 
+        x = Interpolation.linear.apply(start.getX() * TILE_SIZE, end.getX() * TILE_SIZE, time);
+        y = Interpolation.linear.apply(start.getY() * TILE_SIZE, end.getY() * TILE_SIZE, time);
+        sprite.setPosition(x, y);
     }
 
     @Override

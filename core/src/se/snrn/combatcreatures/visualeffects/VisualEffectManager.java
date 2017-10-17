@@ -25,7 +25,7 @@ public class VisualEffectManager implements Updatable, Renderable {
     }
 
 
-    public void addEffect(VisualEffect effect){
+    public void addEffect(VisualEffect effect) {
         effectsToAdd.add(effect);
         done = false;
     }
@@ -33,7 +33,7 @@ public class VisualEffectManager implements Updatable, Renderable {
 
     @Override
     public void update(float delta) {
-        done = true;
+
 
         if (!effectsToAdd.isEmpty()) {
             effects.addAll(effectsToAdd);
@@ -45,28 +45,30 @@ public class VisualEffectManager implements Updatable, Renderable {
         }
 
 
-
-        for (VisualEffect effect: effects
-             ) {
-            if(effect.isDone()){
+        for (VisualEffect effect : effects
+                ) {
+            if (effect.isDone()) {
                 effectsToRemove.add(effect);
-            }else {
-                done = false;
-                effect.update(delta);
             }
+        }
+        if (!effects.isEmpty()) {
+            done = false;
+
+            effects.get(0).update(delta);
+
         }
 
     }
 
     @Override
     public void render(Batch batch) {
-        for (VisualEffect effect: effects
+        for (VisualEffect effect : effects
                 ) {
             effect.render(batch);
         }
     }
 
     public boolean isDone() {
-        return done;
+        return effects.isEmpty();
     }
 }

@@ -112,8 +112,9 @@ public class MissionScreen implements Screen {
         orthographicCamera.update();
 
         player.update(delta);
-        visualEffectManager.update(delta);
+
         creatureManager.update(delta);
+        visualEffectManager.update(delta);
         box2DWorld.setConeLightPosition((player.getTile().getX() * TILE_SIZE) + TILE_SIZE / 2, (player.getTile().getY() * TILE_SIZE) + TILE_SIZE / 2);
 
         inputStateMachine.update(delta);

@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.utils.JsonValue;
 import se.snrn.combatcreatures.AttackResolver;
+import se.snrn.combatcreatures.MissionScreen;
 import se.snrn.combatcreatures.RandomNumber;
 import se.snrn.combatcreatures.ResourceManager;
 import se.snrn.combatcreatures.map.Direction;
@@ -15,6 +16,8 @@ import se.snrn.combatcreatures.map.Tile;
 import se.snrn.combatcreatures.map.TileType;
 import se.snrn.combatcreatures.map.trainstops.TrainStopMap;
 import se.snrn.combatcreatures.userinterface.GameLog;
+import se.snrn.combatcreatures.visualeffects.AttackEffect;
+import se.snrn.combatcreatures.visualeffects.MoveEffect;
 
 import static se.snrn.combatcreatures.CombatCreatures.TILE_SIZE;
 
@@ -65,7 +68,9 @@ public class Creature implements Updatable, Renderable, Mapped, Ai, Living, Figh
             die();
 
         }
-        sprite.setPosition(tile.getX() * TILE_SIZE, tile.getY() * TILE_SIZE);
+        if (MissionScreen.visualEffectManager.isDone()) {
+            sprite.setPosition(tile.getX() * TILE_SIZE, tile.getY() * TILE_SIZE);
+        }
     }
 
     @Override
@@ -95,19 +100,22 @@ public class Creature implements Updatable, Renderable, Mapped, Ai, Living, Figh
 
     @Override
     public boolean move(Direction direction) {
-        Tile newTile = trainStopMap.getTile(tile.getX() + direction.getX(), tile.getY() + direction.getY());
-        if (newTile != null && newTile.getType() == TileType.FLOOR) {
-            if (newTile.getMapped() instanceof Player) {
-                Player player = (Player) newTile.getMapped();
-                int damage = AttackResolver.resolveNormalAttack(this, player);
-                player.takeDamage(damage);
-                GameLog.addMessage("You took " + damage + " damage");
+        if (MissionScreen.visualEffectManager.isDone()) {
+            Tile newTile = trainStopMap.getTile(tile.getX() + direction.getX(), tile.getY() + direction.getY());
+            if (newTile != null && newTile.getType() == TileType.FLOOR) {
+                if (newTile.getMapped() instanceof Player) {
+                    MissionScreen.visualEffectManager.addEffect(new AttackEffect(tile, newTile, this));
+                    Player player = (Player) newTile.getMapped();
+                    int damage = AttackResolver.resolveNormalAttack(this, player);
+                    player.takeDamage(damage);
+                    GameLog.addMessage("You took " + damage + " damage");
+                    return true;
+                }
+                MissionScreen.visualEffectManager.addEffect(new MoveEffect(tile, newTile, this));
+                changeTile(newTile);
                 return true;
             }
-            changeTile(newTile);
-            return true;
         }
-
         return false;
     }
 
@@ -124,8 +132,8 @@ public class Creature implements Updatable, Renderable, Mapped, Ai, Living, Figh
 
     @Override
     public void act(Player player) {
-            aiCore.act(this, player);
-            finished = true;
+        aiCore.act(this, player);
+        finished = true;
     }
 
     public boolean isFinished() {
@@ -202,6 +210,10 @@ public class Creature implements Updatable, Renderable, Mapped, Ai, Living, Figh
 
     public int getXp() {
         return xp;
+    }
+
+    public Sprite getSprite() {
+        return sprite;
     }
 }
 
