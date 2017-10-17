@@ -10,13 +10,13 @@
       "id": 1,
       "name": "Chocolate bar",
       "description": "a chocolate bar",
-      "sprite": "purple_potion.png"
+      "sprite": "axe.png"
     },
     {
       "id": 2,
       "name": "Lollipop",
       "description": "a lollipop",
-      "sprite": "purple_potion.png"
+      "sprite": "cloak.png"
     },
     {
       "id": 3,

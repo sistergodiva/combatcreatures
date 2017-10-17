@@ -7,6 +7,7 @@ import box2dLight.RayHandler;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import se.snrn.combatcreatures.interfaces.Renderable;
@@ -14,7 +15,6 @@ import se.snrn.combatcreatures.interfaces.Updatable;
 import se.snrn.combatcreatures.map.Tile;
 import se.snrn.combatcreatures.map.TileType;
 import se.snrn.combatcreatures.map.trainstops.TrainStopMap;
-import shaders.DiffuseShader;
 import shaders.Gaussian;
 
 import static se.snrn.combatcreatures.CombatCreatures.TILE_SIZE;
@@ -35,12 +35,11 @@ public class Box2DWorld implements Updatable, Renderable {
         rayHandler = new RayHandler(world);
 
         rayHandler.setCombinedMatrix(camera);
-
         box2DDebugRenderer = new Box2DDebugRenderer();
 
 
 
-        pointLight = new PointLight(rayHandler, 100, Color.YELLOW, 100, 0, 0);
+        pointLight = new PointLight(rayHandler, 50, new Color(0.75f, 0.75f, 0.5f, 0.75f),100,0,0);
 
         rayHandler.setAmbientLight(0.25f);
 

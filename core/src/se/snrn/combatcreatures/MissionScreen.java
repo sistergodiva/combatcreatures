@@ -7,6 +7,9 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g3d.Shader;
+import com.badlogic.gdx.graphics.g3d.shaders.DepthShader;
+import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -131,21 +134,20 @@ public class MissionScreen implements Screen {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-
         batch.setProjectionMatrix(orthographicCamera.combined);
         batch.begin();
         trainStopMap.render(batch);
         creatureManager.render(batch);
-        player.render(batch);
+        //player.render(batch);
         inputStateMachine.render(batch);
         visualEffectManager.render(batch);
         batch.end();
 
-//        box2DWorld.render(batch);
-//
-//        batch.begin();
-//        player.render(batch);
-//        batch.end();
+        box2DWorld.render(batch);
+
+        batch.begin();
+        player.render(batch);
+        batch.end();
 
         uiBatch.begin();
         ui.render(uiBatch);
