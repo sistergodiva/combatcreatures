@@ -71,7 +71,7 @@ public class MissionScreen implements Screen {
         creatureManager.setPlayer(player);
         turnManager = new TurnManager(creatureManager);
         inputStateMachine = new InputStateMachine(player, trainStopMap);
-        inputHandler = new InputHandler(inputStateMachine, player);
+        inputHandler = new InputHandler(inputStateMachine, player, orthographicCamera);
 
         visualEffectManager = new VisualEffectManager();
 

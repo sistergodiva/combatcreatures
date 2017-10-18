@@ -1,23 +1,35 @@
 package se.snrn.combatcreatures.input;
 
 
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import se.snrn.combatcreatures.entities.player.Player;
 
 public class InputHandler implements InputProcessor {
 
     private Player player;
+    private OrthographicCamera orthographicCamera;
     private InputStateMachine inputStateMachine;
 
-    public InputHandler(InputStateMachine inputStateMachine, Player player) {
+    public InputHandler(InputStateMachine inputStateMachine, Player player, OrthographicCamera orthographicCamera) {
         this.inputStateMachine = inputStateMachine;
 
         this.player = player;
+        this.orthographicCamera = orthographicCamera;
     }
 
     @Override
     public boolean keyDown(int keycode) {
-        inputStateMachine.handleInput(keycode);
+        if (keycode == Input.Keys.NUMPAD_1) {
+            orthographicCamera.zoom+=0.2;
+        }
+        if (keycode == Input.Keys.NUMPAD_3) {
+            orthographicCamera.zoom-=0.2;
+
+        }
+
+            inputStateMachine.handleInput(keycode);
         return false;
     }
 

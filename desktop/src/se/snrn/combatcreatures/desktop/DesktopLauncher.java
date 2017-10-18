@@ -6,7 +6,7 @@ import se.snrn.combatcreatures.CombatCreatures;
 
 public class DesktopLauncher {
     public static void main(String[] arg) {
-        System.setProperty("org.lwjgl.opengl.Window.undecorated", "true");
+        //System.setProperty("org.lwjgl.opengl.Window.undecorated", "true");
         LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
         config.width = 1280;
         config.height = 720;

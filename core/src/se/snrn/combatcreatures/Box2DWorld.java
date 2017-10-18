@@ -39,7 +39,7 @@ public class Box2DWorld implements Updatable, Renderable {
 
 
 
-        pointLight = new PointLight(rayHandler, 50, new Color(0.75f, 0.75f, 0.5f, 0.75f),100,0,0);
+        pointLight = new PointLight(rayHandler, 50, new Color(0.75f, 0.75f, 0.5f, 1f),100,0,0);
 
         rayHandler.setAmbientLight(0.25f);
 
