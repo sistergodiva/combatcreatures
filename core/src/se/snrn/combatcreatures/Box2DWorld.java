@@ -1,21 +1,18 @@
 package se.snrn.combatcreatures;
 
 
-import box2dLight.Light;
 import box2dLight.PointLight;
 import box2dLight.RayHandler;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import se.snrn.combatcreatures.interfaces.Renderable;
 import se.snrn.combatcreatures.interfaces.Updatable;
 import se.snrn.combatcreatures.map.Tile;
 import se.snrn.combatcreatures.map.TileType;
-import se.snrn.combatcreatures.map.trainstops.TrainStopMap;
-import shaders.Gaussian;
+import se.snrn.combatcreatures.map.trainstops.TileMap;
 
 import static se.snrn.combatcreatures.CombatCreatures.TILE_SIZE;
 
@@ -28,7 +25,7 @@ public class Box2DWorld implements Updatable, Renderable {
     private PointLight pointLight;
 
 
-    public Box2DWorld(OrthographicCamera camera, TrainStopMap trainStopMap) {
+    public Box2DWorld(OrthographicCamera camera, TileMap tileMap) {
         this.camera = camera;
 
         world = new World(new Vector2(0, 0), true);
@@ -38,14 +35,13 @@ public class Box2DWorld implements Updatable, Renderable {
         box2DDebugRenderer = new Box2DDebugRenderer();
 
 
-
-        pointLight = new PointLight(rayHandler, 50, new Color(0.75f, 0.75f, 0.5f, 1f),100,0,0);
+        pointLight = new PointLight(rayHandler, 50, new Color(0.75f, 0.75f, 0.5f, 1f), 100, 0, 0);
 
         rayHandler.setAmbientLight(0.25f);
 
-        for (Tile[] tile : trainStopMap.getTiles()) {
+        for (Tile[] tile : tileMap.getTiles()) {
             for (Tile aTile : tile) {
-                if(aTile.getType() == TileType.WALL) {
+                if (aTile.getType() == TileType.WALL) {
                     newBox(aTile);
                 }
             }
@@ -62,6 +58,7 @@ public class Box2DWorld implements Updatable, Renderable {
 
         rayHandler.update();
 
+
     }
 
     @Override
@@ -77,7 +74,7 @@ public class Box2DWorld implements Updatable, Renderable {
 
     public void newBox(Tile tile) {
         BodyDef bodyDef = new BodyDef();
-        bodyDef.position.set((tile.getX()*TILE_SIZE) + TILE_SIZE / 2, (tile.getY()*TILE_SIZE) + TILE_SIZE / 2);
+        bodyDef.position.set((tile.getX() * TILE_SIZE) + TILE_SIZE / 2, (tile.getY() * TILE_SIZE) + TILE_SIZE / 2);
 
 
         PolygonShape shape = new PolygonShape();
@@ -92,7 +89,7 @@ public class Box2DWorld implements Updatable, Renderable {
     public void newPhysicsObject(Tile tile) {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
-        bodyDef.position.set((tile.getX()*TILE_SIZE) + TILE_SIZE / 2, (tile.getY()*TILE_SIZE) + TILE_SIZE / 2);
+        bodyDef.position.set((tile.getX() * TILE_SIZE) + TILE_SIZE / 2, (tile.getY() * TILE_SIZE) + TILE_SIZE / 2);
 
         Body body = world.createBody(bodyDef);
 
@@ -108,7 +105,7 @@ public class Box2DWorld implements Updatable, Renderable {
 
         Fixture fixture = body.createFixture(fixtureDef);
 
-        body.applyForceToCenter(1,1,true);
+        body.applyForceToCenter(1, 1, true);
 
         circle.dispose();
     }
@@ -117,4 +114,7 @@ public class Box2DWorld implements Updatable, Renderable {
         return world;
     }
 
+    public PointLight newLight(int rays, Color color, float distance, float x, float y) {
+        return new PointLight(rayHandler, rays, color, distance, x, y);
+    }
 }

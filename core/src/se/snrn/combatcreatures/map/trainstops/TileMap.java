@@ -10,7 +10,7 @@ import se.snrn.combatcreatures.map.TileType;
 
 import java.util.ArrayList;
 
-public abstract class TrainStopMap implements Renderable {
+public abstract class TileMap implements Renderable {
 
     private final int width;
     private final int height;
@@ -25,7 +25,7 @@ public abstract class TrainStopMap implements Renderable {
     public boolean dirty;
 
 
-    public TrainStopMap(Tile[][] tiles) {
+    public TileMap(Tile[][] tiles) {
         this.tiles = tiles;
         this.width = tiles.length;
         this.height = tiles[0].length;

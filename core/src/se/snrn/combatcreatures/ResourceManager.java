@@ -19,15 +19,12 @@ public class ResourceManager {
     public static GlyphLayout glyphLayout = new GlyphLayout();
 
 
-
     // COLORS
     public static Sprite white = new Sprite(new Texture(Gdx.files.internal("ui/white.png")));
     public static Sprite black = new Sprite(new Texture(Gdx.files.internal("ui/black.png")));
     public static Sprite red = new Sprite(new Texture(Gdx.files.internal("ui/red.png")));
     public static Sprite blue = new Sprite(new Texture(Gdx.files.internal("ui/blue.png")));
     public static Sprite pink = new Sprite(new Texture(Gdx.files.internal("ui/pink.png")));
-
-
 
 
     public static Sprite bullet = new Sprite(new Texture(Gdx.files.internal("bullet.png")));
@@ -51,6 +48,7 @@ public class ResourceManager {
     public static Sprite doorNS = new Sprite(new Texture(Gdx.files.internal("tiles/doorNS.png")));
 
 
+
     public ResourceManager() {
         mapTiles();
         TextureRegion[][] test = TextureRegion.split(new Texture(Gdx.files.internal("tiles/tile_sheet.png")), 16, 16);
@@ -63,13 +61,11 @@ public class ResourceManager {
         }
     }
 
-    static Texture[] getAnimation(String name, int number) {
+    public static Texture[] getAnimation(String name, int number) {
         Texture[] animation = new Texture[number];
-
-        animation[0] = new Texture(Gdx.files.internal("ui/cursor1.png"));
-        animation[1] = new Texture(Gdx.files.internal("ui/cursor2.png"));
-        animation[2] = new Texture(Gdx.files.internal("ui/cursor3.png"));
-        animation[3] = new Texture(Gdx.files.internal("ui/cursor4.png"));
+        for (int i = 1; i < number + 1; i++) {
+            animation[i-1] = new Texture(Gdx.files.internal(name + i + ".png"));
+        }
         return animation;
     }
 

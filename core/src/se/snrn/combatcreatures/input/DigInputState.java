@@ -9,7 +9,7 @@ import se.snrn.combatcreatures.map.DirectionDiagonal;
 import se.snrn.combatcreatures.entities.player.Player;
 import se.snrn.combatcreatures.map.Tile;
 import se.snrn.combatcreatures.map.TileType;
-import se.snrn.combatcreatures.map.trainstops.TrainStopMap;
+import se.snrn.combatcreatures.map.trainstops.TileMap;
 
 import java.util.ArrayList;
 
@@ -20,18 +20,18 @@ public class DigInputState implements InputState {
 
 
     private Player player;
-    private TrainStopMap trainStopMap;
+    private TileMap tileMap;
     private ArrayList<Tile> allowedTargets;
 
 
-    public DigInputState(Player player, TrainStopMap trainStopMap) {
+    public DigInputState(Player player, TileMap tileMap) {
         this.player = player;
-        this.trainStopMap = trainStopMap;
+        this.tileMap = tileMap;
 
 
         allowedTargets = new ArrayList<>();
         for (Direction direction : Direction.values()) {
-            allowedTargets.add(trainStopMap.getTile(player.getTile().getX() + (direction.getX()), player.getTile().getY() + (direction.getY())));
+            allowedTargets.add(tileMap.getTile(player.getTile().getX() + (direction.getX()), player.getTile().getY() + (direction.getY())));
         }
     }
 
@@ -61,7 +61,7 @@ public class DigInputState implements InputState {
     }
 
     public InputState defaultInputState() {
-        return new DefaultInputState(player, trainStopMap);
+        return new DefaultInputState(player, tileMap);
     }
 
 
@@ -70,23 +70,23 @@ public class DigInputState implements InputState {
         Tile tile = null;
         switch (input) {
             case Input.Keys.W: {
-                tile = player.getTrainStopMap().getTileAtDirection(player.getTile(), DirectionDiagonal.NORTH);
-                MissionScreen.trainStopMap.setDirty(true);
+                tile = player.getTileMap().getTileAtDirection(player.getTile(), DirectionDiagonal.NORTH);
+                MissionScreen.tileMap.setDirty(true);
                 break;
             }
             case Input.Keys.D: {
-                tile = player.getTrainStopMap().getTileAtDirection(player.getTile(), DirectionDiagonal.EAST);
-                MissionScreen.trainStopMap.setDirty(true);
+                tile = player.getTileMap().getTileAtDirection(player.getTile(), DirectionDiagonal.EAST);
+                MissionScreen.tileMap.setDirty(true);
                 break;
             }
             case Input.Keys.S: {
-                tile = player.getTrainStopMap().getTileAtDirection(player.getTile(), DirectionDiagonal.SOUTH);
-                MissionScreen.trainStopMap.setDirty(true);
+                tile = player.getTileMap().getTileAtDirection(player.getTile(), DirectionDiagonal.SOUTH);
+                MissionScreen.tileMap.setDirty(true);
                 break;
             }
             case Input.Keys.A: {
-                tile = player.getTrainStopMap().getTileAtDirection(player.getTile(), DirectionDiagonal.WEST);
-                MissionScreen.trainStopMap.setDirty(true);
+                tile = player.getTileMap().getTileAtDirection(player.getTile(), DirectionDiagonal.WEST);
+                MissionScreen.tileMap.setDirty(true);
                 break;
             }
 

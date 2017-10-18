@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import se.snrn.combatcreatures.entities.player.Player;
 import se.snrn.combatcreatures.interfaces.Renderable;
 import se.snrn.combatcreatures.interfaces.Updatable;
-import se.snrn.combatcreatures.map.trainstops.TrainStopMap;
+import se.snrn.combatcreatures.map.trainstops.TileMap;
 
 
 public class InputStateMachine implements Updatable, Renderable {
@@ -12,14 +12,14 @@ public class InputStateMachine implements Updatable, Renderable {
     private InputState currentInputState;
     private InputState newInputState;
     private Player player;
-    private TrainStopMap trainStopMap;
+    private TileMap tileMap;
 
 
-    public InputStateMachine(Player player, TrainStopMap trainStopMap) {
+    public InputStateMachine(Player player, TileMap tileMap) {
 
-        currentInputState = new DefaultInputState(player, trainStopMap);
+        currentInputState = new DefaultInputState(player, tileMap);
         this.player = player;
-        this.trainStopMap = trainStopMap;
+        this.tileMap = tileMap;
     }
 
 

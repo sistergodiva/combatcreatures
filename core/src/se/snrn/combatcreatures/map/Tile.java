@@ -42,9 +42,9 @@ public class Tile implements Renderable {
 
         if (explored) {
             if (this.type == TileType.DOOR) {
-                if (tileValue == 999 || MissionScreen.trainStopMap.isDirty()) {
-                    if (MissionScreen.trainStopMap.getTileAtDirection(this, DirectionDiagonal.NORTH).getType() == WALL
-                            && MissionScreen.trainStopMap.getTileAtDirection(this, DirectionDiagonal.SOUTH).getType() == WALL) {
+                if (tileValue == 999 || MissionScreen.tileMap.isDirty()) {
+                    if (MissionScreen.tileMap.getTileAtDirection(this, DirectionDiagonal.NORTH).getType() == WALL
+                            && MissionScreen.tileMap.getTileAtDirection(this, DirectionDiagonal.SOUTH).getType() == WALL) {
                         tileValue = 1;
                     }
                 }
@@ -75,8 +75,8 @@ public class Tile implements Renderable {
 
             if (this.type == WALL) {
 
-                if (tileValue == 999 || MissionScreen.trainStopMap.isDirty()) {
-                    tileValue = TileBitmask.getTileNumber(this, MissionScreen.trainStopMap);
+                if (tileValue == 999 || MissionScreen.tileMap.isDirty()) {
+                    tileValue = TileBitmask.getTileNumber(this, MissionScreen.tileMap);
                 }
                 ResourceManager.floor.setPosition(x * TILE_SIZE, y * TILE_SIZE);
                 ResourceManager.floor.draw(batch);

@@ -8,7 +8,7 @@ import se.snrn.combatcreatures.map.TileType;
 import se.snrn.combatcreatures.map.pathfinding.AStar;
 import se.snrn.combatcreatures.map.pathfinding.FloodFill;
 import se.snrn.combatcreatures.map.trainstops.MapRoom;
-import se.snrn.combatcreatures.map.trainstops.TrainStopMap;
+import se.snrn.combatcreatures.map.trainstops.TileMap;
 
 import java.util.ArrayList;
 
@@ -17,7 +17,7 @@ import static se.snrn.combatcreatures.map.TileType.*;
 
 public class MapParser {
 
-    public void parseMap(TrainStopMap map) {
+    public void parseMap(TileMap map) {
 
 
         Tile startTile = map.getStartTile();
@@ -43,7 +43,7 @@ public class MapParser {
         }
     }
 
-    private void findSpawnLocations(TrainStopMap map) {
+    private void findSpawnLocations(TileMap map) {
         int fullNeighbours = 0;
         ArrayList<Tile> spawnLocations = new ArrayList<>();
 
@@ -67,7 +67,7 @@ public class MapParser {
         System.out.println(map.getSpawns().size());
     }
 
-    public static Tile getRandomEmptyTile(TrainStopMap tileMap) {
+    public static Tile getRandomEmptyTile(TileMap tileMap) {
         Tile emptyTile = tileMap.getTile(RandomNumber.range(0, tileMap.getWidth()), RandomNumber.range(0, tileMap.getHeight()));
 
         if (emptyTile != null && emptyTile.getType() == FLOOR) {
@@ -76,17 +76,17 @@ public class MapParser {
         return getRandomEmptyTile(tileMap);
     }
 
-    private void markWalls(TrainStopMap map) {
+    private void markWalls(TileMap map) {
         for (Tile wall : map.getWalls()
                 ) {
             wall.setType(TileType.WALL);
         }
     }
 
-    private void findRooms(TrainStopMap trainStopMap) {
+    private void findRooms(TileMap tileMap) {
         ArrayList<MapRoom> rooms = new ArrayList<>();
 
-        Tile[][] tiles = trainStopMap.getTiles();
+        Tile[][] tiles = tileMap.getTiles();
 
         for (int i = 0; i < tiles.length; i++) {
             for (int j = 0; j < tiles[0].length; j++) {
@@ -107,10 +107,10 @@ public class MapParser {
 
 
         System.out.println("rooms: " + rooms.size());
-        trainStopMap.setRooms(rooms);
+        tileMap.setRooms(rooms);
     }
 
-    private void createDoors(TrainStopMap tileMap) {
+    private void createDoors(TileMap tileMap) {
         for (Tile tile : tileMap.getOpenTiles()) {
 
 
@@ -126,7 +126,7 @@ public class MapParser {
         }
     }
 
-    private void generateStairs(TrainStopMap tileMap) {
+    private void generateStairs(TileMap tileMap) {
         Tile stairsUp = tileMap.getOpenTiles().get(RandomNumber.range(0, tileMap.getOpenTiles().size() - 1));
         Tile stairsDown = tileMap.getOpenTiles().get(RandomNumber.range(0, tileMap.getOpenTiles().size() - 1));
         if (AStar.getDistance(stairsUp, stairsDown, tileMap) < 60) {
@@ -142,7 +142,7 @@ public class MapParser {
         }
     }
 
-    private ArrayList<Tile> findPath(Tile start, Tile goal, TrainStopMap tileMap) {
+    private ArrayList<Tile> findPath(Tile start, Tile goal, TileMap tileMap) {
         return AStar.calculateAStarNoTerrain(start, goal, tileMap);
     }
 }

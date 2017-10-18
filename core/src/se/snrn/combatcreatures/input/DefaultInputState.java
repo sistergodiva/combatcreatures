@@ -6,15 +6,15 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import se.snrn.combatcreatures.MissionScreen;
 import se.snrn.combatcreatures.map.Direction;
 import se.snrn.combatcreatures.entities.player.Player;
-import se.snrn.combatcreatures.map.trainstops.TrainStopMap;
+import se.snrn.combatcreatures.map.trainstops.TileMap;
 
 public class DefaultInputState implements InputState{
     private Player player;
-    private TrainStopMap trainStopMap;
+    private TileMap tileMap;
 
-    public DefaultInputState(Player player, TrainStopMap trainStopMap) {
+    public DefaultInputState(Player player, TileMap tileMap) {
         this.player = player;
-        this.trainStopMap = trainStopMap;
+        this.tileMap = tileMap;
     }
 
     @Override
@@ -58,10 +58,10 @@ public class DefaultInputState implements InputState{
                 break;
             }
             case Input.Keys.J: {
-                return new JumpInputState(player, trainStopMap);
+                return new JumpInputState(player, tileMap);
             }
             case Input.Keys.K: {
-                return new DigInputState(player, trainStopMap);
+                return new DigInputState(player, tileMap);
             }
 
             case Input.Keys.L: {
@@ -70,11 +70,11 @@ public class DefaultInputState implements InputState{
             }
 
             case Input.Keys.I: {
-                return new InventoryInputState(player, trainStopMap);
+                return new InventoryInputState(player, tileMap);
             }
 
             case Input.Keys.Y: {
-                return new LevelingInputState(player, trainStopMap);
+                return new LevelingInputState(player, tileMap);
             }
             case Input.Keys.M: {
                 MissionScreen.ui.getMiniMap().setMapScale(8);
@@ -86,7 +86,7 @@ public class DefaultInputState implements InputState{
             }
 
             case  Input.Keys.Q: {
-                return new RangedInputState(player, trainStopMap);
+                return new RangedInputState(player, tileMap);
             }
 
             case Input.Keys.Z: {

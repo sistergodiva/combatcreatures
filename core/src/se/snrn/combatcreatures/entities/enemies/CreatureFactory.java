@@ -5,7 +5,7 @@ import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
 import se.snrn.combatcreatures.RandomNumber;
 import se.snrn.combatcreatures.map.Tile;
-import se.snrn.combatcreatures.map.trainstops.TrainStopMap;
+import se.snrn.combatcreatures.map.trainstops.TileMap;
 
 public class CreatureFactory {
     static JsonValue creatureStats;
@@ -18,19 +18,19 @@ public class CreatureFactory {
 
     }
 
-    public static Creature spawnCreature(Tile tile, TrainStopMap trainStopMap, int id) {
-        return new Creature(tile, trainStopMap, creatureStats.get(id), creatures.get(id), new TargetDummyAiCore());
+    public static Creature spawnCreature(Tile tile, TileMap tileMap, int id) {
+        return new Creature(tile, tileMap, creatureStats.get(id), creatures.get(id), new TargetDummyAiCore());
     }
 
-    public static Creature spawnTargetDummy(Tile tile, TrainStopMap trainStopMap) {
+    public static Creature spawnTargetDummy(Tile tile, TileMap tileMap) {
         int id = RandomNumber.range(0, creatures.size-1);
-        return new Creature(tile, trainStopMap, creatureStats.get(id), creatures.get(id), new TargetDummyAiCore());
+        return new Creature(tile, tileMap, creatureStats.get(id), creatures.get(id), new TargetDummyAiCore());
 
     }
 
-    public static Creature spawnRandomCreature(Tile tile, TrainStopMap trainStopMap) {
+    public static Creature spawnRandomCreature(Tile tile, TileMap tileMap) {
         int id = RandomNumber.range(0, creatures.size-1);
-        return new Creature(tile, trainStopMap, creatureStats.get(id), creatures.get(id), new MeleeAiCore());
+        return new Creature(tile, tileMap, creatureStats.get(id), creatures.get(id), new MeleeAiCore());
 
     }
 }

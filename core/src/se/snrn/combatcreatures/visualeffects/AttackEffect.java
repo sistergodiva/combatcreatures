@@ -3,8 +3,10 @@ package se.snrn.combatcreatures.visualeffects;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Interpolation;
+import se.snrn.combatcreatures.MissionScreen;
 import se.snrn.combatcreatures.entities.enemies.Creature;
 import se.snrn.combatcreatures.entities.player.Player;
+import se.snrn.combatcreatures.map.Direction;
 import se.snrn.combatcreatures.map.Tile;
 
 import static se.snrn.combatcreatures.CombatCreatures.DELAY;
@@ -24,6 +26,9 @@ public class AttackEffect implements VisualEffect {
     private float x;
     private float y;
     private float delay;
+    private Direction direction;
+    SlashAnimation slashAnimation;
+
 
     public AttackEffect(Tile start, Tile end, Player player) {
         this.start = start;
@@ -33,6 +38,8 @@ public class AttackEffect implements VisualEffect {
         x = start.getX() * TILE_SIZE;
         y = start.getY() * TILE_SIZE;
         this.sprite = player.getSprite();
+        direction = MissionScreen.tileMap.getDirectionFromTile(start,end);
+        slashAnimation = new SlashAnimation(x,y, direction);
     }
 
     public AttackEffect(Tile start, Tile end, Creature creature) {
@@ -43,7 +50,9 @@ public class AttackEffect implements VisualEffect {
         x = start.getX() * TILE_SIZE;
         y = start.getY() * TILE_SIZE;
         this.sprite = creature.getSprite();
+        direction = MissionScreen.tileMap.getDirectionFromTile(start,end);
         delay = DELAY;
+        //slashAnimation = new SlashAnimation(x,y, direction);
     }
 
     @Override
@@ -51,6 +60,7 @@ public class AttackEffect implements VisualEffect {
 
         delay -= delta;
         if (delay < 0) {
+
 
             if (!goingBack) {
                 time += delta * SPEED_MULTIPLIER;
@@ -73,11 +83,16 @@ public class AttackEffect implements VisualEffect {
 
 
         sprite.setPosition(x, y);
+        if(slashAnimation != null) {
+            slashAnimation.update(delta);
+        }
     }
 
     @Override
     public void render(Batch batch) {
-
+        if(slashAnimation != null) {
+            slashAnimation.render(batch);
+        }
     }
 
     @Override

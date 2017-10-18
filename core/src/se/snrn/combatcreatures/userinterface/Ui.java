@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import se.snrn.combatcreatures.entities.player.Player;
 import se.snrn.combatcreatures.interfaces.Renderable;
 import se.snrn.combatcreatures.interfaces.Updatable;
-import se.snrn.combatcreatures.map.trainstops.TrainStopMap;
+import se.snrn.combatcreatures.map.trainstops.TileMap;
 import se.snrn.combatcreatures.userinterface.inventory.Inventory;
 import se.snrn.combatcreatures.userinterface.leveling.SkillWindow;
 
@@ -25,7 +25,7 @@ public class Ui implements Updatable, Renderable {
     private AbilityBar abilityBar;
     private SkillWindow skillWindow;
 
-    public Ui(Player player, TrainStopMap trainStopMap) {
+    public Ui(Player player, TileMap tileMap) {
         margin = 8;
         this.player = player;
         inventory = player.getInventory();

@@ -9,7 +9,7 @@ import se.snrn.combatcreatures.interfaces.Renderable;
 import se.snrn.combatcreatures.interfaces.Updatable;
 import se.snrn.combatcreatures.map.Tile;
 import se.snrn.combatcreatures.map.TileType;
-import se.snrn.combatcreatures.map.trainstops.TrainStopMap;
+import se.snrn.combatcreatures.map.trainstops.TileMap;
 
 import static se.snrn.combatcreatures.ResourceManager.*;
 
@@ -21,7 +21,7 @@ public class MiniMap implements Updatable, Renderable {
     private float miniMapHeight;
     private float startY;
     private float startX;
-    private TrainStopMap trainStopMap;
+    private TileMap tileMap;
     private Player player;
     private float mapScale;
 
@@ -32,12 +32,12 @@ public class MiniMap implements Updatable, Renderable {
         this.player = player;
 
 
-        trainStopMap = player.getTrainStopMap();
+        tileMap = player.getTileMap();
         mapScale = 4;
         margin = 8;
 
-        miniMapWidth = mapScale * trainStopMap.getWidth();
-        miniMapHeight = mapScale * trainStopMap.getHeight();
+        miniMapWidth = mapScale * tileMap.getWidth();
+        miniMapHeight = mapScale * tileMap.getHeight();
 
         startX = Gdx.graphics.getWidth() - miniMapWidth - margin;
         startY = Gdx.graphics.getHeight() - miniMapHeight - margin;
@@ -49,8 +49,8 @@ public class MiniMap implements Updatable, Renderable {
             mapScale = 4;
         }
         this.mapScale = mapScale;
-        miniMapWidth = mapScale * trainStopMap.getWidth();
-        miniMapHeight = mapScale * trainStopMap.getHeight();
+        miniMapWidth = mapScale * tileMap.getWidth();
+        miniMapHeight = mapScale * tileMap.getHeight();
 
         startX = Gdx.graphics.getWidth() - miniMapWidth - margin;
         startY = Gdx.graphics.getHeight() - miniMapHeight - margin;
@@ -65,9 +65,9 @@ public class MiniMap implements Updatable, Renderable {
     public void render(Batch batch) {
 
         ResourceManager.uiNinePatch.draw(batch, startX-margin, startY-margin, miniMapWidth+margin*2, miniMapHeight+margin*2);
-        for (int x = 0; x < trainStopMap.getWidth(); x++) {
-            for (int y = 0; y < trainStopMap.getHeight(); y++) {
-                Tile point = trainStopMap.getTile(x, y);
+        for (int x = 0; x < tileMap.getWidth(); x++) {
+            for (int y = 0; y < tileMap.getHeight(); y++) {
+                Tile point = tileMap.getTile(x, y);
                 if (point.getType() == TileType.DOOR && point.isExplored()) {
                     red.setSize(mapScale, mapScale);
                     red.setPosition(startX + point.getX() * mapScale, startY + point.getY() * mapScale);

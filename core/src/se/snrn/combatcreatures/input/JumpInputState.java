@@ -7,7 +7,7 @@ import se.snrn.combatcreatures.map.Direction;
 import se.snrn.combatcreatures.entities.player.Player;
 import se.snrn.combatcreatures.map.Tile;
 import se.snrn.combatcreatures.map.TileType;
-import se.snrn.combatcreatures.map.trainstops.TrainStopMap;
+import se.snrn.combatcreatures.map.trainstops.TileMap;
 
 import java.util.ArrayList;
 
@@ -21,18 +21,18 @@ public class JumpInputState implements InputState {
 
     private ArrayList<Tile> allowedTargets;
     private Player player;
-    private TrainStopMap trainStopMap;
+    private TileMap tileMap;
     private boolean done;
 
-    public JumpInputState(Player player, TrainStopMap trainStopMap) {
+    public JumpInputState(Player player, TileMap tileMap) {
         this.player = player;
-        this.trainStopMap = trainStopMap;
+        this.tileMap = tileMap;
 
 
         allowedTargets = new ArrayList<>();
 
         for (Direction direction : Direction.values()) {
-            allowedTargets.add(trainStopMap.getTile(player.getTile().getX() + (direction.getX() * 2), player.getTile().getY() + (direction.getY() * 2)));
+            allowedTargets.add(tileMap.getTile(player.getTile().getX() + (direction.getX() * 2), player.getTile().getY() + (direction.getY() * 2)));
         }
 
     }
@@ -98,7 +98,7 @@ public class JumpInputState implements InputState {
         }
         if(done) {
             turnManager.endPlayerTurn();
-            return new DefaultInputState(player, trainStopMap);
+            return new DefaultInputState(player, tileMap);
         }
         return null;
     }

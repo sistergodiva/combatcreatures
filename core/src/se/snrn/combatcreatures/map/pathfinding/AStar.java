@@ -3,7 +3,7 @@ package se.snrn.combatcreatures.map.pathfinding;
 
 import com.badlogic.gdx.Gdx;
 import se.snrn.combatcreatures.map.Tile;
-import se.snrn.combatcreatures.map.trainstops.TrainStopMap;
+import se.snrn.combatcreatures.map.trainstops.TileMap;
 
 import java.util.*;
 
@@ -23,7 +23,7 @@ public class AStar {
     };
 
 
-    private static void generateNodes(TrainStopMap tileMap) {
+    private static void generateNodes(TileMap tileMap) {
         nodes.clear();
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
@@ -33,7 +33,7 @@ public class AStar {
         }
     }
 
-    public static ArrayList<Tile> calculateAStarNoTerrain(Tile p1, Tile p2, TrainStopMap tileMap) {
+    public static ArrayList<Tile> calculateAStarNoTerrain(Tile p1, Tile p2, TileMap tileMap) {
         Gdx.app.log("AStar", "Doing expensive AStar");
         width = tileMap.getWidth();
         height = tileMap.getHeight();
@@ -89,7 +89,7 @@ public class AStar {
         return null;
     }
 
-    public static boolean isReachable(Tile start, Tile goal, TrainStopMap map) {
+    public static boolean isReachable(Tile start, Tile goal, TileMap map) {
         return calculateAStarNoTerrain(start, goal, map) != null;
     }
 
@@ -112,7 +112,7 @@ public class AStar {
                 y < height;
     }
 
-    public static int getDistance(Tile start, Tile goal, TrainStopMap map) {
+    public static int getDistance(Tile start, Tile goal, TileMap map) {
         return calculateAStarNoTerrain(start, goal, map).size();
     }
 }

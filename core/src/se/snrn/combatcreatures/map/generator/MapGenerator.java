@@ -4,7 +4,7 @@ package se.snrn.combatcreatures.map.generator;
 import se.snrn.combatcreatures.map.Tile;
 import se.snrn.combatcreatures.map.pathfinding.FloodFill;
 import se.snrn.combatcreatures.map.trainstops.SwitchStop;
-import se.snrn.combatcreatures.map.trainstops.TrainStopMap;
+import se.snrn.combatcreatures.map.trainstops.TileMap;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -35,7 +35,7 @@ public class MapGenerator {
      * @param birthLimit         if a dead cell has more than this amount of neighbours, it is born
      * @param numberOfSteps      the amount of times this simulation is run in the initial random map
      */
-    public TrainStopMap getCellAutoMap(double chanceToStartAlive, int deathLimit, int birthLimit, int numberOfSteps) {
+    public TileMap getCellAutoMap(double chanceToStartAlive, int deathLimit, int birthLimit, int numberOfSteps) {
         //create 2d array of booleans set to false
         boolean[][] cellmap = new boolean[width][height];
         //inititalize the map with 0-100% chance for each tile to start alive
@@ -47,7 +47,7 @@ public class MapGenerator {
 
 
         //make true tiles FULL and false tiles OPEN
-        TrainStopMap map = getMapFromBool(cellmap, width, height);
+        TileMap map = getMapFromBool(cellmap, width, height);
         if (!acceptableMap(map)) {
             return getCellAutoMap(chanceToStartAlive, deathLimit, birthLimit, numberOfSteps);
         } else {
@@ -57,7 +57,7 @@ public class MapGenerator {
         }
     }
 
-    private boolean acceptableMap(TrainStopMap map) {
+    private boolean acceptableMap(TileMap map) {
         Tile tile = MapParser.getRandomEmptyTile(map);
         ArrayList<Tile> emptyTiles;
         emptyTiles = FloodFill.getFloodFromTile(map, tile);
@@ -66,8 +66,8 @@ public class MapGenerator {
     }
 
 
-    private TrainStopMap getMapFromBool(boolean[][] cellGrid, int width, int height) {
-        TrainStopMap map = new SwitchStop(new Tile[width][height]);
+    private TileMap getMapFromBool(boolean[][] cellGrid, int width, int height) {
+        TileMap map = new SwitchStop(new Tile[width][height]);
 
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {

@@ -10,7 +10,7 @@ import se.snrn.combatcreatures.interfaces.Renderable;
 import se.snrn.combatcreatures.interfaces.Updatable;
 import se.snrn.combatcreatures.items.Item;
 import se.snrn.combatcreatures.map.Tile;
-import se.snrn.combatcreatures.map.trainstops.TrainStopMap;
+import se.snrn.combatcreatures.map.trainstops.TileMap;
 
 import java.util.ArrayList;
 
@@ -20,7 +20,7 @@ public class Corpse implements Updatable, Renderable, Mapped, Container {
 
 
     private final Tile tile;
-    private final TrainStopMap tileMap;
+    private final TileMap tileMap;
     private final Sprite sprite;
     private int floor;
 
@@ -47,7 +47,7 @@ public class Corpse implements Updatable, Renderable, Mapped, Container {
     }
 
     @Override
-    public TrainStopMap getMap() {
+    public TileMap getMap() {
         return null;
     }
 

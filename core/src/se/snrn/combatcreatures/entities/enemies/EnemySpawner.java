@@ -1,15 +1,15 @@
 package se.snrn.combatcreatures.entities.enemies;
 
 import se.snrn.combatcreatures.map.Tile;
-import se.snrn.combatcreatures.map.trainstops.TrainStopMap;
+import se.snrn.combatcreatures.map.trainstops.TileMap;
 
 import java.util.ArrayList;
 import java.util.Collections;
 
 public class EnemySpawner {
 
-    public static void spawnTargetDummies(CreatureManager creatureManager, TrainStopMap trainStopMap, int enemyBudget) {
-        ArrayList<Tile> emptyTiles = trainStopMap.getSpawns();
+    public static void spawnTargetDummies(CreatureManager creatureManager, TileMap tileMap, int enemyBudget) {
+        ArrayList<Tile> emptyTiles = tileMap.getSpawns();
         int usedBudget = 0;
 
         Collections.shuffle(emptyTiles);
@@ -19,7 +19,7 @@ public class EnemySpawner {
                 break;
             }
 
-            Creature spawnedCreature = CreatureFactory.spawnTargetDummy(emptyTile, trainStopMap);
+            Creature spawnedCreature = CreatureFactory.spawnTargetDummy(emptyTile, tileMap);
             creatureManager.addCreature(spawnedCreature);
             usedBudget += spawnedCreature.getCost();
         }
@@ -27,8 +27,8 @@ public class EnemySpawner {
 
     }
 
-    public static void spawnEnemies(CreatureManager creatureManager, TrainStopMap trainStopMap, int enemyBudget) {
-        ArrayList<Tile> emptyTiles = trainStopMap.getSpawns();
+    public static void spawnEnemies(CreatureManager creatureManager, TileMap tileMap, int enemyBudget) {
+        ArrayList<Tile> emptyTiles = tileMap.getSpawns();
         int usedBudget = 0;
 
         Collections.shuffle(emptyTiles);
@@ -38,7 +38,7 @@ public class EnemySpawner {
                 break;
             }
 
-            Creature spawnedCreature = CreatureFactory.spawnRandomCreature(emptyTile, trainStopMap);
+            Creature spawnedCreature = CreatureFactory.spawnRandomCreature(emptyTile, tileMap);
             creatureManager.addCreature(spawnedCreature);
             usedBudget += spawnedCreature.getCost();
         }

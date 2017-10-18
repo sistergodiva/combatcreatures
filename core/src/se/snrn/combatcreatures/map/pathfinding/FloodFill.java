@@ -4,7 +4,7 @@ package se.snrn.combatcreatures.map.pathfinding;
 import se.snrn.combatcreatures.map.Direction;
 import se.snrn.combatcreatures.map.DirectionDiagonal;
 import se.snrn.combatcreatures.map.Tile;
-import se.snrn.combatcreatures.map.trainstops.TrainStopMap;
+import se.snrn.combatcreatures.map.trainstops.TileMap;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -108,7 +108,7 @@ public class FloodFill {
         return allNeighbours;
     }
 
-    public static ArrayList<Tile> getFloodFromTile(TrainStopMap tileMap, Tile startTile) {
+    public static ArrayList<Tile> getFloodFromTile(TileMap tileMap, Tile startTile) {
         ArrayList<Tile> filledTiles = new ArrayList<>();
         List<Tile> openList = new ArrayList<>();
         List<Tile> closedList = new ArrayList<>();
@@ -135,7 +135,7 @@ public class FloodFill {
     }
 
 
-    public static ArrayList<Tile> getWallsFromTile(TrainStopMap tileMap, Tile startTile) {
+    public static ArrayList<Tile> getWallsFromTile(TileMap tileMap, Tile startTile) {
         ArrayList<Tile> walls = new ArrayList<>();
         ArrayList<Tile> filledTiles = new ArrayList<>();
         List<Tile> openList = new ArrayList<>();

@@ -6,7 +6,7 @@ import se.snrn.combatcreatures.map.TileType;
 import se.snrn.combatcreatures.map.prefabs.MapComponent;
 import se.snrn.combatcreatures.map.prefabs.Room;
 import se.snrn.combatcreatures.map.trainstops.SwitchStop;
-import se.snrn.combatcreatures.map.trainstops.TrainStopMap;
+import se.snrn.combatcreatures.map.trainstops.TileMap;
 
 import java.util.ArrayList;
 
@@ -17,7 +17,7 @@ public class DungeonGenerator {
     public static Tile nextTile;
     static ArrayList<Room> rooms;
 
-    public static TrainStopMap getDungeonMap(int width, int height) {
+    public static TileMap getDungeonMap(int width, int height) {
         Tile[][] tiles = getFilledMap(width, height);
 
         rooms = new ArrayList<>();

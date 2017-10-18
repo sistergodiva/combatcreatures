@@ -4,18 +4,18 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import se.snrn.combatcreatures.MissionScreen;
 import se.snrn.combatcreatures.entities.player.Player;
-import se.snrn.combatcreatures.map.trainstops.TrainStopMap;
+import se.snrn.combatcreatures.map.trainstops.TileMap;
 import se.snrn.combatcreatures.userinterface.leveling.SkillWindow;
 
 public class LevelingInputState implements InputState {
 
     private SkillWindow skillWindow;
     private Player player;
-    private TrainStopMap trainStopMap;
+    private TileMap tileMap;
 
-    public LevelingInputState(Player player, TrainStopMap trainStopMap) {
+    public LevelingInputState(Player player, TileMap tileMap) {
         this.player = player;
-        this.trainStopMap = trainStopMap;
+        this.tileMap = tileMap;
         this.skillWindow = MissionScreen.getUi().getSkillWindow();
     }
 
@@ -62,7 +62,7 @@ public class LevelingInputState implements InputState {
             }
             case Input.Keys.Y: {
 
-                return new DefaultInputState(player, trainStopMap);
+                return new DefaultInputState(player, tileMap);
             }
 
 

@@ -6,9 +6,9 @@ import se.snrn.combatcreatures.map.MapFactory;
 import se.snrn.combatcreatures.map.Tile;
 import se.snrn.combatcreatures.map.prefabs.MapComponent;
 
-public class TrainStopFactory {
+public class TileMapFactory {
 
-    public static TrainStopMap getTrainStop() {
+    public static TileMap getTileMap() {
 
         return MapFactory.generateCellularTileMap(RandomNumber.range(1, 100));
 

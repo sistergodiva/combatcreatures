@@ -13,7 +13,7 @@ import se.snrn.combatcreatures.items.Equipment.Stat;
 import se.snrn.combatcreatures.map.Direction;
 import se.snrn.combatcreatures.map.Tile;
 import se.snrn.combatcreatures.map.los.LineOfSight;
-import se.snrn.combatcreatures.map.trainstops.TrainStopMap;
+import se.snrn.combatcreatures.map.trainstops.TileMap;
 import se.snrn.combatcreatures.userinterface.GameLog;
 import se.snrn.combatcreatures.userinterface.inventory.Inventory;
 import se.snrn.combatcreatures.visualeffects.AttackEffect;
@@ -32,7 +32,7 @@ public class Player implements Updatable, Renderable, Mapped, Living, Fighter {
     private Tile tile;
     private Sprite sprite;
     private boolean alive;
-    private TrainStopMap trainStopMap;
+    private TileMap tileMap;
     private Stats stats;
     private PlayerEquipment playerEquipment;
     private ArrayList<Effect> effects;
@@ -44,9 +44,9 @@ public class Player implements Updatable, Renderable, Mapped, Living, Fighter {
     private int xp;
 
 
-    public Player(Tile tile, TrainStopMap trainStopMap, Stats stats) {
+    public Player(Tile tile, TileMap tileMap, Stats stats) {
         this.tile = tile;
-        this.trainStopMap = trainStopMap;
+        this.tileMap = tileMap;
         this.stats = stats;
         sprite = ResourceManager.player;
         alive = true;
@@ -57,7 +57,7 @@ public class Player implements Updatable, Renderable, Mapped, Living, Fighter {
         inventory = new Inventory();
         effects = new ArrayList<>();
         level = 0;
-        LineOfSight.getLineOfSight(tile, trainStopMap.getTiles());
+        LineOfSight.getLineOfSight(tile, tileMap.getTiles());
 
         skillPoints = 0;
 
@@ -90,7 +90,7 @@ public class Player implements Updatable, Renderable, Mapped, Living, Fighter {
     }
 
     @Override
-    public TrainStopMap getMap() {
+    public TileMap getMap() {
         return null;
     }
 
@@ -100,13 +100,13 @@ public class Player implements Updatable, Renderable, Mapped, Living, Fighter {
         tile.setMapped(this);
         this.tile = tile;
         tile.stepOn(this);
-        LineOfSight.getLineOfSight(tile, trainStopMap.getTiles());
+        LineOfSight.getLineOfSight(tile, tileMap.getTiles());
     }
 
     @Override
     public boolean move(Direction direction) {
         if (MissionScreen.visualEffectManager.isDone()) {
-            Tile newTile = trainStopMap.getTile(tile.getX() + direction.getX(), tile.getY() + direction.getY());
+            Tile newTile = tileMap.getTile(tile.getX() + direction.getX(), tile.getY() + direction.getY());
             if (newTile != null && newTile.getType().isWalkable()) {
                 if (newTile.getMapped() instanceof Creature) {
                     MissionScreen.visualEffectManager.addEffect(new AttackEffect(tile, newTile, this));
@@ -223,8 +223,8 @@ public class Player implements Updatable, Renderable, Mapped, Living, Fighter {
         this.skillPoints = skillPoints;
     }
 
-    public TrainStopMap getTrainStopMap() {
-        return trainStopMap;
+    public TileMap getTileMap() {
+        return tileMap;
     }
 
     public Sprite getSprite() {

@@ -1,6 +1,6 @@
 package se.snrn.combatcreatures.map;
 
-import se.snrn.combatcreatures.map.trainstops.TrainStopMap;
+import se.snrn.combatcreatures.map.trainstops.TileMap;
 
 import java.util.HashMap;
 
@@ -13,24 +13,24 @@ public class TileBitmask {
     private static HashMap<Integer, Integer> gfx;
 
 
-    private static int getBitmaskFromTile(Tile tile, TrainStopMap trainStopMap) {
+    private static int getBitmaskFromTile(Tile tile, TileMap tileMap) {
         int bitMask = 0;
 
         for (DirectionDiagonal direction : DirectionDiagonal.values()) {
-            Tile checkedTile = trainStopMap.getTileAtDirection(tile, direction);
-            bitMask += getBitMask(trainStopMap, direction, checkedTile, tile);
+            Tile checkedTile = tileMap.getTileAtDirection(tile, direction);
+            bitMask += getBitMask(tileMap, direction, checkedTile, tile);
         }
         return bitMask;
     }
 
-    private static int getBitMask(TrainStopMap trainStopMap, DirectionDiagonal direction, Tile checkedTile, Tile tile) {
+    private static int getBitMask(TileMap tileMap, DirectionDiagonal direction, Tile checkedTile, Tile tile) {
 
         if (checkedTile == null) {
             return 0;
         }
         if (checkedTile.getType() != FLOOR) {
             if (isDiagonal(direction)) {
-                if (hasOneEmptyOrthogonalNeighbour(tile, trainStopMap, direction)) {
+                if (hasOneEmptyOrthogonalNeighbour(tile, tileMap, direction)) {
                     return 0;
                 }
                 return getDirectionInt(direction);
@@ -41,23 +41,23 @@ public class TileBitmask {
     }
 
 
-    static boolean hasOneEmptyOrthogonalNeighbour(Tile checkedTile, TrainStopMap trainStopMap, DirectionDiagonal directionDiagonal) {
+    static boolean hasOneEmptyOrthogonalNeighbour(Tile checkedTile, TileMap tileMap, DirectionDiagonal directionDiagonal) {
 
         if (directionDiagonal == NORTHWEST) {
-            return trainStopMap.getTileAtDirection(checkedTile, NORTH).getType() == FLOOR
-                    || trainStopMap.getTileAtDirection(checkedTile, DirectionDiagonal.WEST).getType() == FLOOR;
+            return tileMap.getTileAtDirection(checkedTile, NORTH).getType() == FLOOR
+                    || tileMap.getTileAtDirection(checkedTile, DirectionDiagonal.WEST).getType() == FLOOR;
         }
         if (directionDiagonal == NORTHEAST) {
-            return trainStopMap.getTileAtDirection(checkedTile, NORTH).getType() == FLOOR
-                    || trainStopMap.getTileAtDirection(checkedTile, EAST).getType() == FLOOR;
+            return tileMap.getTileAtDirection(checkedTile, NORTH).getType() == FLOOR
+                    || tileMap.getTileAtDirection(checkedTile, EAST).getType() == FLOOR;
         }
         if (directionDiagonal == SOUTHWEST) {
-            return trainStopMap.getTileAtDirection(checkedTile, SOUTH).getType() == FLOOR
-                    || trainStopMap.getTileAtDirection(checkedTile, DirectionDiagonal.WEST).getType() == FLOOR;
+            return tileMap.getTileAtDirection(checkedTile, SOUTH).getType() == FLOOR
+                    || tileMap.getTileAtDirection(checkedTile, DirectionDiagonal.WEST).getType() == FLOOR;
         }
         if (directionDiagonal == SOUTHEAST) {
-            return trainStopMap.getTileAtDirection(checkedTile, SOUTH).getType() == FLOOR
-                    || trainStopMap.getTileAtDirection(checkedTile, EAST).getType() == FLOOR;
+            return tileMap.getTileAtDirection(checkedTile, SOUTH).getType() == FLOOR
+                    || tileMap.getTileAtDirection(checkedTile, EAST).getType() == FLOOR;
         } else {
             return false;
         }
@@ -120,7 +120,7 @@ public class TileBitmask {
         return gfx;
     }
 
-    static int getTileNumber(Tile tile, TrainStopMap compositeMap) {
+    static int getTileNumber(Tile tile, TileMap compositeMap) {
         if (gfx == null) {
             gfx = fillGfxHash();
         }

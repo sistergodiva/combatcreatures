@@ -1,5 +1,7 @@
 package se.snrn.combatcreatures.entities.enemies;
 
+import box2dLight.PointLight;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.utils.JsonValue;
@@ -14,7 +16,7 @@ import se.snrn.combatcreatures.interfaces.*;
 import se.snrn.combatcreatures.items.consumable.ConsumableFactory;
 import se.snrn.combatcreatures.map.Tile;
 import se.snrn.combatcreatures.map.TileType;
-import se.snrn.combatcreatures.map.trainstops.TrainStopMap;
+import se.snrn.combatcreatures.map.trainstops.TileMap;
 import se.snrn.combatcreatures.userinterface.GameLog;
 import se.snrn.combatcreatures.visualeffects.AttackEffect;
 import se.snrn.combatcreatures.visualeffects.MoveEffect;
@@ -33,15 +35,16 @@ public class Creature implements Updatable, Renderable, Mapped, Ai, Living, Figh
     private boolean finished;
     private int health;
     private boolean alive;
-    private TrainStopMap trainStopMap;
+    private TileMap tileMap;
     private Stats stats;
     private int cost;
     private Sprite deadSprite;
     private boolean active;
+    private PointLight light;
 
 
-    public Creature(Tile tile, TrainStopMap trainStopMap, JsonValue stats, JsonValue appearance, AiCore aiCore) {
-        this.trainStopMap = trainStopMap;
+    public Creature(Tile tile, TileMap tileMap, JsonValue stats, JsonValue appearance, AiCore aiCore) {
+        this.tileMap = tileMap;
         this.stats = new Stats(stats.getInt(0), stats.getInt(1), stats.getInt(2), stats.getInt(3), stats.getInt(4), stats.getInt(5));
         this.tile = tile;
         this.tile.setMapped(this);
@@ -57,8 +60,7 @@ public class Creature implements Updatable, Renderable, Mapped, Ai, Living, Figh
         cost = 10;
         deadSprite = ResourceManager.getCreatureSpriteFromString(deadSpriteString);
         active = false;
-
-
+        light = MissionScreen.box2DWorld.newLight(50, Color.LIGHT_GRAY, 50, tile.getX() * TILE_SIZE, tile.getY() * TILE_SIZE);
     }
 
     @Override
@@ -68,6 +70,8 @@ public class Creature implements Updatable, Renderable, Mapped, Ai, Living, Figh
             die();
 
         }
+        light.setPosition(sprite.getX()+TILE_SIZE/2, sprite.getY()+TILE_SIZE/2);
+
         if (MissionScreen.visualEffectManager.isDone()) {
             sprite.setPosition(tile.getX() * TILE_SIZE, tile.getY() * TILE_SIZE);
         }
@@ -87,8 +91,8 @@ public class Creature implements Updatable, Renderable, Mapped, Ai, Living, Figh
     }
 
     @Override
-    public TrainStopMap getMap() {
-        return trainStopMap;
+    public TileMap getMap() {
+        return tileMap;
     }
 
     @Override
@@ -101,7 +105,7 @@ public class Creature implements Updatable, Renderable, Mapped, Ai, Living, Figh
     @Override
     public boolean move(Direction direction) {
         if (MissionScreen.visualEffectManager.isDone()) {
-            Tile newTile = trainStopMap.getTile(tile.getX() + direction.getX(), tile.getY() + direction.getY());
+            Tile newTile = tileMap.getTile(tile.getX() + direction.getX(), tile.getY() + direction.getY());
             if (newTile != null && newTile.getType() == TileType.FLOOR) {
                 if (newTile.getMapped() instanceof Player) {
                     MissionScreen.visualEffectManager.addEffect(new AttackEffect(tile, newTile, this));

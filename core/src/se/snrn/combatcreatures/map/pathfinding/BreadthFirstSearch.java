@@ -2,7 +2,7 @@ package se.snrn.combatcreatures.map.pathfinding;
 
 
 import se.snrn.combatcreatures.map.Tile;
-import se.snrn.combatcreatures.map.trainstops.TrainStopMap;
+import se.snrn.combatcreatures.map.trainstops.TileMap;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,7 +21,7 @@ public class BreadthFirstSearch {
     private java.util.Map<Tile, Node> nodes = new HashMap<>();
 
 
-    private void generateNodes(TrainStopMap map) {
+    private void generateNodes(TileMap map) {
 
         this.nodes.clear();
 
@@ -34,7 +34,7 @@ public class BreadthFirstSearch {
     }
 
 
-    public ArrayList<Node> getHighlight(Tile start, int distance, TrainStopMap map) {
+    public ArrayList<Node> getHighlight(Tile start, int distance, TileMap map) {
         generateNodes(map);
         range = distance;
         frontier = new ArrayList<>();

@@ -12,7 +12,7 @@ import se.snrn.combatcreatures.interfaces.Fighter;
 import se.snrn.combatcreatures.interfaces.Mapped;
 import se.snrn.combatcreatures.map.Tile;
 import se.snrn.combatcreatures.map.los.LineOfSight;
-import se.snrn.combatcreatures.map.trainstops.TrainStopMap;
+import se.snrn.combatcreatures.map.trainstops.TileMap;
 
 import java.util.ArrayList;
 
@@ -25,7 +25,7 @@ public class RangedInputState implements InputState {
 
     private ArrayList<Mapped> allowedTargets;
     private Player player;
-    private TrainStopMap trainStopMap;
+    private TileMap tileMap;
     private boolean done;
     private Mapped target;
     private int targetNumber;
@@ -33,9 +33,9 @@ public class RangedInputState implements InputState {
     private Animation<Texture> cursorAnimation;
     private float elapsedTime;
 
-    public RangedInputState(Player player, TrainStopMap trainStopMap) {
+    public RangedInputState(Player player, TileMap tileMap) {
         this.player = player;
-        this.trainStopMap = trainStopMap;
+        this.tileMap = tileMap;
 
         cursorAnimation = ResourceManager.cursorAnimation;
 
@@ -122,7 +122,7 @@ public class RangedInputState implements InputState {
         }
         if (done) {
             turnManager.endPlayerTurn();
-            return new DefaultInputState(player, trainStopMap);
+            return new DefaultInputState(player, tileMap);
         }
         return null;
     }
