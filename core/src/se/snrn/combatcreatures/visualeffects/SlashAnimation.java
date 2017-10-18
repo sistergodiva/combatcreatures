@@ -26,7 +26,8 @@ public class SlashAnimation implements VisualEffect {
         this.x = x;
         this.y = y;
         this.direction = direction;
-        animation = new Animation<Texture>(0.125f, ResourceManager.getAnimation("animations/slash", 4));
+        //animation = new Animation<Texture>(0.125f, ResourceManager.getAnimation("animations/slash", 4));
+        animation = new Animation<Texture>(0.125f, ResourceManager.getAnimation("animations/smash", 4));
         frame = animation.getKeyFrame(0);
 
         switch (direction) {
