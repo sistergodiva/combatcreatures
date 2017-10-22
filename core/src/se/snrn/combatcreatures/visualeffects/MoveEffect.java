@@ -3,6 +3,7 @@ package se.snrn.combatcreatures.visualeffects;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Interpolation;
+import se.snrn.combatcreatures.ResourceManager;
 import se.snrn.combatcreatures.entities.enemies.Creature;
 import se.snrn.combatcreatures.entities.player.Player;
 import se.snrn.combatcreatures.map.Tile;
@@ -31,6 +32,7 @@ public class MoveEffect implements VisualEffect {
         y = start.getY() * TILE_SIZE;
 
         this.sprite = player.getSprite();
+        ResourceManager.walk.play();
     }
 
     public MoveEffect(Tile start, Tile end, Creature creature) {

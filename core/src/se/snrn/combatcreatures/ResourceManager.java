@@ -2,6 +2,7 @@ package se.snrn.combatcreatures;
 
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.*;
 
@@ -9,6 +10,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class ResourceManager {
+
+    public static Sound hit = Gdx.audio.newSound(Gdx.files.internal("hit.wav"));
+    public static Sound walk = Gdx.audio.newSound(Gdx.files.internal("walk.wav"));
+    public static Sound pickUp = Gdx.audio.newSound(Gdx.files.internal("pickup.wav"));
 
     public static Sprite fog = new Sprite(new Texture(Gdx.files.internal("fog.png")));
 
@@ -31,9 +36,12 @@ public class ResourceManager {
 
 
     // UI
+    public static NinePatch healthBarNinePatch = new NinePatch(new Texture(Gdx.files.internal("ui/healthbar.png")), 6, 6, 6, 6);
     public static NinePatch uiNinePatch = new NinePatch(new Texture(Gdx.files.internal("ui/uibox.png")), 6, 6, 6, 6);
     public static Sprite target = new Sprite(new Texture(Gdx.files.internal("ui/target.png")));
     public static Sprite cursor = new Sprite(new Texture(Gdx.files.internal("ui/cursor1.png")));
+
+    public static NinePatch health = new NinePatch(new Texture(Gdx.files.internal("ui/health.png")), 4, 4, 6, 6);
 
     public static Sprite heart = new Sprite(new Texture(Gdx.files.internal("ui/heart.png")));
     public static Sprite magic = new Sprite(new Texture(Gdx.files.internal("ui/magic.png")));
@@ -47,6 +55,8 @@ public class ResourceManager {
     private static HashMap<Integer, Integer> tileMap;
     public static Sprite doorNS = new Sprite(new Texture(Gdx.files.internal("tiles/doorNS.png")));
 
+
+    public static Sprite hatSprite = new Sprite(new Texture(Gdx.files.internal("hat.png")));
 
 
     public ResourceManager() {
@@ -64,7 +74,7 @@ public class ResourceManager {
     public static Texture[] getAnimation(String name, int number) {
         Texture[] animation = new Texture[number];
         for (int i = 1; i < number + 1; i++) {
-            animation[i-1] = new Texture(Gdx.files.internal(name + i + ".png"));
+            animation[i - 1] = new Texture(Gdx.files.internal(name + i + ".png"));
         }
         return animation;
     }

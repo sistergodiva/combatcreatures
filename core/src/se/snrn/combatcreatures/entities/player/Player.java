@@ -17,6 +17,8 @@ import se.snrn.combatcreatures.map.trainstops.TileMap;
 import se.snrn.combatcreatures.userinterface.GameLog;
 import se.snrn.combatcreatures.userinterface.inventory.Inventory;
 import se.snrn.combatcreatures.visualeffects.AttackEffect;
+import se.snrn.combatcreatures.visualeffects.DamageNumberEffect;
+import se.snrn.combatcreatures.visualeffects.DiceEffect;
 import se.snrn.combatcreatures.visualeffects.MoveEffect;
 
 import java.util.ArrayList;
@@ -50,7 +52,7 @@ public class Player implements Updatable, Renderable, Mapped, Living, Fighter {
         this.stats = stats;
         sprite = ResourceManager.player;
         alive = true;
-        health = 10;
+        health = stats.getStatFromEnum(Stat.HP);
         mana = 5;
         karies = 3;
         playerEquipment = new PlayerEquipment(this);
@@ -81,6 +83,7 @@ public class Player implements Updatable, Renderable, Mapped, Living, Fighter {
     @Override
     public void render(Batch batch) {
         sprite.draw(batch);
+        playerEquipment.render(batch);
     }
 
 
@@ -112,6 +115,9 @@ public class Player implements Updatable, Renderable, Mapped, Living, Fighter {
                     MissionScreen.visualEffectManager.addEffect(new AttackEffect(tile, newTile, this));
                     Creature creature = (Creature) newTile.getMapped();
                     int damage = AttackResolver.resolveNormalAttack(this, creature);
+                    MissionScreen.visualEffectManager.addEffect(new DamageNumberEffect(tile.getX() * TILE_SIZE, tile.getY() * TILE_SIZE, damage));
+//                    MissionScreen.visualEffectManager.addEffect(new DiceEffect(tile.getX()*TILE_SIZE,tile.getY()*TILE_SIZE));
+//                    MissionScreen.visualEffectManager.addEffect(new DiceEffect((tile.getX()+1)*TILE_SIZE,tile.getY()*TILE_SIZE));
                     creature.takeDamage(damage);
                     GameLog.addMessage(creature.getName() + " took " + damage + " damage");
                     turnManager.endPlayerTurn();
@@ -229,6 +235,10 @@ public class Player implements Updatable, Renderable, Mapped, Living, Fighter {
 
     public Sprite getSprite() {
         return sprite;
+    }
+
+    public PlayerEquipment getPlayerEquipment() {
+        return playerEquipment;
     }
 }
 

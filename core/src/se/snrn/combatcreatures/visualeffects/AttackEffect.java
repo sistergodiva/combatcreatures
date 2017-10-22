@@ -9,9 +9,7 @@ import se.snrn.combatcreatures.entities.player.Player;
 import se.snrn.combatcreatures.map.Direction;
 import se.snrn.combatcreatures.map.Tile;
 
-import static se.snrn.combatcreatures.CombatCreatures.DELAY;
-import static se.snrn.combatcreatures.CombatCreatures.SPEED_MULTIPLIER;
-import static se.snrn.combatcreatures.CombatCreatures.TILE_SIZE;
+import static se.snrn.combatcreatures.CombatCreatures.*;
 
 public class AttackEffect implements VisualEffect {
 
@@ -27,7 +25,7 @@ public class AttackEffect implements VisualEffect {
     private float y;
     private float delay;
     private Direction direction;
-    SlashAnimation slashAnimation;
+    SlashAnimationEffect slashAnimationEffect;
 
 
     public AttackEffect(Tile start, Tile end, Player player) {
@@ -38,8 +36,9 @@ public class AttackEffect implements VisualEffect {
         x = start.getX() * TILE_SIZE;
         y = start.getY() * TILE_SIZE;
         this.sprite = player.getSprite();
-        direction = MissionScreen.tileMap.getDirectionFromTile(start,end);
-        slashAnimation = new SlashAnimation(x,y, direction);
+        direction = MissionScreen.tileMap.getDirectionFromTile(start, end);
+        slashAnimationEffect = new SlashAnimationEffect(x, y, direction);
+
     }
 
     public AttackEffect(Tile start, Tile end, Creature creature) {
@@ -50,9 +49,9 @@ public class AttackEffect implements VisualEffect {
         x = start.getX() * TILE_SIZE;
         y = start.getY() * TILE_SIZE;
         this.sprite = creature.getSprite();
-        direction = MissionScreen.tileMap.getDirectionFromTile(start,end);
+        direction = MissionScreen.tileMap.getDirectionFromTile(start, end);
         delay = DELAY;
-        //slashAnimation = new SlashAnimation(x,y, direction);
+        slashAnimationEffect = new SlashAnimationEffect(x,y, direction);
     }
 
     @Override
@@ -83,16 +82,19 @@ public class AttackEffect implements VisualEffect {
 
 
         sprite.setPosition(x, y);
-        if(slashAnimation != null) {
-            slashAnimation.update(delta);
+
+
+        if (slashAnimationEffect != null) {
+            slashAnimationEffect.update(delta);
         }
     }
 
     @Override
     public void render(Batch batch) {
-        if(slashAnimation != null) {
-            slashAnimation.render(batch);
+        if (slashAnimationEffect != null) {
+            slashAnimationEffect.render(batch);
         }
+
     }
 
     @Override

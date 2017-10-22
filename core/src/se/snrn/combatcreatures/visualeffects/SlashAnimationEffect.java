@@ -8,7 +8,7 @@ import se.snrn.combatcreatures.map.Direction;
 
 import static se.snrn.combatcreatures.CombatCreatures.TILE_SIZE;
 
-public class SlashAnimation implements VisualEffect {
+public class SlashAnimationEffect implements VisualEffect {
 
     private float x;
     private float y;
@@ -21,7 +21,7 @@ public class SlashAnimation implements VisualEffect {
     private Texture frame;
     private float rotation;
 
-    public SlashAnimation(float x, float y, Direction direction) {
+    public SlashAnimationEffect(float x, float y, Direction direction) {
 
         this.x = x;
         this.y = y;
@@ -47,7 +47,7 @@ public class SlashAnimation implements VisualEffect {
         }
         this.x += direction.getX()*TILE_SIZE/2;
         this.y += direction.getY()*TILE_SIZE/2;
-
+        ResourceManager.hit.play();
     }
 
     @Override
@@ -62,6 +62,7 @@ public class SlashAnimation implements VisualEffect {
 
     @Override
     public void update(float delta) {
+
         time += delta*4;
         frame = animation.getKeyFrame(time);
         if (time >= 0.5f) {

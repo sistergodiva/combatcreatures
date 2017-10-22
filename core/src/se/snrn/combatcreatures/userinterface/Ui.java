@@ -6,6 +6,7 @@ import se.snrn.combatcreatures.entities.player.Player;
 import se.snrn.combatcreatures.interfaces.Renderable;
 import se.snrn.combatcreatures.interfaces.Updatable;
 import se.snrn.combatcreatures.map.trainstops.TileMap;
+import se.snrn.combatcreatures.userinterface.inventory.EquipmentWindow;
 import se.snrn.combatcreatures.userinterface.inventory.Inventory;
 import se.snrn.combatcreatures.userinterface.leveling.SkillWindow;
 
@@ -24,6 +25,7 @@ public class Ui implements Updatable, Renderable {
     private InfoBox infoBox;
     private AbilityBar abilityBar;
     private SkillWindow skillWindow;
+    private EquipmentWindow equipmentWindow;
 
     public Ui(Player player, TileMap tileMap) {
         margin = 8;
@@ -38,6 +40,7 @@ public class Ui implements Updatable, Renderable {
         infoBox = new InfoBox(player, 0, 144);
         abilityBar = new AbilityBar(player, 300 + margin, 0);
         skillWindow = new SkillWindow(300, 300, player);
+        equipmentWindow = new EquipmentWindow(0, 100, player);
 
     }
 
@@ -54,6 +57,7 @@ public class Ui implements Updatable, Renderable {
         if (skillWindow.isOpen()) {
             skillWindow.render(batch);
         }
+
         healthBar.render(batch);
         manaBar.render(batch);
         kariesBar.render(batch);
@@ -61,7 +65,7 @@ public class Ui implements Updatable, Renderable {
         textLog.render(batch);
         infoBox.render(batch);
         abilityBar.render(batch);
-
+        equipmentWindow.render(batch);
     }
 
     public MiniMap getMiniMap() {

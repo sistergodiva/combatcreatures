@@ -19,6 +19,7 @@ import se.snrn.combatcreatures.entities.player.Player;
 import se.snrn.combatcreatures.input.InputHandler;
 import se.snrn.combatcreatures.input.InputStateMachine;
 import se.snrn.combatcreatures.items.consumable.ConsumableFactory;
+import se.snrn.combatcreatures.map.Tile;
 import se.snrn.combatcreatures.map.trainstops.TileMapFactory;
 import se.snrn.combatcreatures.map.trainstops.TileMap;
 import se.snrn.combatcreatures.userinterface.GameLog;
@@ -49,6 +50,7 @@ public class MissionScreen implements Screen {
     private ShapeRenderer shapeRenderer;
     public static VisualEffectManager visualEffectManager;
     public static TileMap tileMap;
+    private Tile hooverTile;
 
     public MissionScreen(Batch batch, SpriteBatch uiBatch, CombatCreatures combatCreatures) {
         cc = combatCreatures;
@@ -64,7 +66,7 @@ public class MissionScreen implements Screen {
         tileMap = TileMapFactory.getTileMap();
 
         creatureManager = new CreatureManager();
-        player = new Player(tileMap.getStartTile(), tileMap, new Stats(1, 1, 1, 1, 1, 1));
+        player = new Player(tileMap.getStartTile(), tileMap, new Stats(1, 1, 1, 1, 10, 1));
         creatureManager.setPlayer(player);
         turnManager = new TurnManager(creatureManager);
         inputStateMachine = new InputStateMachine(player, tileMap);
@@ -120,7 +122,6 @@ public class MissionScreen implements Screen {
         inputStateMachine.update(delta);
         ui.update(delta);
 
-
         Gdx.graphics.setTitle("FPS: " + Gdx.graphics.getFramesPerSecond());
     }
 
@@ -138,6 +139,7 @@ public class MissionScreen implements Screen {
         player.render(batch);
         inputStateMachine.render(batch);
         visualEffectManager.render(batch);
+
         batch.end();
 
         //box2DWorld.render(batch);

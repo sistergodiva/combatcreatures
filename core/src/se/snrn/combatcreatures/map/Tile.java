@@ -146,6 +146,7 @@ public class Tile implements Renderable {
     public void stepOn(Player player) {
         for (Item item : items
                 ) {
+            ResourceManager.pickUp.play();
             player.getInventory().addItem(item);
 
         }

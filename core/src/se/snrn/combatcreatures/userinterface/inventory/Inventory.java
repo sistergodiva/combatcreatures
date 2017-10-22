@@ -59,12 +59,7 @@ public class Inventory implements Renderable {
         cursor.setSlot(slots.get(0));
 
         addItem(ConsumableFactory.getNewConsumable(0));
-        addItem(ConsumableFactory.getNewConsumable(1));
-        addItem(ConsumableFactory.getNewConsumable(1));
-        addItem(ConsumableFactory.getNewConsumable(1));
-        addItem(ConsumableFactory.getNewConsumable(1));
-        addItem(ConsumableFactory.getNewConsumable(1));
-        addItem(ConsumableFactory.getNewConsumable(1));
+
 
     }
 

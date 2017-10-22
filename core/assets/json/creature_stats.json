@@ -2,7 +2,7 @@
   "creature": [
     {
       "magicAttack": 0,
-      "normalAttack": 0,
+      "normalAttack": 1,
       "magicDefence": 0,
       "normalDefence": 0,
       "health": 10,
@@ -11,7 +11,7 @@
     },
     {
       "magicAttack": 0,
-      "normalAttack": 0,
+      "normalAttack": 1,
       "magicDefence": 0,
       "normalDefence": 0,
       "health": 10,
@@ -20,7 +20,7 @@
     },
     {
       "magicAttack": 0,
-      "normalAttack": 0,
+      "normalAttack": 1,
       "magicDefence": 0,
       "normalDefence": 0,
       "health": 10,
@@ -29,7 +29,7 @@
     },
     {
       "magicAttack": 0,
-      "normalAttack": 0,
+      "normalAttack": 1,
       "magicDefence": 0,
       "normalDefence": 0,
       "health": 10,
@@ -38,7 +38,7 @@
     },
     {
       "magicAttack": 0,
-      "normalAttack": 0,
+      "normalAttack": 1,
       "magicDefence": 0,
       "normalDefence": 0,
       "health": 10,

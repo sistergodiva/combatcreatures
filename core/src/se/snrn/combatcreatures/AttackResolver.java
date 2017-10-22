@@ -13,7 +13,8 @@ public class AttackResolver {
     }
 
     public static int resolveNormalAttack(Fighter attacker, Fighter defender) {
-        return attacker.getStats().getStatFromEnum(Stat.NAT) - defender.getStats().getStatFromEnum(Stat.NDE);
+        return attacker.getStats().getStatFromEnum(Stat.NAT);
+        //- defender.getStats().getStatFromEnum(Stat.NDE);
     }
 
     public static void resolveRangedAttack(Mapped attacker, Mapped defender) {

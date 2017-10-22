@@ -2,6 +2,7 @@ package se.snrn.combatcreatures.items.Equipment;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import se.snrn.combatcreatures.ResourceManager;
 import se.snrn.combatcreatures.entities.effects.PermanentBuffEffect;
 import se.snrn.combatcreatures.items.Ability;
 import se.snrn.combatcreatures.items.Item;
@@ -26,6 +27,7 @@ public class Equipment implements Item {
         this.ability = ability;
         this.equipmentSlot = equipmentSlot;
         this.prefix = prefix;
+        sprite = ResourceManager.hatSprite;
     }
 
     @Override
@@ -45,7 +47,7 @@ public class Equipment implements Item {
 
     @Override
     public Sprite getSprite() {
-        return null;
+        return sprite;
     }
 
     @Override
