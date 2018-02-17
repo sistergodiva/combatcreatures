@@ -9,6 +9,7 @@ import se.snrn.combatcreatures.AttackResolver;
 import se.snrn.combatcreatures.MissionScreen;
 import se.snrn.combatcreatures.RandomNumber;
 import se.snrn.combatcreatures.ResourceManager;
+import se.snrn.combatcreatures.items.Equipment.Stat;
 import se.snrn.combatcreatures.map.Direction;
 import se.snrn.combatcreatures.entities.Stats;
 import se.snrn.combatcreatures.entities.player.Player;
@@ -24,6 +25,7 @@ import se.snrn.combatcreatures.visualeffects.MoveEffect;
 import static se.snrn.combatcreatures.CombatCreatures.TILE_SIZE;
 
 public class Creature implements Updatable, Renderable, Mapped, Ai, Living, Fighter {
+    private Stats stats;
     private int xp;
     private String description;
     private String spriteString;
@@ -36,26 +38,26 @@ public class Creature implements Updatable, Renderable, Mapped, Ai, Living, Figh
     private int health;
     private boolean alive;
     private TileMap tileMap;
-    private Stats stats;
     private int cost;
     private Sprite deadSprite;
     private boolean active;
     private PointLight light;
 
 
-    public Creature(Tile tile, TileMap tileMap, JsonValue stats, JsonValue appearance, AiCore aiCore) {
+    public Creature(Tile tile, TileMap tileMap, JsonValue definition, AiCore aiCore) {
         this.tileMap = tileMap;
-        this.stats = new Stats(stats.getInt(0), stats.getInt(1), stats.getInt(2), stats.getInt(3), stats.getInt(4), stats.getInt(5));
+        this.stats = new Stats(definition.get("stats"));
         this.tile = tile;
         this.tile.setMapped(this);
-        this.name = appearance.getString(0);
-        this.description = appearance.getString(1);
-        this.spriteString = appearance.getString(2);
-        this.deadSpriteString = appearance.getString(3);
-        this.xp = stats.getInt(6);
+        this.name = definition.getString(0);
+        this.description = definition.getString(1);
+        this.spriteString = definition.getString(2);
+        this.deadSpriteString = definition.getString(3);
+
+        this.xp = definition.get("stats").getInt("xp");
         this.aiCore = aiCore;
         alive = true;
-        health = 3;
+        health = this.stats.getStatFromEnum(Stat.hp);
         sprite = ResourceManager.getCreatureSpriteFromString(spriteString);
         cost = 10;
         deadSprite = ResourceManager.getCreatureSpriteFromString(deadSpriteString);
@@ -70,7 +72,7 @@ public class Creature implements Updatable, Renderable, Mapped, Ai, Living, Figh
             die();
 
         }
-        light.setPosition(sprite.getX()+TILE_SIZE/2, sprite.getY()+TILE_SIZE/2);
+        light.setPosition(sprite.getX() + TILE_SIZE / 2, sprite.getY() + TILE_SIZE / 2);
 
         if (MissionScreen.visualEffectManager.isDone()) {
             sprite.setPosition(tile.getX() * TILE_SIZE, tile.getY() * TILE_SIZE);
@@ -165,7 +167,7 @@ public class Creature implements Updatable, Renderable, Mapped, Ai, Living, Figh
     }
 
     @Override
-    public int getHealth() {
+    public int getHp() {
         return health;
     }
 

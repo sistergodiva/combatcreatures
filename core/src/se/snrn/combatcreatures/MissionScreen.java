@@ -66,7 +66,7 @@ public class MissionScreen implements Screen {
         tileMap = TileMapFactory.getTileMap();
 
         creatureManager = new CreatureManager();
-        player = new Player(tileMap.getStartTile(), tileMap, new Stats(1, 1, 1, 1, 10, 1));
+        player = new Player(tileMap.getStartTile(), tileMap, new Stats());
         creatureManager.setPlayer(player);
         turnManager = new TurnManager(creatureManager);
         inputStateMachine = new InputStateMachine(player, tileMap);

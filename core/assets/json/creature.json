@@ -4,31 +4,121 @@
       "name": "Goblin",
       "description": "A goblin wizard",
       "sprite": "goblin.png",
-      "sprite_dead": "dead_creature.png"
+      "sprite_dead": "dead_creature.png",
+      "stats": {
+        "xp": 10,
+        "loot": [
+          {
+            "id": 1,
+            "chance": 20
+          }
+        ],
+        "str": 10,
+        "dex": 10,
+        "wis": 10,
+        "hp": 10,
+        "ep": 10,
+        "mp": 10,
+        "flame": 10,
+        "grass": 10,
+        "water": 10
+      }
     },
     {
       "name": "Beholder",
       "description": "A beholder",
       "sprite": "beholder.png",
-      "sprite_dead": "dead_creature.png"
+      "sprite_dead": "dead_creature.png",
+      "stats": {
+        "xp": 10,
+        "loot": [
+          {
+            "id": 1,
+            "chance": 20
+          }
+        ],
+        "str": 10,
+        "dex": 10,
+        "wis": 10,
+        "hp": 10,
+        "ep": 10,
+        "mp": 10,
+        "flame": 10,
+        "grass": 10,
+        "water": 10
+      }
     },
-       {
+    {
       "name": "Skeleton",
       "description": "A skeleton",
       "sprite": "skeleton.png",
-      "sprite_dead": "dead_creature.png"
+      "sprite_dead": "dead_creature.png",
+      "stats": {
+        "xp": 10,
+        "loot": [
+          {
+            "id": 1,
+            "chance": 20
+          }
+        ],
+        "str": 10,
+        "dex": 10,
+        "wis": 10,
+        "hp": 10,
+        "ep": 10,
+        "mp": 10,
+        "flame": 10,
+        "grass": 10,
+        "water": 10
+      }
     },
     {
       "name": "Flies",
       "description": "A gaggle of flies",
       "sprite": "flies1.png",
-      "sprite_dead": "dead_creature.png"
+      "sprite_dead": "dead_creature.png",
+      "stats": {
+        "xp": 10,
+        "loot": [
+          {
+            "id": 1,
+            "chance": 20
+          }
+        ],
+        "str": 10,
+        "dex": 10,
+        "wis": 10,
+        "hp": 10,
+        "ep": 10,
+        "mp": 10,
+        "flame": 10,
+        "grass": 10,
+        "water": 10
+      }
     },
     {
       "name": "Leech",
       "description": "A leech",
       "sprite": "leech.png",
-      "sprite_dead": "dead_creature.png"
+      "sprite_dead": "dead_creature.png",
+      "stats": {
+        "xp": 10,
+        "loot": [
+          {
+            "id": 1,
+            "chance": 20
+          }
+        ],
+        "str": 10,
+        "dex": 10,
+        "wis": 10,
+        "hp": 10,
+        "ep": 10,
+        "mp": 10,
+        "flame": 10,
+        "grass": 10,
+        "water": 10
+      }
     }
   ]
 }

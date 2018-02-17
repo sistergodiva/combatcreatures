@@ -9,10 +9,10 @@ public class EquipmentFactory {
         return new Equipment(
                 "Hat", "A fancy hat",
                 new PermanentBuffEffect(
-                        new Stats(1, 0, 0, 0, 0, 0),
+                        new Stats(),
                         "Hat-buff",
                         "This hat makes you look cool."
-                ), null, EquipmentSlot.HEAD, null
+                ), null, EquipmentSlot.HEAD
         );
     }
 

@@ -2,7 +2,15 @@ package se.snrn.combatcreatures.items.Equipment;
 
 
 public enum Stat {
-    MAT("Magic Attack"), NAT("Normal Attack"), MDE("Magic defence"), NDE("Normal Defence"), HP("Health"), MP("Mana");
+    str("Strength"),
+    dex("Dexterity"),
+    wis("Wisdom"),
+    hp("Health"),
+    ep("Energy"),
+    mp("Mana"),
+    fire("Fire"),
+    grass("Grass"),
+    water("Water");
 
     private String name;
 

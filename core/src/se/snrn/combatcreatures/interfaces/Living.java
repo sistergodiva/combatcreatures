@@ -6,7 +6,7 @@ public interface Living {
     void setAlive(boolean alive);
     void takeDamage(int damage);
     void healDamage(int damage);
-    int getHealth();
+    int getHp();
     void die();
 
     void tick();

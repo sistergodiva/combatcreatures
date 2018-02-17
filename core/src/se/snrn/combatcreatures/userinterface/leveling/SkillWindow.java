@@ -84,7 +84,7 @@ public class SkillWindow implements Updatable, Renderable{
 
 
     public int getStatAtCursor() {
-        return skillSpenders.get(cursorPos).getStatValue();
+       return skillSpenders.get(cursorPos).getStatValue();
     }
 
     public boolean isOpen() {

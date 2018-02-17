@@ -12,10 +12,10 @@ public class ConsumableEffectFactory {
                 return new DamageConsumable();
             }
             case 2: {
-                return new AddKariesConsumable();
+                return new RandomStatBuff();
             }
             case 3: {
-                return new RemoveKariesConsumable();
+                return new RandomStatBuff();
             }
             case 4: {
                 return new RandomStatBuff();

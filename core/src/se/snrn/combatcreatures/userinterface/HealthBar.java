@@ -1,7 +1,6 @@
 package se.snrn.combatcreatures.userinterface;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import se.snrn.combatcreatures.ResourceManager;
 import se.snrn.combatcreatures.entities.player.Player;
 import se.snrn.combatcreatures.interfaces.Renderable;
@@ -34,8 +33,8 @@ public class HealthBar implements Updatable, Renderable {
     @Override
     public void render(Batch batch) {
         ResourceManager.uiNinePatch.draw(batch, x,y-margin*2, 250+margin*2, TILE_SIZE+margin*2);
-        maxHp = player.getStats().getStatFromEnum(Stat.HP);
-        currentHp = player.getHealth();
+        maxHp = player.getHp();
+        currentHp = player.getHp();
         ResourceManager.health.draw(batch,x+margin,y- margin,currentHp / maxHp * 250,TILE_SIZE);
         ResourceManager.healthBarNinePatch.draw(batch, x+margin, y - margin, 250, TILE_SIZE);
         ResourceManager.font.draw(batch, "HP: "+currentHp+" / "+maxHp,x,y);

@@ -18,7 +18,6 @@ import se.snrn.combatcreatures.userinterface.GameLog;
 import se.snrn.combatcreatures.userinterface.inventory.Inventory;
 import se.snrn.combatcreatures.visualeffects.AttackEffect;
 import se.snrn.combatcreatures.visualeffects.DamageNumberEffect;
-import se.snrn.combatcreatures.visualeffects.DiceEffect;
 import se.snrn.combatcreatures.visualeffects.MoveEffect;
 
 import java.util.ArrayList;
@@ -30,7 +29,7 @@ public class Player implements Updatable, Renderable, Mapped, Living, Fighter {
 
 
     private int skillPoints;
-    private int health;
+    private int hp;
     private Tile tile;
     private Sprite sprite;
     private boolean alive;
@@ -38,9 +37,7 @@ public class Player implements Updatable, Renderable, Mapped, Living, Fighter {
     private Stats stats;
     private PlayerEquipment playerEquipment;
     private ArrayList<Effect> effects;
-    private int karies;
     private Inventory inventory;
-    private int mana;
     private int level;
     private int score;
     private int xp;
@@ -52,9 +49,6 @@ public class Player implements Updatable, Renderable, Mapped, Living, Fighter {
         this.stats = stats;
         sprite = ResourceManager.player;
         alive = true;
-        health = stats.getStatFromEnum(Stat.HP);
-        mana = 5;
-        karies = 3;
         playerEquipment = new PlayerEquipment(this);
         inventory = new Inventory();
         effects = new ArrayList<>();
@@ -75,7 +69,7 @@ public class Player implements Updatable, Renderable, Mapped, Living, Fighter {
     @Override
     public void update(float delta) {
         sprite.setPosition(tile.getX() * TILE_SIZE, tile.getY() * TILE_SIZE);
-        if (health <= 0 && alive) {
+        if (hp <= 0 && alive) {
             die();
         }
     }
@@ -145,17 +139,12 @@ public class Player implements Updatable, Renderable, Mapped, Living, Fighter {
 
     @Override
     public void takeDamage(int damage) {
-        health -= damage;
+        hp -= damage;
     }
 
     @Override
     public void healDamage(int damage) {
-        health += damage;
-    }
-
-    @Override
-    public int getHealth() {
-        return health;
+        hp += damage;
     }
 
     @Override
@@ -173,33 +162,25 @@ public class Player implements Updatable, Renderable, Mapped, Living, Fighter {
         return stats;
     }
 
-    public void addKaries(int karies) {
-        this.karies += karies;
-    }
-
-    public void removeKaries(int karies) {
-        this.karies -= karies;
-    }
-
-    public int getKaries() {
-        return karies;
-    }
-
     public Inventory getInventory() {
         return inventory;
     }
 
-    public int getMana() {
-        return stats.getStatFromEnum(Stat.MP);
+    public int getHp() {
+        return stats.getStatFromEnum(Stat.hp);
+    }
+
+    public int getEp() {
+        return stats.getStatFromEnum(Stat.ep);
+    }
+
+    public int getMp() {
+        return stats.getStatFromEnum(Stat.mp);
     }
 
 
     public int getLevel() {
         return level;
-    }
-
-    public int getScore() {
-        return score;
     }
 
     public void addXp(int xp) {
